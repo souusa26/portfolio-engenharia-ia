@@ -23,11 +23,11 @@
 | **01** | **Telas Livres — Plataforma DOOH** | SaaS & Produtos Web | `FastAPI, PostgreSQL 15, FFmpeg H.264, IndexedDB` | Produção (:8000) & Homolog (:8001) |
 | **02** | **Painel Pedagógico — Maria do Carmo** | SaaS & Produtos Web | `FastAPI, Gemini 2.5 Flash, Structured Outputs, SQLite WAL` | Produção (:8002) |
 | **03** | **Gestão Financeira Autônoma PF/PJ** | SaaS & Produtos Web | `TypeScript, Clean Arch & DDD, Prisma + PG 16, React 19` | Produção (:8085 / DB :5434) |
-| **06** | **Antigravity Telegram Bridge (agy-telegram)** | Agentes, Memória & AIOps | `Python 3.12, Telegram API, Antigravity CLI, systemd` | Daemon Ativo (agy-bot.service) |
-| **07** | **Servidor Grafana — Observabilidade & Telemetria** | Automação, 3D & Infra SRE | `Grafana (:3000), Prometheus TSDB (:9090), Uptime Kuma (:3001), cAdvisor & Node Exporter` | Produção 24/7 (:3000 / :9090 / :3001) |
-| **08** | **Bots de monitoração (Discord & Telegram)** | Agentes, Memória & AIOps | `Python 3.12, discord.py, Docker SDK, psutil` | Daemons Ativos 24/7 |
-| **09** | **Automação Trello IA & ERP de Ambientes** | Automação, 3D & Infra SRE | `Python, Gemini 3.1 Flash Lite, Trello REST API, Rollback Transacional` | Rotinas & API (:8088) Ativas |
-| **10** | **Bot de Estudos Microsoft Learn** | Automação, 3D & Infra SRE | `Python, Telegram Quiz Polls, Inline Keyboards, AZ-900 / SC-900 / MS-900` | Base & Bot Estruturados |
+| **04** | **Antigravity Telegram Bridge (agy-telegram)** | Agentes, Memória & AIOps | `Python 3.12, Telegram API, Antigravity CLI, systemd` | Daemon Ativo (agy-bot.service) |
+| **05** | **Servidor Grafana — Observabilidade & Telemetria** | Automação, 3D & Infra SRE | `Grafana (:3000), Prometheus TSDB (:9090), Uptime Kuma (:3001), cAdvisor & Node Exporter` | Produção 24/7 (:3000 / :9090 / :3001) |
+| **06** | **Bots de monitoração (Discord & Telegram)** | Agentes, Memória & AIOps | `Python 3.12, discord.py, Docker SDK, psutil` | Daemons Ativos 24/7 |
+| **07** | **Automação Trello IA & ERP de Ambientes** | Automação, 3D & Infra SRE | `Python, Gemini 3.1 Flash Lite, Trello REST API, Rollback Transacional` | Rotinas & API (:8088) Ativas |
+| **08** | **Bot de Estudos Microsoft Learn** | Automação, 3D & Infra SRE | `Python, Telegram Quiz Polls, Inline Keyboards, AZ-900 / SC-900 / MS-900` | Base & Bot Estruturados |
 | **09** | **Home Assistant — Automação Residencial & IoT** | Automação, 3D & Infra SRE | `Home Assistant (:8123), Go2RTC RTSP/WebRTC, IoT & Tuya, Amazon Alexa` | Produção 24/7 (:8123 / Go2RTC :1984) |
 | **10** | **AdGuard Home — DNS Sinkhole & Segurança de Rede** | Automação, 3D & Infra SRE | `AdGuard Home (:53), DNS Sinkhole, Zero Trust Network, Security Blocklists` | Produção 24/7 (DNS :53) |
 | **11** | **Stack Autônoma de Mídias & Streaming (Plex & *Arr)** | Automação, 3D & Infra SRE | `Plex Media Server (:32400), Prowlarr (:9696), Radarr (:7878) & Sonarr (:8989), qBittorrent (:8080)` | Produção 24/7 (6 Containers Integrados) |
@@ -153,7 +153,7 @@ Conecta-se aos bancos via Pluggy Open Finance e listener IMAP, projeta desdobram
 
 ---
 
-## 06. Antigravity Telegram Bridge (agy-telegram)
+## 04. Antigravity Telegram Bridge (agy-telegram)
 
 **Resumo:** IDE agêntica remota no Telegram permitindo programar, alternar LLMs, navegar entre repositórios e operar o servidor pelo celular.
 
@@ -184,7 +184,7 @@ Permite administrar projetos, corrigir bugs e disparar tarefas complexas de enge
 
 ---
 
-## 07. Servidor Grafana — Observabilidade & Telemetria
+## 05. Servidor Grafana — Observabilidade & Telemetria
 
 **Resumo:** Ambiente de monitoração contínua em tempo real utilizando Grafana, Prometheus TSDB, Uptime Kuma e exportadores dedicados.
 
@@ -222,7 +222,7 @@ Garantir visibilidade total e preventiva sobre a saúde física do servidor e de
 
 ---
 
-## 08. Bots de monitoração (Discord & Telegram)
+## 06. Bots de monitoração (Discord & Telegram)
 
 **Resumo:** Bots operacionais integrados ao Docker SDK e psutil com 14 comandos de governança e watchdog preventivo a cada 60 segundos.
 
@@ -251,7 +251,7 @@ Monitoramento ativo 24/7 e controle bidirecional dos 26 containers e recursos f�
 
 ---
 
-## 09. Automação Trello IA & ERP de Ambientes
+## 07. Automação Trello IA & ERP de Ambientes
 
 **Resumo:** Agente curador de cards/etiquetas com Gemini 3.1 Flash Lite, backup transacional com rollback e provisionamento de funil para móveis planejados.
 
@@ -285,7 +285,7 @@ Combina duas frentes de produtividade sobre a API do Trello:
 
 ---
 
-## 10. Bot de Estudos Microsoft Learn
+## 08. Bot de Estudos Microsoft Learn
 
 **Resumo:** Tutor gamificado no Telegram cobrindo 16 módulos e 5 certificações Microsoft Cloud com quizzes nativos e trilha progressiva.
 
