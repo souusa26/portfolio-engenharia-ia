@@ -9,7 +9,7 @@
 
 | Indicador | Destaque |
 | :--- | :--- |
-| **Projetos Documentados** | `8 Sistemas` |
+| **Projetos Documentados** | `11 Sistemas` |
 | **Infraestrutura Ativa** | `26 Containers 24/7` |
 | **Modelos & Agentes** | `Gemini, Claude` |
 | **Arquitetura & Governança** | `DDD + Zero Trust` |
@@ -24,13 +24,13 @@
 | **02** | **Painel Pedagógico — Maria do Carmo** | SaaS & Produtos Web | `FastAPI, Gemini 2.5 Flash, Structured Outputs, SQLite WAL` | Produção (:8002) |
 | **03** | **Gestão Financeira Autônoma PF/PJ** | SaaS & Produtos Web | `TypeScript, Clean Arch & DDD, Prisma + PG 16, React 19` | Produção (:8085 / DB :5434) |
 | **06** | **Antigravity Telegram Bridge (agy-telegram)** | Agentes, Memória & AIOps | `Python 3.12, Telegram API, Antigravity CLI, systemd` | Daemon Ativo (agy-bot.service) |
-| **07** | **Servidor Grafana** | Agentes, Memória & AIOps | `FastMCP, Model Context Protocol, Python 3.12 Async, LiteLLM` | Estruturado em ai-ops/ |
+| **07** | **Servidor Grafana — Observabilidade & Telemetria** | Automação, 3D & Infra SRE | `Grafana (:3000), Prometheus TSDB (:9090), Uptime Kuma (:3001), cAdvisor & Node Exporter` | Produção 24/7 (:3000 / :9090 / :3001) |
 | **08** | **Bots de monitoração (Discord & Telegram)** | Agentes, Memória & AIOps | `Python 3.12, discord.py, Docker SDK, psutil` | Daemons Ativos 24/7 |
 | **09** | **Automação Trello IA & ERP de Ambientes** | Automação, 3D & Infra SRE | `Python, Gemini 3.1 Flash Lite, Trello REST API, Rollback Transacional` | Rotinas & API (:8088) Ativas |
 | **10** | **Bot de Estudos Microsoft Learn** | Automação, 3D & Infra SRE | `Python, Telegram Quiz Polls, Inline Keyboards, AZ-900 / SC-900 / MS-900` | Base & Bot Estruturados |
-| **09** | **HomeAssistant** | SaaS & Produtos Web | `Python, IA Generativa` | Em Produção |
-| **10** | **AdGuard** | SaaS & Produtos Web | `Python, IA Generativa` | Em Produção |
-| **11** | **Stack de midias** | SaaS & Produtos Web | `Python, IA Generativa` | Em Produção |
+| **09** | **Home Assistant — Automação Residencial & IoT** | Automação, 3D & Infra SRE | `Home Assistant (:8123), Go2RTC RTSP/WebRTC, IoT & Tuya, Amazon Alexa` | Produção 24/7 (:8123 / Go2RTC :1984) |
+| **10** | **AdGuard Home — DNS Sinkhole & Segurança de Rede** | Automação, 3D & Infra SRE | `AdGuard Home (:53), DNS Sinkhole, Zero Trust Network, Security Blocklists` | Produção 24/7 (DNS :53) |
+| **11** | **Stack Autônoma de Mídias & Streaming (Plex & *Arr)** | Automação, 3D & Infra SRE | `Plex Media Server (:32400), Prowlarr (:9696), Radarr (:7878) & Sonarr (:8989), qBittorrent (:8080)` | Produção 24/7 (6 Containers Integrados) |
 
 ---
 
@@ -105,7 +105,7 @@ Plataforma comercial Digital Out-Of-Home (DOOH) projetada para tablets Android i
 
 Desenvolvido sob medida para a coordenadora escolar Maria do Carmo avaliar dezenas de relatórios pedagógicos individuais enviados pelos professores em arquivos .docx, .pdf e .zip.
 
-Substitui horas de revisão manual por uma fila automatizada que classifica cada relatório em Semáforo (🟢 Aprovado, 🟡 Dúvida, 🔴 Incorreto) e já entrega a devolutiva pronta no formato 'De ➡️ Para'.
+Substitui horas de revisão manual por uma fila automatizada que classifica cada relatório em Semáforo (Aprovado, Dúvida, Incorreto) e já entrega a devolutiva pronta no formato 'De -> Para'.
 
 ### Arquitetura & Motor Cognitivo
 
@@ -184,35 +184,41 @@ Permite administrar projetos, corrigir bugs e disparar tarefas complexas de enge
 
 ---
 
-## 07. Servidor Grafana
+## 07. Servidor Grafana — Observabilidade & Telemetria
 
-**Resumo:** Ambiente de monitoração utilizando Grafana, Prometheus e Kuma
+**Resumo:** Ambiente de monitoração contínua em tempo real utilizando Grafana, Prometheus TSDB, Uptime Kuma e exportadores dedicados.
 
-- **Categoria:** `Agentes, Memória & AIOps`
-- **Status:** `Estruturado em ai-ops/`
-- **Caminho no Servidor:** `/home/tiago2609/homelab-aiops-portfolio/ai-ops`
-- **Tecnologias:** `FastMCP` • `Model Context Protocol` • `Python 3.12 Async` • `LiteLLM` • `Open-WebUI`
+- **Categoria:** `Automação, 3D & Infra SRE`
+- **Status:** `Produção 24/7 (:3000 / :9090 / :3001)`
+- **Caminho no Servidor:** `/home/tiago2609/monitoring`
+- **Tecnologias:** `Grafana (:3000)` • `Prometheus TSDB (:9090)` • `Uptime Kuma (:3001)` • `cAdvisor & Node Exporter` • `mc-monitor (PaperMC)`
 
 ### Galeria & Evidências Visuais
 
-#### Grafana Docker
-![Grafana Docker](assets/1792768088-Grafana-Docker.png)
+#### Dashboard Grafana Docker (cAdvisor) — Consumo de CPU, RAM e Rede por Container
+![Dashboard Grafana Docker (cAdvisor) — Consumo de CPU, RAM e Rede por Container](assets/1792768088-Grafana-Docker.png)
 
-#### Grafana Mine
-![Grafana Mine](assets/1792768089-Grafana-Mine.png)
+#### Dashboard Grafana PaperMC (mc-monitor) — TPS, Jogadores Online e Memória JVM
+![Dashboard Grafana PaperMC (mc-monitor) — TPS, Jogadores Online e Memória JVM](assets/1792768089-Grafana-Mine.png)
 
-#### Grafana Server
-![Grafana Server](assets/1792768089-Grafana-Server.png)
+#### Dashboard Grafana Host Linux (Node Exporter) — Telemetria de Hardware, Disco e Carga
+![Dashboard Grafana Host Linux (Node Exporter) — Telemetria de Hardware, Disco e Carga](assets/1792768089-Grafana-Server.png)
 
-### Problema & Visão AIOps
+### Problema & Visão de Observabilidade (NOC / SRE)
 
-Permite que agentes de IA inspecionem a saúde real da infraestrutura (métricas PromQL, containers degradados e logs) através do protocolo padronizado MCP da Anthropic, atuando como engenheiros SRE.
+Garantir visibilidade total e preventiva sobre a saúde física do servidor e de todos os serviços hospedados 24/7, antecipando gargalos de CPU, memória, I/O de disco ou degradação de aplicações antes que afetem os usuários finais.
 
-### Arquitetura & Segurança
+### Arquitetura de Coleta & Dashboards Especializados
 
-• Servidor FastMCP (mcp_homelab_server.py) expondo tools assíncronas via stdio e SSE;
-• LiteLLM AI Gateway (:4000) unificando roteamento de modelos locais e em nuvem com Open-WebUI (:3002);
-• Design Read-Only nas ferramentas de diagnóstico para garantir investigações de causa-raiz (RCA) 100% seguras.
+- Prometheus TSDB (:9090): coleta séries temporais a cada 15 segundos em 9 jobs de scrape simultâneos;
+- Monitoramento de Containers (cAdvisor :8082): painel dedicado no Grafana rastreando o isolamento de recursos de cada um dos 26 containers Docker;
+- Monitoramento de Aplicação Game Server (mc-monitor): telemetria em tempo real do servidor PaperMC (taxa de ticks por segundo - TPS, latência e heap Java);
+- Monitoramento de Host e Disponibilidade: métricas de kernel/hardware via Node Exporter (:9100) combinadas com sondas sintéticas HTTP/TCP no Blackbox Exporter (:9115) e Uptime Kuma (:3001).
+
+### Orquestração de Agentes de IA
+
+- Co-engenharia das queries PromQL, provisionamento declarativo dos dashboards JSON no Grafana e integração de novos exportadores (como o mc-monitor e plex-exporter) assistida por agentes;
+- Inspeção automatizada das métricas do Prometheus pelos agentes para diagnóstico rápido de causa-raiz (RCA).
 
 ---
 
@@ -273,7 +279,7 @@ Combina duas frentes de produtividade sobre a API do Trello:
 
 ### Engenharia de Confiabilidade & Rollback
 
-• Gatilho estrito por etiquetas respeitando travas '🚫 Sem IA' e '🤖 Analisado';
+• Gatilho estrito por etiquetas respeitando travas 'Sem IA' e 'Analisado';
 • Snapshot automático pré-mutação em backups_trello_ia/ e histórico auditável (trello_ia_history.json);
 • Script dedicado de reversão transacional (rollback_ia_desejos.py) e automação de capas (auto_cover_filmes.py).
 
@@ -302,95 +308,115 @@ Transforma o estudo para 5 certificações Microsoft (AZ-900, SC-900, MS-900, MS
 
 ### Arquitetura Pedagógica
 
-• 16 módulos divididos em 4 fases progressivas (Nuvem Base ➔ Identidades/Entra ID ➔ Governança M365 ➔ Colaboração & Endpoints);
+• 16 módulos divididos em 4 fases progressivas (Nuvem Base -> Identidades/Entra ID -> Governança M365 -> Colaboração & Endpoints);
 • Quizzes nativos do Telegram (type='quiz') com correção instantânea e explicação técnica detalhada;
 • Curadoria de conteúdo e estruturação de código realizadas em parceria com agentes de IA.
 
 ---
 
-## 09. HomeAssistant
+## 09. Home Assistant — Automação Residencial & IoT
 
-**Resumo:** Clique para editar o resumo, blocos e adicionar prints deste projeto.
+**Resumo:** Central inteligente de domótica integrando iluminação Tuya, câmeras IP via Go2RTC, assistentes de voz (Echo Dot), multimídia e telemetria do servidor.
 
-- **Categoria:** `SaaS & Produtos Web`
-- **Status:** `Em Produção`
-- **Caminho no Servidor:** `/home/tiago2609/Projetos/...`
-- **Tecnologias:** `Python` • `IA Generativa`
+- **Categoria:** `Automação, 3D & Infra SRE`
+- **Status:** `Produção 24/7 (:8123 / Go2RTC :1984)`
+- **Caminho no Servidor:** `/home/tiago2609/HA & /home/tiago2609/homelab`
+- **Tecnologias:** `Home Assistant (:8123)` • `Go2RTC RTSP/WebRTC` • `IoT & Tuya` • `Amazon Alexa` • `Dashboards YAML`
 
 ### Galeria & Evidências Visuais
 
-#### homeassistant administrador
-![homeassistant administrador](assets/1792769292-homeassistant-administrador.png)
+#### Painel Executivo Home Assistant (Desktop) — Controle dos Cômodos, Câmeras e Servidor
+![Painel Executivo Home Assistant (Desktop) — Controle dos Cômodos, Câmeras e Servidor](assets/1792769292-homeassistant-administrador.png)
 
-#### homeassistant mobile
-![homeassistant mobile](assets/1792769295-homeassistant-mobile.png)
+#### Interface Mobile Responsiva (Vista 1) — Controle Rápido de Iluminação e Clima
+![Interface Mobile Responsiva (Vista 1) — Controle Rápido de Iluminação e Clima](assets/1792769295-homeassistant-mobile.png)
 
-#### homeassistant mobile 2
-![homeassistant mobile 2](assets/1792769297-homeassistant-mobile-2.png)
+#### Interface Mobile Responsiva (Vista 2) — Monitoramento de Mídia, Rede e Dispositivos
+![Interface Mobile Responsiva (Vista 2) — Monitoramento de Mídia, Rede e Dispositivos](assets/1792769297-homeassistant-mobile-2.png)
 
-### Problema & Visão
+### Problema & Visão de Domótica Centralizada
 
-Descreva o objetivo do projeto...
+Unificar todos os dispositivos inteligentes do apartamento (lâmpadas, interruptores, tomadas, TVs, PS5, computador, câmeras IP e serviços do servidor) em uma única central de controle local (Desktop e Mobile) com baixíssima latência, eliminando a dependência de múltiplos aplicativos proprietários.
 
-### Arquitetura & Orquestração de IA
+### Arquitetura & Integrações em Produção
 
-Descreva a stack e o papel dos agentes...
+- Ecossistema IoT Tuya & Comandos de Voz: automação de cenas de iluminação, interruptores e tomadas inteligentes integrados com rotinas da Amazon Echo Dot (Alexa);
+- Retransmissão de Câmeras de Baixa Latência (Go2RTC :1984): agregação de streams de vídeo RTSP/WebRTC exibidos em tempo real diretamente no dashboard;
+- Integração Multimídia & Monitoramento de Infraestrutura: conexão com Spotify Developer API, status da fila de downloads e visibilidade do estado dos containers Docker;
+- Governança & Backups: rotinas de snapshot consolidado (homeassistant.tar.gz) em /home/tiago2609/HA preservando configurações, integrações HACS e dashboards YAML.
+
+### Orquestração de Agentes de IA
+
+- Co-engenharia dos painéis customizados em YAML (visão administrativa e mobile), diagnóstico de conectividade de dispositivos IoT na rede local e mapeamento de entidades inteligentes para automação contextual.
 
 ---
 
-## 10. AdGuard
+## 10. AdGuard Home — DNS Sinkhole & Segurança de Rede
 
-**Resumo:** Clique para editar o resumo, blocos e adicionar prints deste projeto.
+**Resumo:** Servidor DNS primário da infraestrutura atuando na filtragem de ameaças, bloqueio de telemetrias invasivas, rastreadores e resolução de domínios locais.
 
-- **Categoria:** `SaaS & Produtos Web`
-- **Status:** `Em Produção`
-- **Caminho no Servidor:** `/home/tiago2609/Projetos/...`
-- **Tecnologias:** `Python` • `IA Generativa`
+- **Categoria:** `Automação, 3D & Infra SRE`
+- **Status:** `Produção 24/7 (DNS :53)`
+- **Caminho no Servidor:** `/opt/AdGuardHome`
+- **Tecnologias:** `AdGuard Home (:53)` • `DNS Sinkhole` • `Zero Trust Network` • `Security Blocklists` • `Split-Horizon DNS`
 
 ### Galeria & Evidências Visuais
 
-#### AdGuard
-![AdGuard](assets/1792769393-AdGuard.png)
+#### Painel Analítico AdGuard Home — Volume de Consultas DNS, Bloqueios e Tempo de Resposta
+![Painel Analítico AdGuard Home — Volume de Consultas DNS, Bloqueios e Tempo de Resposta](assets/1792769393-AdGuard.png)
 
-### Problema & Visão
+### Problema & Higiene de Rede Preventiva
 
-Descreva o objetivo do projeto...
+Dispositivos conectados (Smart TVs, smartphones, equipamentos IoT e computadores) realizam milhares de conexões diárias para servidores de telemetria invasiva, rastreadores publicitários e domínios maliciosos. O AdGuard Home atua diretamente no gateway da rede, protegendo todos os dispositivos de forma transparente sem exigir instalação de softwares clientes.
 
-### Arquitetura & Orquestração de IA
+### Arquitetura & Governança de DNS
 
-Descreva a stack e o papel dos agentes...
+- DNS Primário de Borda (Porta 53): configurado como resolvedor central da rede local e da malha VPN Tailscale, inspecionando 100% das requisições DNS;
+- Filtragem em Camadas (DNS Sinkhole): bloqueio automatizado de domínios de phishing, malware, anúncios e telemetria de sistemas operacionais, reduzindo o consumo de banda e elevando a privacidade;
+- Resolução Interna & Telemetria: suporte a reescritas de DNS local (Split-Horizon) para serviços internos do homelab e auditoria em tempo real com latência média de resposta na casa de milissegundos.
+
+### Orquestração de Agentes de IA
+
+- Curadoria e ajuste fino de listas de bloqueio (blocklists) e regras de exceção (allowlists) com auxílio de agentes para garantir segurança máxima sem interromper serviços críticos, além de análise automatizada de padrões de tráfego DNS.
 
 ---
 
-## 11. Stack de midias
+## 11. Stack Autônoma de Mídias & Streaming (Plex & *Arr)
 
-**Resumo:** Clique para editar o resumo, blocos e adicionar prints deste projeto.
+**Resumo:** Pipeline 100% automatizado de indexação, busca, download, organização de catálogo e streaming com transcodificação via hardware.
 
-- **Categoria:** `SaaS & Produtos Web`
-- **Status:** `Em Produção`
-- **Caminho no Servidor:** `/home/tiago2609/Projetos/...`
-- **Tecnologias:** `Python` • `IA Generativa`
+- **Categoria:** `Automação, 3D & Infra SRE`
+- **Status:** `Produção 24/7 (6 Containers Integrados)`
+- **Caminho no Servidor:** `/home/tiago2609/homelab`
+- **Tecnologias:** `Plex Media Server (:32400)` • `Prowlarr (:9696)` • `Radarr (:7878) & Sonarr (:8989)` • `qBittorrent (:8080)` • `FlareSolverr (:8191)`
 
 ### Galeria & Evidências Visuais
 
-#### Plex
-![Plex](assets/1792769588-Plex.png)
+#### Plex Media Server — Catálogo Organizado e Streaming Multi-Dispositivo (:32400)
+![Plex Media Server — Catálogo Organizado e Streaming Multi-Dispositivo (:32400)](assets/1792769588-Plex.png)
 
-#### Prowlarr
-![Prowlarr](assets/1792769577-Prowlarr.png)
+#### Prowlarr — Gerenciamento Centralizado de Indexadores e Integração de APIs (:9696)
+![Prowlarr — Gerenciamento Centralizado de Indexadores e Integração de APIs (:9696)](assets/1792769577-Prowlarr.png)
 
-#### Radarr
-![Radarr](assets/1792769583-Radarr.png)
+#### Radarr — Automação de Monitoramento, Qualidade e Organização de Filmes (:7878)
+![Radarr — Automação de Monitoramento, Qualidade e Organização de Filmes (:7878)](assets/1792769583-Radarr.png)
 
-#### qBittorrent
-![qBittorrent](assets/1792769585-qBittorrent.png)
+#### qBittorrent WebUI — Motor de Transferência Integrado ao Pipeline Automatizado (:8080)
+![qBittorrent WebUI — Motor de Transferência Integrado ao Pipeline Automatizado (:8080)](assets/1792769585-qBittorrent.png)
 
-### Problema & Visão
+### Problema & Automação Ponta a Ponta
 
-Descreva o objetivo do projeto...
+Eliminar todo o trabalho manual de procurar, baixar, descompactar, renomear pastas e atualizar bibliotecas de mídia. Com esta arquitetura orientada a eventos, basta adicionar um título ao catálogo para que os containers cooperem autonomamente até a disponibilização imediata no Plex para Smart TVs (Roku TV), celulares e navegadores.
 
-### Arquitetura & Orquestração de IA
+### Arquitetura do Pipeline de Mídia
 
-Descreva a stack e o papel dos agentes...
+- Indexação & Bypass Resiliente (Prowlarr :9696 + FlareSolverr :8191): o Prowlarr unifica os indexadores e sincroniza via API com o restante da stack, enquanto o FlareSolverr resolve desafios anti-bot automaticamente via navegador headless;
+- Gestão Inteligente de Catálogo (Radarr :7878 & Sonarr :8989): monitoram lançamentos, avaliam perfis de qualidade/idioma e disparam ordens de download automatizadas;
+- Transferência & Armazenamento Híbrido (qBittorrent :8080): realiza os downloads diretamente no volume dedicado de alta capacidade (HD SATA 500GB), entregando os arquivos prontos para catalogação;
+- Streaming Acelerado & Observabilidade (Plex :32400): servidor de mídia utilizando Intel QuickSync para transcodificação via hardware com consumo mínimo de CPU (12W-16W), monitorado no Prometheus/Grafana via plex_exporter (:9594) e qbittorrent-exporter (:8090).
+
+### Orquestração de Agentes de IA
+
+- Arquitetura dos mapeamentos de volumes Docker Compose para movimentação instantânea de arquivos sem I/O duplicado, configuração das pontes de API entre os 6 containers, integração de métricas ao Grafana e automação de capas/metadados integrada ao Trello (auto_cover_filmes.py).
 
 ---
