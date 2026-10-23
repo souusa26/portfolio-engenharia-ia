@@ -321,7 +321,16 @@
         "Inline Keyboards",
         "AZ-900 / SC-900 / MS-900"
       ],
-      "images": [],
+      "images": [
+        {
+          "url": "assets/1792768980-Bot-estudos.png",
+          "caption": "Bot estudos"
+        },
+        {
+          "url": "assets/1792768983-Bot-estudos-quizz.png",
+          "caption": "Bot estudos quizz"
+        }
+      ],
       "blocks": [
         {
           "title": "Problema & Micro-Learning",

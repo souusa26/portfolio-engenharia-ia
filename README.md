@@ -287,6 +287,14 @@ Combina duas frentes de produtividade sobre a API do Trello:
 - **Caminho no Servidor:** `/home/tiago2609/Projetos/botEstudos`
 - **Tecnologias:** `Python` • `Telegram Quiz Polls` • `Inline Keyboards` • `AZ-900 / SC-900 / MS-900`
 
+### Galeria & Evidências Visuais
+
+#### Bot estudos
+![Bot estudos](assets/1792768980-Bot-estudos.png)
+
+#### Bot estudos quizz
+![Bot estudos quizz](assets/1792768983-Bot-estudos-quizz.png)
+
 ### Problema & Micro-Learning
 
 Transforma o estudo para 5 certificações Microsoft (AZ-900, SC-900, MS-900, MS-700 e MD-102) em sessões rápidas e interativas pelo celular.
