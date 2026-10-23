@@ -24,7 +24,7 @@
 | **02** | **Painel Pedagógico — Maria do Carmo** | SaaS & Produtos Web | `FastAPI, Gemini 2.5 Flash, Structured Outputs, SQLite WAL` | Produção (:8002) |
 | **03** | **Gestão Financeira Autônoma PF/PJ** | SaaS & Produtos Web | `TypeScript, Clean Arch & DDD, Prisma + PG 16, React 19` | Produção (:8085 / DB :5434) |
 | **06** | **Antigravity Telegram Bridge (agy-telegram)** | Agentes, Memória & AIOps | `Python 3.12, Telegram API, Antigravity CLI, systemd` | Daemon Ativo (agy-bot.service) |
-| **07** | **Servidor FastMCP & AI Gateway** | Agentes, Memória & AIOps | `FastMCP, Model Context Protocol, Python 3.12 Async, LiteLLM` | Estruturado em ai-ops/ |
+| **07** | **Servidor Grafana** | Agentes, Memória & AIOps | `FastMCP, Model Context Protocol, Python 3.12 Async, LiteLLM` | Estruturado em ai-ops/ |
 | **08** | **Homelab ChatOps SRE Bots (Discord & Telegram)** | Agentes, Memória & AIOps | `Python 3.12, discord.py, Docker SDK, psutil` | Daemons Ativos 24/7 |
 | **09** | **Automação Trello IA & ERP de Ambientes** | Automação, 3D & Infra SRE | `Python, Gemini 3.1 Flash Lite, Trello REST API, Rollback Transacional` | Rotinas & API (:8088) Ativas |
 | **10** | **Bot de Estudos Microsoft Learn** | Automação, 3D & Infra SRE | `Python, Telegram Quiz Polls, Inline Keyboards, AZ-900 / SC-900 / MS-900` | Base & Bot Estruturados |
@@ -183,9 +183,9 @@ Permite administrar projetos, corrigir bugs e disparar tarefas complexas de enge
 
 ---
 
-## 07. Servidor FastMCP & AI Gateway
+## 07. Servidor Grafana
 
-**Resumo:** Implementação do Model Context Protocol (MCP) conectando agentes diretamente ao Prometheus, Docker e systemd com LiteLLM.
+**Resumo:** Ambiente de monitoração utilizando Grafana, Prometheus e Kuma
 
 - **Categoria:** `Agentes, Memória & AIOps`
 - **Status:** `Estruturado em ai-ops/`
@@ -194,8 +194,14 @@ Permite administrar projetos, corrigir bugs e disparar tarefas complexas de enge
 
 ### Galeria & Evidências Visuais
 
-#### Prometheus TSDB Targets (:9090) — Fonte de Telemetria para o Servidor FastMCP
-![Prometheus TSDB Targets (:9090) — Fonte de Telemetria para o Servidor FastMCP](assets/prometheus-targets.png)
+#### Grafana Docker
+![Grafana Docker](assets/1792768088-Grafana-Docker.png)
+
+#### Grafana Mine
+![Grafana Mine](assets/1792768089-Grafana-Mine.png)
+
+#### Grafana Server
+![Grafana Server](assets/1792768089-Grafana-Server.png)
 
 ### Problema & Visão AIOps
 

@@ -195,8 +195,8 @@
       "id": "fastmcp-aiops",
       "number": "07",
       "category": "Agentes, Memória & AIOps",
-      "title": "Servidor FastMCP & AI Gateway",
-      "subtitle": "Implementação do Model Context Protocol (MCP) conectando agentes diretamente ao Prometheus, Docker e systemd com LiteLLM.",
+      "title": "Servidor Grafana",
+      "subtitle": "Ambiente de monitoração utilizando Grafana, Prometheus e Kuma",
       "status": "Estruturado em ai-ops/",
       "path": "/home/tiago2609/homelab-aiops-portfolio/ai-ops",
       "tags": [
@@ -208,8 +208,16 @@
       ],
       "images": [
         {
-          "url": "assets/prometheus-targets.png",
-          "caption": "Prometheus TSDB Targets (:9090) — Fonte de Telemetria para o Servidor FastMCP"
+          "url": "assets/1792768088-Grafana-Docker.png",
+          "caption": "Grafana Docker"
+        },
+        {
+          "url": "assets/1792768089-Grafana-Mine.png",
+          "caption": "Grafana Mine"
+        },
+        {
+          "url": "assets/1792768089-Grafana-Server.png",
+          "caption": "Grafana Server"
         }
       ],
       "blocks": [
