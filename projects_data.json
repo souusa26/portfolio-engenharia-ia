@@ -87,12 +87,20 @@
       ],
       "images": [
         {
-          "url": "assets/maria-dashboard.png",
-          "caption": "Painel da Coordenação Pedagógica — Fila de Avaliação e Semáforo IA"
+          "url": "assets/1792767178-maria-do-carmo-admin.png",
+          "caption": "maria do carmo admin"
         },
         {
-          "url": "assets/maria-pin.png",
-          "caption": "Tela de Acesso Rápido por PIN (UX Inclusiva e PWA)"
+          "url": "assets/1792767396-maria-do-carmo-redacao.png",
+          "caption": "maria do carmo redacao"
+        },
+        {
+          "url": "assets/1792767400-maria-do-carmo-devolutiva.png",
+          "caption": "maria do carmo devolutiva"
+        },
+        {
+          "url": "assets/1792767402-maria-do-carmo-base-de-conhecimento.png",
+          "caption": "maria do carmo base de conhecimento"
         }
       ],
       "blocks": [

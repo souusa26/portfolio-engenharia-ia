@@ -90,11 +90,17 @@ Plataforma comercial Digital Out-Of-Home (DOOH) projetada para tablets Android i
 
 ### Galeria & Evidências Visuais
 
-#### Painel da Coordenação Pedagógica — Fila de Avaliação e Semáforo IA
-![Painel da Coordenação Pedagógica — Fila de Avaliação e Semáforo IA](assets/maria-dashboard.png)
+#### maria do carmo admin
+![maria do carmo admin](assets/1792767178-maria-do-carmo-admin.png)
 
-#### Tela de Acesso Rápido por PIN (UX Inclusiva e PWA)
-![Tela de Acesso Rápido por PIN (UX Inclusiva e PWA)](assets/maria-pin.png)
+#### maria do carmo redacao
+![maria do carmo redacao](assets/1792767396-maria-do-carmo-redacao.png)
+
+#### maria do carmo devolutiva
+![maria do carmo devolutiva](assets/1792767400-maria-do-carmo-devolutiva.png)
+
+#### maria do carmo base de conhecimento
+![maria do carmo base de conhecimento](assets/1792767402-maria-do-carmo-base-de-conhecimento.png)
 
 ### Problema & Visão de Produto
 
