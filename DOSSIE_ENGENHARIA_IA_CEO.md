@@ -30,6 +30,7 @@
 | **10** | **Bot de Estudos Microsoft Learn** | Automação, 3D & Infra SRE | `Python, Telegram Quiz Polls, Inline Keyboards, AZ-900 / SC-900 / MS-900` | Base & Bot Estruturados |
 | **09** | **HomeAssistant** | SaaS & Produtos Web | `Python, IA Generativa` | Em Produção |
 | **10** | **AdGuard** | SaaS & Produtos Web | `Python, IA Generativa` | Em Produção |
+| **11** | **Stack de midias** | SaaS & Produtos Web | `Python, IA Generativa` | Em Produção |
 
 ---
 
@@ -350,6 +351,39 @@ Descreva a stack e o papel dos agentes...
 
 #### AdGuard
 ![AdGuard](assets/1792769393-AdGuard.png)
+
+### Problema & Visão
+
+Descreva o objetivo do projeto...
+
+### Arquitetura & Orquestração de IA
+
+Descreva a stack e o papel dos agentes...
+
+---
+
+## 11. Stack de midias
+
+**Resumo:** Clique para editar o resumo, blocos e adicionar prints deste projeto.
+
+- **Categoria:** `SaaS & Produtos Web`
+- **Status:** `Em Produção`
+- **Caminho no Servidor:** `/home/tiago2609/Projetos/...`
+- **Tecnologias:** `Python` • `IA Generativa`
+
+### Galeria & Evidências Visuais
+
+#### Plex
+![Plex](assets/1792769588-Plex.png)
+
+#### Prowlarr
+![Prowlarr](assets/1792769577-Prowlarr.png)
+
+#### Radarr
+![Radarr](assets/1792769583-Radarr.png)
+
+#### qBittorrent
+![qBittorrent](assets/1792769585-qBittorrent.png)
 
 ### Problema & Visão
 

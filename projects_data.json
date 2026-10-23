@@ -407,6 +407,47 @@
           "content": "Descreva a stack e o papel dos agentes..."
         }
       ]
+    },
+    {
+      "id": "projeto-1792769405283",
+      "number": "11",
+      "category": "SaaS & Produtos Web",
+      "title": "Stack de midias",
+      "subtitle": "Clique para editar o resumo, blocos e adicionar prints deste projeto.",
+      "status": "Em Produção",
+      "path": "/home/tiago2609/Projetos/...",
+      "tags": [
+        "Python",
+        "IA Generativa"
+      ],
+      "images": [
+        {
+          "url": "assets/1792769588-Plex.png",
+          "caption": "Plex"
+        },
+        {
+          "url": "assets/1792769577-Prowlarr.png",
+          "caption": "Prowlarr"
+        },
+        {
+          "url": "assets/1792769583-Radarr.png",
+          "caption": "Radarr"
+        },
+        {
+          "url": "assets/1792769585-qBittorrent.png",
+          "caption": "qBittorrent"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Problema & Visão",
+          "content": "Descreva o objetivo do projeto..."
+        },
+        {
+          "title": "Arquitetura & Orquestração de IA",
+          "content": "Descreva a stack e o papel dos agentes..."
+        }
+      ]
     }
   ]
 }
