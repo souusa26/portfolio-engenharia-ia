@@ -1,6 +1,6 @@
 {
   "settings": {
-    "theme": "zinc-dark",
+    "theme": "light",
     "accent": "indigo",
     "columns": 3,
     "badge": "Portfólio de Engenharia & IA • Tiago Sousa",
@@ -17,7 +17,7 @@
       },
       {
         "label": "Modelos & Agentes",
-        "value": "Gemini, Claude & MCP"
+        "value": "Gemini, Claude"
       },
       {
         "label": "Arquitetura & Governança",
