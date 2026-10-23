@@ -106,7 +106,7 @@
       "blocks": [
         {
           "title": "Problema & Visão de Produto",
-          "content": "Desenvolvido sob medida para a coordenadora escolar Maria do Carmo avaliar dezenas de relatórios pedagógicos individuais enviados pelos professores em arquivos .docx, .pdf e .zip.\n\nSubstitui horas de revisão manual por uma fila automatizada que classifica cada relatório em três níveis (Aprovado, Dúvida, Incorreto) e já entrega a devolutiva pronta no formato 'De -> Para'."
+          "content": "Desenvolvido sob medida para a coordenadora escolar Maria do Carmo avaliar dezenas de relatórios pedagógicos individuais enviados pelos professores em arquivos .docx, .pdf e .zip.\n\nSubstitui horas de revisão manual por uma fila automatizada que classifica cada relatório em Semáforo (🟢 Aprovado, 🟡 Dúvida, 🔴 Incorreto) e já entrega a devolutiva pronta no formato 'De ➡️ Para'."
         },
         {
           "title": "Arquitetura & Motor Cognitivo",
@@ -194,44 +194,40 @@
     {
       "id": "fastmcp-aiops",
       "number": "07",
-      "category": "Automação, 3D & Infra SRE",
-      "title": "Servidor Grafana — Observabilidade & Telemetria",
-      "subtitle": "Central de monitoramento contínuo em tempo real integrando Grafana, Prometheus TSDB, Uptime Kuma e exportadores dedicados.",
-      "status": "Produção 24/7 (:3000 / :9090 / :3001)",
-      "path": "/home/tiago2609/monitoring",
+      "category": "Agentes, Memória & AIOps",
+      "title": "Servidor Grafana",
+      "subtitle": "Ambiente de monitoração utilizando Grafana, Prometheus e Kuma",
+      "status": "Estruturado em ai-ops/",
+      "path": "/home/tiago2609/homelab-aiops-portfolio/ai-ops",
       "tags": [
-        "Grafana (:3000)",
-        "Prometheus TSDB (:9090)",
-        "Uptime Kuma (:3001)",
-        "cAdvisor & Node Exporter",
-        "mc-monitor (PaperMC)"
+        "FastMCP",
+        "Model Context Protocol",
+        "Python 3.12 Async",
+        "LiteLLM",
+        "Open-WebUI"
       ],
       "images": [
         {
           "url": "assets/1792768088-Grafana-Docker.png",
-          "caption": "Dashboard Grafana Docker (cAdvisor) — Consumo de CPU, RAM e Rede por Container"
+          "caption": "Grafana Docker"
         },
         {
           "url": "assets/1792768089-Grafana-Mine.png",
-          "caption": "Dashboard Grafana PaperMC (mc-monitor) — TPS, Jogadores Online e Memória JVM"
+          "caption": "Grafana Mine"
         },
         {
           "url": "assets/1792768089-Grafana-Server.png",
-          "caption": "Dashboard Grafana Host Linux (Node Exporter) — Telemetria de Hardware, Disco e Carga"
+          "caption": "Grafana Server"
         }
       ],
       "blocks": [
         {
-          "title": "Problema & Visão de Observabilidade (NOC / SRE)",
-          "content": "Garantir visibilidade total e preventiva sobre a saúde física do servidor e de todos os serviços hospedados 24/7, antecipando gargalos de CPU, memória, I/O de disco ou degradação de aplicações antes que afetem os usuários finais."
+          "title": "Problema & Visão AIOps",
+          "content": "Permite que agentes de IA inspecionem a saúde real da infraestrutura (métricas PromQL, containers degradados e logs) através do protocolo padronizado MCP da Anthropic, atuando como engenheiros SRE."
         },
         {
-          "title": "Arquitetura de Coleta & Dashboards Especializados",
-          "content": "- Prometheus TSDB (:9090): coleta séries temporais a cada 15 segundos em 9 jobs de scrape simultâneos;\n- Monitoramento de Containers (cAdvisor :8082): painel dedicado no Grafana rastreando o isolamento de recursos de cada um dos 26 containers Docker;\n- Monitoramento de Aplicação Game Server (mc-monitor): telemetria em tempo real do servidor PaperMC (taxa de ticks por segundo - TPS, latência e heap Java);\n- Monitoramento de Host e Disponibilidade: métricas de kernel/hardware via Node Exporter (:9100) combinadas com sondas sintéticas HTTP/TCP no Blackbox Exporter (:9115) e Uptime Kuma (:3001)."
-        },
-        {
-          "title": "Orquestração de Agentes de IA",
-          "content": "- Co-engenharia das queries PromQL, provisionamento declarativo dos dashboards JSON no Grafana e integração de novos exportadores (como o mc-monitor e plex-exporter) assistida por agentes;\n- Inspeção automatizada das métricas do Prometheus pelos agentes para diagnóstico rápido de causa-raiz (RCA)."
+          "title": "Arquitetura & Segurança",
+          "content": "• Servidor FastMCP (mcp_homelab_server.py) expondo tools assíncronas via stdio e SSE;\n• LiteLLM AI Gateway (:4000) unificando roteamento de modelos locais e em nuvem com Open-WebUI (:3002);\n• Design Read-Only nas ferramentas de diagnóstico para garantir investigações de causa-raiz (RCA) 100% seguras."
         }
       ]
     },
@@ -254,6 +250,10 @@
         {
           "url": "assets/1792768287-Discord.png",
           "caption": "Discord"
+        },
+        {
+          "url": "assets/1792768397-Telegram.png",
+          "caption": "Telegram"
         }
       ],
       "blocks": [
@@ -290,7 +290,7 @@
         },
         {
           "title": "Engenharia de Confiabilidade & Rollback",
-          "content": "• Gatilho estrito por etiquetas respeitando travas de exclusão ('Sem IA' e 'Analisado');\n• Snapshot automático pré-mutação em backups_trello_ia/ e histórico auditável (trello_ia_history.json);\n• Script dedicado de reversão transacional (rollback_ia_desejos.py) e automação de capas (auto_cover_filmes.py)."
+          "content": "• Gatilho estrito por etiquetas respeitando travas '🚫 Sem IA' e '🤖 Analisado';\n• Snapshot automático pré-mutação em backups_trello_ia/ e histórico auditável (trello_ia_history.json);\n• Script dedicado de reversão transacional (rollback_ia_desejos.py) e automação de capas (auto_cover_filmes.py)."
         }
       ]
     },
