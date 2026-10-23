@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
   <title>Tiago Sousa — Portfólio de Engenharia & Agentes de IA</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -49,6 +49,7 @@
       background-color: var(--bg-main);
       color: var(--text-primary);
       transition: background-color 0.2s ease, color 0.2s ease;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .font-mono { font-family: 'JetBrains Mono', monospace; }
@@ -71,12 +72,16 @@
     .accent-text { color: var(--accent); }
 
     .project-card {
-      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+      touch-action: manipulation;
     }
     .project-card:hover {
       transform: translateY(-2px);
       border-color: var(--accent);
       box-shadow: 0 12px 28px -12px rgba(0, 0, 0, 0.25);
+    }
+    .project-card:active {
+      transform: scale(0.99);
     }
 
     .line-clamp-2 {
@@ -86,10 +91,18 @@
       overflow: hidden;
     }
 
+    /* Hide scrollbars for clean touch pills on mobile */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
     input, textarea, select {
       background-color: var(--bg-elevated);
       color: var(--text-primary);
       border: 1px solid var(--border-color);
+      font-size: 16px; /* Prevents auto-zoom on iOS inputs */
+    }
+    @media (min-width: 640px) {
+      input, textarea, select { font-size: 0.875rem; }
     }
     input:focus, textarea:focus, select:focus {
       outline: none;
@@ -97,32 +110,35 @@
     }
   </style>
 </head>
-<body data-theme="zinc-dark" data-accent="indigo" class="min-h-screen antialiased">
+<body data-theme="zinc-dark" data-accent="indigo" class="min-h-screen antialiased flex flex-col">
 
   <!-- TOP NAVIGATION & STUDIO BAR -->
-  <nav class="sticky top-0 z-30 surface border-t-0 border-x-0 backdrop-blur-md bg-opacity-90">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
-      <div class="flex items-center gap-3">
-        <div class="w-8 h-8 rounded-lg accent-bg flex items-center justify-center font-bold text-xs tracking-wider">
+  <nav class="sticky top-0 z-30 surface border-t-0 border-x-0 backdrop-blur-md bg-opacity-95">
+    <div class="max-w-6xl mx-auto px-3.5 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-2.5">
+      
+      <!-- BRAND LOGO & AUTHOR -->
+      <div class="flex items-center gap-2.5 min-w-0">
+        <div class="w-7 h-7 sm:w-8 h-8 rounded-lg accent-bg flex items-center justify-center font-bold text-xs tracking-wider shrink-0">
           TS
         </div>
-        <div>
-          <div class="font-semibold text-sm leading-tight">Tiago Sousa</div>
-          <div class="text-xs text-sec font-mono" id="live-status-text">Engenharia & Agentes de IA</div>
+        <div class="min-w-0">
+          <div class="font-semibold text-xs sm:text-sm leading-tight truncate">Tiago Sousa</div>
+          <div class="text-[11px] text-sec font-mono truncate hidden min-[380px]:block" id="live-status-text">Engenharia & IA</div>
         </div>
       </div>
 
-      <!-- ACTION BUTTONS -->
-      <div class="flex items-center gap-2">
-        <!-- DARK / WHITE SEGMENTED SWITCHER -->
+      <!-- TOP ACTION BUTTONS -->
+      <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+        
+        <!-- QUICK THEME TOGGLE (DARK / WHITE) -->
         <div class="inline-flex items-center p-0.5 rounded-lg elevated text-xs font-medium">
-          <button onclick="setQuickTheme('zinc-dark')" id="btn-theme-dark" class="px-2.5 py-1 rounded-md transition flex items-center gap-1.5">
+          <button onclick="setQuickTheme('zinc-dark')" id="btn-theme-dark" title="Modo Escuro" class="px-2 sm:px-2.5 py-1 rounded-md transition flex items-center gap-1">
             <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
             </svg>
-            <span>Dark</span>
+            <span class="hidden sm:inline">Dark</span>
           </button>
-          <button onclick="setQuickTheme('light')" id="btn-theme-light" class="px-2.5 py-1 rounded-md transition flex items-center gap-1.5">
+          <button onclick="setQuickTheme('light')" id="btn-theme-light" title="Modo Claro" class="px-2 sm:px-2.5 py-1 rounded-md transition flex items-center gap-1">
             <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="12" cy="12" r="5"></circle>
               <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -134,37 +150,46 @@
               <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
               <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
             </svg>
-            <span>White</span>
+            <span class="hidden sm:inline">White</span>
           </button>
         </div>
 
-        <button onclick="toggleEditMode()" id="btn-edit-mode" class="px-3.5 py-1.5 rounded-lg elevated text-xs font-medium hover:opacity-90 transition">
-          Personalizar
+        <!-- CUSTOMIZE / EDIT BUTTON -->
+        <button onclick="toggleEditMode()" id="btn-edit-mode" class="px-2.5 sm:px-3.5 py-1.5 rounded-lg elevated text-xs font-medium hover:opacity-90 transition flex items-center gap-1">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+          </svg>
+          <span class="hidden sm:inline" id="btn-edit-label">Personalizar</span>
         </button>
-        <button onclick="saveAll(true)" id="btn-save-sync" class="hidden px-3.5 py-1.5 rounded-lg accent-bg text-xs font-semibold hover:opacity-95 transition">
-          Salvar & Sincronizar GitHub
+
+        <!-- SAVE BUTTON IN EDIT MODE -->
+        <button onclick="saveAll(true)" id="btn-save-sync" class="hidden px-2.5 sm:px-3.5 py-1.5 rounded-lg accent-bg text-xs font-semibold hover:opacity-95 transition">
+          Salvar
         </button>
-        <a href="/api/dossier" target="_blank" class="hidden sm:inline-flex px-3.5 py-1.5 rounded-lg elevated text-xs font-medium hover:opacity-90 transition">
+
+        <!-- MARKDOWN LINK (DESKTOP) -->
+        <a href="/api/dossier" target="_blank" class="hidden md:inline-flex px-3 py-1.5 rounded-lg elevated text-xs font-medium hover:opacity-90 transition">
           Markdown
         </a>
       </div>
     </div>
 
-    <!-- CUSTOMIZATION DRAWER (ONLY VISIBLE IN EDIT MODE) -->
+    <!-- CUSTOMIZATION DRAWER (EDIT MODE) -->
     <div id="customizer-bar" class="hidden border-t border-subtle elevated">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-4 text-xs">
-        <div class="flex flex-wrap items-center gap-4">
-          <div class="flex items-center gap-2">
-            <span class="text-sec font-medium">Tema:</span>
-            <select id="select-theme" onchange="updateThemeSettings()" class="px-2.5 py-1 rounded-md text-xs">
+      <div class="max-w-6xl mx-auto px-3.5 sm:px-6 py-3 space-y-3 sm:space-y-0 sm:flex sm:flex-wrap sm:items-center sm:justify-between sm:gap-4 text-xs">
+        <div class="grid grid-cols-3 sm:flex sm:flex-wrap items-center gap-2 sm:gap-4">
+          <div>
+            <span class="text-sec block sm:inline font-medium text-[11px] sm:text-xs sm:mr-1">Tema:</span>
+            <select id="select-theme" onchange="updateThemeSettings()" class="w-full sm:w-auto px-2 py-1.5 rounded-md text-xs">
               <option value="zinc-dark">Minimal Dark</option>
               <option value="light">Clean White</option>
               <option value="slate-dark">Executive Navy</option>
             </select>
           </div>
-          <div class="flex items-center gap-2">
-            <span class="text-sec font-medium">Destaque:</span>
-            <select id="select-accent" onchange="updateThemeSettings()" class="px-2.5 py-1 rounded-md text-xs">
+          <div>
+            <span class="text-sec block sm:inline font-medium text-[11px] sm:text-xs sm:mr-1">Destaque:</span>
+            <select id="select-accent" onchange="updateThemeSettings()" class="w-full sm:w-auto px-2 py-1.5 rounded-md text-xs">
               <option value="indigo">Indigo</option>
               <option value="emerald">Emerald</option>
               <option value="blue">Blue</option>
@@ -172,41 +197,41 @@
               <option value="rose">Rose</option>
             </select>
           </div>
-          <div class="flex items-center gap-2">
-            <span class="text-sec font-medium">Layout:</span>
-            <select id="select-cols" onchange="updateThemeSettings()" class="px-2.5 py-1 rounded-md text-xs">
+          <div>
+            <span class="text-sec block sm:inline font-medium text-[11px] sm:text-xs sm:mr-1">Grade:</span>
+            <select id="select-cols" onchange="updateThemeSettings()" class="w-full sm:w-auto px-2 py-1.5 rounded-md text-xs">
               <option value="3">3 Colunas</option>
               <option value="2">2 Colunas</option>
             </select>
           </div>
         </div>
 
-        <div class="flex items-center gap-3">
+        <div class="flex items-center justify-between sm:justify-end gap-3 pt-1 sm:pt-0 border-t border-subtle sm:border-t-0">
           <button onclick="addNewProject()" class="px-3 py-1.5 rounded-md surface hover:opacity-90 font-medium">
             + Novo Projeto
           </button>
-          <span id="save-toast" class="text-emerald-500 font-mono hidden">Alterações salvas</span>
+          <span id="save-toast" class="text-emerald-500 font-mono text-[11px] sm:text-xs hidden">Salvo com sucesso</span>
         </div>
       </div>
     </div>
   </nav>
 
-  <!-- CLEAN MINIMALIST HERO -->
-  <header class="max-w-6xl mx-auto px-4 sm:px-6 pt-12 pb-8">
+  <!-- CLEAN HERO SECTION -->
+  <header class="max-w-6xl mx-auto px-3.5 sm:px-6 pt-6 sm:pt-12 pb-4 sm:pb-8">
     <div id="hero-view">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full elevated text-xs font-mono text-sec mb-4" id="hero-badge">
+      <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full elevated text-[11px] sm:text-xs font-mono text-sec mb-2.5 sm:mb-4" id="hero-badge">
         Portfólio de Engenharia & IA • Tiago Sousa
       </div>
-      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight max-w-3xl leading-tight" id="hero-title">
+      <h1 class="text-2xl sm:text-4xl font-bold tracking-tight max-w-3xl leading-snug sm:leading-tight" id="hero-title">
         Projetos & Sistemas Desenvolvidos com Agentes de IA
       </h1>
-      <p class="mt-3 text-base text-sec max-w-2xl leading-relaxed" id="hero-subtitle">
+      <p class="mt-2 sm:mt-3 text-xs sm:text-base text-sec max-w-2xl leading-relaxed" id="hero-subtitle">
         Ecossistema real em produção 24/7 combinando desenvolvimento assistido por múltiplos agentes com arquiteturas limpas e LLMs embarcados.
       </p>
     </div>
 
-    <!-- HERO EDIT FORM (ONLY IN EDIT MODE) -->
-    <div id="hero-edit" class="hidden surface rounded-2xl p-5 space-y-3">
+    <!-- HERO EDIT FORM (EDIT MODE) -->
+    <div id="hero-edit" class="hidden surface rounded-2xl p-4 sm:p-5 space-y-3">
       <div class="text-xs font-mono uppercase accent-text font-semibold">Editar Cabeçalho da Página</div>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div>
@@ -224,69 +249,81 @@
       </div>
     </div>
 
-    <!-- COMPACT METRICS STRIP -->
-    <div id="metrics-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-8"></div>
+    <!-- COMPACT METRICS GRID -->
+    <div id="metrics-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 mt-4 sm:mt-8"></div>
   </header>
 
-  <!-- FILTER TABS & SEARCH -->
-  <section class="max-w-6xl mx-auto px-4 sm:px-6 pb-6">
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-subtle pb-4">
-      <div class="flex flex-wrap gap-1.5" id="category-tabs"></div>
-      <input
-        id="search-box"
-        type="text"
-        oninput="renderGrid()"
-        placeholder="Buscar projeto ou tecnologia..."
-        class="px-3.5 py-1.5 rounded-lg text-xs w-full sm:w-64"
-      />
+  <!-- FILTER TABS & SEARCH BAR -->
+  <section class="max-w-6xl mx-auto px-3.5 sm:px-6 pb-4 sm:pb-6">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-subtle pb-3 sm:pb-4">
+      <!-- HORIZONTAL SCROLLABLE CATEGORIES ON MOBILE -->
+      <div class="flex overflow-x-auto no-scrollbar gap-1.5 pb-1 -mx-3.5 px-3.5 sm:mx-0 sm:px-0 sm:flex-wrap" id="category-tabs"></div>
+      
+      <!-- SEARCH BOX -->
+      <div class="relative w-full sm:w-64 shrink-0">
+        <input
+          id="search-box"
+          type="text"
+          oninput="renderGrid()"
+          placeholder="Buscar projeto ou tecnologia..."
+          class="w-full px-3.5 py-1.5 sm:py-2 rounded-lg text-xs"
+        />
+      </div>
     </div>
   </section>
 
-  <!-- CLEAN BENTO PROJECT GRID -->
-  <main class="max-w-6xl mx-auto px-4 sm:px-6 pb-20">
-    <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+  <!-- RESPONSIVE PROJECT GRID -->
+  <main class="max-w-6xl mx-auto px-3.5 sm:px-6 pb-16 flex-1">
+    <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5"></div>
   </main>
 
-  <!-- PROJECT DETAIL & VISUAL EDITOR MODAL -->
-  <div id="project-modal" class="fixed inset-0 z-50 hidden bg-black/75 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
-    <div class="surface rounded-2xl max-w-4xl w-full max-h-[92vh] flex flex-col overflow-hidden shadow-2xl">
+  <!-- MOBILE-OPTIMIZED PROJECT DETAIL & EDITOR MODAL -->
+  <div id="project-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-6 overflow-hidden">
+    <div class="surface w-full h-[100dvh] sm:h-auto sm:max-h-[92vh] sm:max-w-4xl sm:rounded-2xl flex flex-col overflow-hidden shadow-2xl">
       
-      <!-- MODAL HEADER -->
-      <div class="px-6 py-4 border-b border-subtle flex items-center justify-between gap-4 shrink-0">
-        <div class="flex items-center gap-2.5">
-          <span id="modal-num" class="px-2.5 py-0.5 rounded font-mono text-xs elevated font-semibold"></span>
-          <span id="modal-cat" class="text-xs text-sec font-medium"></span>
+      <!-- STICKY MODAL HEADER -->
+      <div class="px-4 sm:px-6 py-3 sm:py-4 border-b border-subtle flex items-center justify-between gap-3 shrink-0 elevated">
+        <div class="flex items-center gap-2 min-w-0">
+          <span id="modal-num" class="px-2 py-0.5 rounded font-mono text-[11px] sm:text-xs elevated font-semibold shrink-0"></span>
+          <span id="modal-cat" class="text-xs text-sec font-medium truncate"></span>
         </div>
-        <div class="flex items-center gap-2">
-          <button onclick="toggleModalEdit()" id="btn-modal-edit" class="px-3 py-1.5 rounded-lg elevated text-xs font-medium hover:opacity-90">
-            Editar Projeto / Imagens
+        
+        <div class="flex items-center gap-2 shrink-0">
+          <button onclick="toggleModalEdit()" id="btn-modal-edit" class="px-2.5 sm:px-3 py-1.5 rounded-lg elevated text-xs font-medium hover:opacity-90">
+            Editar
           </button>
-          <button onclick="closeModal()" class="w-8 h-8 rounded-lg elevated flex items-center justify-center text-xs font-mono hover:opacity-80">
-            ESC
+          <button onclick="closeModal()" title="Fechar" class="w-8 h-8 rounded-lg elevated flex items-center justify-center text-sec hover:text-white transition">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
           </button>
         </div>
       </div>
 
       <!-- MODAL SCROLLABLE BODY -->
-      <div class="p-6 overflow-y-auto space-y-6 flex-1" id="modal-body"></div>
+      <div class="p-4 sm:p-6 overflow-y-auto space-y-4 sm:space-y-6 flex-1" id="modal-body"></div>
 
-      <!-- MODAL FOOTER (VISIBLE WHEN EDITING) -->
-      <div id="modal-footer" class="hidden px-6 py-3.5 border-t border-subtle elevated flex items-center justify-between shrink-0">
+      <!-- STICKY MODAL FOOTER (EDIT MODE) -->
+      <div id="modal-footer" class="hidden px-4 sm:px-6 py-3 border-t border-subtle elevated flex items-center justify-between gap-3 shrink-0 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
         <button onclick="deleteCurrentProject()" class="text-xs text-rose-500 hover:underline">
-          Excluir este projeto
+          Excluir
         </button>
-        <div class="flex items-center gap-2">
-          <button onclick="saveAll(true)" class="px-4 py-2 rounded-lg accent-bg text-xs font-semibold">
-            Salvar Alterações & Atualizar README
-          </button>
-        </div>
+        <button onclick="saveAll(true)" class="px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-lg accent-bg text-xs font-semibold">
+          Salvar Alterações
+        </button>
       </div>
     </div>
   </div>
 
   <!-- LIGHTBOX FULLSCREEN IMAGE VIEWER -->
-  <div id="lightbox" onclick="closeLightbox()" class="fixed inset-0 z-50 hidden bg-black/90 flex items-center justify-center p-4 cursor-zoom-out">
-    <img id="lightbox-img" src="" alt="" class="max-w-full max-h-[92vh] rounded-lg shadow-2xl object-contain" />
+  <div id="lightbox" onclick="closeLightbox()" class="fixed inset-0 z-50 hidden bg-black/95 flex items-center justify-center p-3 cursor-zoom-out">
+    <div class="relative max-w-full max-h-full flex items-center justify-center">
+      <img id="lightbox-img" src="" alt="" class="max-w-[96vw] max-h-[88vh] rounded-lg shadow-2xl object-contain" />
+      <button onclick="closeLightbox()" class="absolute top-2 right-2 w-9 h-9 rounded-full bg-black/70 text-white flex items-center justify-center">
+        ✕
+      </button>
+    </div>
   </div>
 
   <script>
@@ -324,11 +361,11 @@
       const btnDark = document.getElementById('btn-theme-dark');
       const btnLight = document.getElementById('btn-theme-light');
       if (theme === 'light') {
-        btnLight.className = "px-2.5 py-1 rounded-md transition flex items-center gap-1.5 accent-bg";
-        btnDark.className = "px-2.5 py-1 rounded-md transition flex items-center gap-1.5 text-sec hover:opacity-80";
+        btnLight.className = "px-2 sm:px-2.5 py-1 rounded-md transition flex items-center gap-1 accent-bg";
+        btnDark.className = "px-2 sm:px-2.5 py-1 rounded-md transition flex items-center gap-1 text-sec hover:opacity-80";
       } else {
-        btnDark.className = "px-2.5 py-1 rounded-md transition flex items-center gap-1.5 accent-bg";
-        btnLight.className = "px-2.5 py-1 rounded-md transition flex items-center gap-1.5 text-sec hover:opacity-80";
+        btnDark.className = "px-2 sm:px-2.5 py-1 rounded-md transition flex items-center gap-1 accent-bg";
+        btnLight.className = "px-2 sm:px-2.5 py-1 rounded-md transition flex items-center gap-1 text-sec hover:opacity-80";
       }
     }
 
@@ -378,9 +415,11 @@
       document.getElementById('btn-save-sync').classList.toggle('hidden', !EDIT_MODE);
       document.getElementById('hero-view').classList.toggle('hidden', EDIT_MODE);
       document.getElementById('hero-edit').classList.toggle('hidden', !EDIT_MODE);
-      document.getElementById('btn-edit-mode').textContent = EDIT_MODE
-        ? 'Modo Apresentação'
-        : 'Personalizar';
+      
+      const label = document.getElementById('btn-edit-label');
+      if (label) {
+        label.textContent = EDIT_MODE ? 'Ver Leitura' : 'Personalizar';
+      }
       renderAll();
       if (CURRENT_PROJECT_INDEX !== null) {
         renderModalContent();
@@ -397,12 +436,12 @@
       const metrics = STATE.settings.metrics || [];
       const container = document.getElementById('metrics-grid');
       container.innerHTML = metrics.map((m, idx) => `
-        <div class="surface rounded-xl p-4">
-          <div class="text-xs text-sec">${m.label}</div>
+        <div class="surface rounded-xl p-2.5 sm:p-4">
+          <div class="text-[10px] sm:text-xs text-sec truncate">${m.label}</div>
           ${EDIT_MODE ? `
-            <input type="text" value="${m.value}" oninput="STATE.settings.metrics[${idx}].value = this.value" class="mt-1 w-full px-2 py-1 rounded text-sm font-bold" />
+            <input type="text" value="${m.value}" oninput="STATE.settings.metrics[${idx}].value = this.value" class="mt-1 w-full px-2 py-1 rounded text-xs sm:text-sm font-bold" />
           ` : `
-            <div class="text-lg font-bold mt-0.5">${m.value}</div>
+            <div class="text-sm sm:text-lg font-bold mt-0.5 truncate">${m.value}</div>
           `}
         </div>
       `).join('');
@@ -415,7 +454,7 @@
         const active = c === ACTIVE_CAT;
         return `
           <button onclick="ACTIVE_CAT='${c}'; renderCategories(); renderGrid();"
-            class="px-3 py-1.5 rounded-lg text-xs font-medium transition ${active ? 'accent-bg' : 'elevated text-sec hover:opacity-90'}">
+            class="whitespace-nowrap shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium transition ${active ? 'accent-bg' : 'elevated text-sec hover:opacity-90'}">
             ${c}
           </button>
         `;
@@ -426,7 +465,7 @@
       const query = (document.getElementById('search-box')?.value || '').toLowerCase().trim();
       const cols = STATE.settings.columns || 3;
       const grid = document.getElementById('projects-grid');
-      grid.className = `grid grid-cols-1 md:grid-cols-2 ${cols === 2 ? 'lg:grid-cols-2' : 'lg:grid-cols-3'} gap-5`;
+      grid.className = `grid grid-cols-1 md:grid-cols-2 ${cols === 2 ? 'lg:grid-cols-2' : 'lg:grid-cols-3'} gap-4 sm:gap-5`;
 
       const filtered = STATE.projects
         .map((p, index) => ({ p, index }))
@@ -439,12 +478,12 @@
       grid.innerHTML = filtered.map(({ p, index }) => {
         const cover = (p.images && p.images.length > 0) ? p.images[0].url : null;
         return `
-          <article onclick="openModal(${index})" class="surface project-card rounded-2xl overflow-hidden cursor-pointer flex flex-col justify-between">
+          <article onclick="openModal(${index})" class="surface project-card rounded-xl sm:rounded-2xl overflow-hidden cursor-pointer flex flex-col justify-between">
             <div>
               <!-- IMAGE THUMBNAIL -->
               <div class="aspect-video w-full elevated relative overflow-hidden flex items-center justify-center border-b border-subtle">
                 ${cover ? `
-                  <img src="${cover}" alt="${p.title}" class="w-full h-full object-cover object-top" />
+                  <img src="${cover}" alt="${p.title}" loading="lazy" class="w-full h-full object-cover object-top" />
                 ` : `
                   <div class="text-center p-4">
                     <div class="text-xs font-mono text-sec opacity-75">PROJETO ${p.number}</div>
@@ -461,24 +500,24 @@
                 ` : ''}
               </div>
 
-              <!-- CLEAN CARD BODY -->
-              <div class="p-5">
+              <!-- CARD BODY -->
+              <div class="p-4 sm:p-5">
                 <div class="flex items-center justify-between gap-2 text-[11px] text-sec font-mono mb-1.5">
-                  <span>${p.category}</span>
-                  <span class="inline-flex items-center gap-1.5 text-emerald-500 font-medium">
+                  <span class="truncate">${p.category}</span>
+                  <span class="inline-flex items-center gap-1.5 text-emerald-500 font-medium shrink-0">
                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                     Ativo
                   </span>
                 </div>
-                <h3 class="font-bold text-base leading-snug">${p.title}</h3>
+                <h3 class="font-bold text-sm sm:text-base leading-snug">${p.title}</h3>
                 <p class="text-xs text-sec mt-1.5 line-clamp-2 leading-relaxed">${p.subtitle || ''}</p>
               </div>
             </div>
 
-            <!-- CLEAN FOOTER TAGS -->
-            <div class="px-5 pb-4 pt-2 flex flex-wrap gap-1.5">
-              ${(p.tags || []).slice(0, 4).map(t => `
-                <span class="px-2 py-0.5 rounded elevated text-[11px] font-mono text-sec">${t}</span>
+            <!-- FOOTER TAGS -->
+            <div class="px-4 sm:px-5 pb-3.5 sm:pb-4 pt-1 flex flex-wrap gap-1.5">
+              ${(p.tags || []).slice(0, 3).map(t => `
+                <span class="px-2 py-0.5 rounded elevated text-[10px] sm:text-[11px] font-mono text-sec truncate max-w-[150px]">${t}</span>
               `).join('')}
             </div>
           </article>
@@ -490,11 +529,13 @@
       CURRENT_PROJECT_INDEX = index;
       ACTIVE_IMG_INDEX = 0;
       document.getElementById('project-modal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden'; // Prevents body scroll when modal is open
       renderModalContent();
     }
 
     function closeModal() {
       document.getElementById('project-modal').classList.add('hidden');
+      document.body.style.overflow = '';
       CURRENT_PROJECT_INDEX = null;
       renderGrid();
     }
@@ -513,46 +554,44 @@
       document.getElementById('modal-num').textContent = p.number;
       document.getElementById('modal-cat').textContent = p.category;
       document.getElementById('modal-footer').classList.toggle('hidden', !EDIT_MODE);
-      document.getElementById('btn-modal-edit').textContent = EDIT_MODE
-        ? 'Modo Leitura'
-        : 'Editar Blocos & Imagens';
+      document.getElementById('btn-modal-edit').textContent = EDIT_MODE ? 'Ver Leitura' : 'Editar';
 
       const body = document.getElementById('modal-body');
 
       if (!EDIT_MODE) {
-        // CLEAN PRESENTATION VIEW
+        // PRESENTATION VIEW
         const imgs = p.images || [];
         const activeImg = imgs[ACTIVE_IMG_INDEX] || null;
 
         body.innerHTML = `
           <div>
-            <h2 class="text-2xl font-bold">${p.title}</h2>
-            <p class="text-sm text-sec mt-1.5 leading-relaxed">${p.subtitle || ''}</p>
-            <div class="flex flex-wrap items-center gap-2 mt-3 text-xs font-mono">
-              <span class="px-2.5 py-1 rounded elevated text-emerald-500 font-medium">${p.status}</span>
-              ${p.path ? `<span class="px-2.5 py-1 rounded elevated text-sec">${p.path}</span>` : ''}
+            <h2 class="text-xl sm:text-2xl font-bold leading-tight">${p.title}</h2>
+            <p class="text-xs sm:text-sm text-sec mt-1.5 leading-relaxed">${p.subtitle || ''}</p>
+            <div class="flex flex-wrap items-center gap-2 mt-2.5 text-xs font-mono">
+              <span class="px-2 py-0.5 rounded elevated text-emerald-500 font-medium">${p.status}</span>
+              ${p.path ? `<span class="px-2 py-0.5 rounded elevated text-sec truncate max-w-full">${p.path}</span>` : ''}
             </div>
-            <div class="flex flex-wrap gap-1.5 mt-3">
-              ${(p.tags || []).map(t => `<span class="px-2.5 py-1 rounded elevated text-xs font-mono">${t}</span>`).join('')}
+            <div class="flex flex-wrap gap-1.5 mt-2.5">
+              ${(p.tags || []).map(t => `<span class="px-2 py-0.5 rounded elevated text-[11px] font-mono text-sec">${t}</span>`).join('')}
             </div>
           </div>
 
-          <!-- IMAGE GALLERY -->
+          <!-- IMAGE GALLERY WITH TOUCH SWIPE -->
           ${imgs.length > 0 ? `
-            <div class="space-y-3">
+            <div class="space-y-2.5">
               <div class="rounded-xl overflow-hidden elevated border border-subtle">
                 <img src="${activeImg.url}" onclick="openLightbox('${activeImg.url}')"
-                  class="w-full max-h-[420px] object-contain mx-auto cursor-zoom-in bg-black/20" />
-                <div class="px-4 py-2.5 text-xs text-sec border-t border-subtle flex items-center justify-between">
-                  <span>${activeImg.caption || p.title}</span>
-                  <span class="font-mono text-[11px]">Clique para ampliar</span>
+                  class="w-full max-h-[35vh] sm:max-h-[420px] object-contain mx-auto cursor-zoom-in bg-black/20" />
+                <div class="px-3 sm:px-4 py-2 text-xs text-sec border-t border-subtle flex items-center justify-between gap-2">
+                  <span class="truncate font-medium">${activeImg.caption || p.title}</span>
+                  <span class="font-mono text-[10px] sm:text-[11px] shrink-0 text-sec">Toque para zoom</span>
                 </div>
               </div>
               ${imgs.length > 1 ? `
-                <div class="flex gap-2 overflow-x-auto pb-1">
+                <div class="flex gap-2 overflow-x-auto no-scrollbar pb-1 snap-x snap-mandatory">
                   ${imgs.map((img, i) => `
                     <img src="${img.url}" onclick="ACTIVE_IMG_INDEX=${i}; renderModalContent();"
-                      class="h-16 w-28 object-cover rounded-lg cursor-pointer border-2 transition ${i === ACTIVE_IMG_INDEX ? 'border-indigo-500 opacity-100' : 'border-transparent opacity-60 hover:opacity-100'}" />
+                      class="h-14 sm:h-16 w-24 sm:w-28 shrink-0 object-cover rounded-lg cursor-pointer border-2 transition snap-start ${i === ACTIVE_IMG_INDEX ? 'border-indigo-500 opacity-100' : 'border-transparent opacity-60 hover:opacity-100'}" />
                   `).join('')}
                 </div>
               ` : ''}
@@ -560,21 +599,21 @@
           ` : ''}
 
           <!-- CONTENT BLOCKS -->
-          <div class="grid grid-cols-1 gap-4">
+          <div class="grid grid-cols-1 gap-3 sm:gap-4">
             ${(p.blocks || []).map(b => `
-              <div class="elevated rounded-xl p-5">
+              <div class="elevated rounded-xl p-4 sm:p-5">
                 <h4 class="text-xs font-bold accent-text uppercase tracking-wider font-mono mb-2">${b.title}</h4>
-                <div class="text-sm leading-relaxed whitespace-pre-line">${b.content}</div>
+                <div class="text-xs sm:text-sm leading-relaxed whitespace-pre-line text-slate-200 dark:text-slate-200">${b.content}</div>
               </div>
             `).join('')}
           </div>
         `;
       } else {
-        // FULL VISUAL EDITOR VIEW
+        // FULL VISUAL EDITOR VIEW (TOUCH FRIENDLY)
         const imgs = p.images || [];
         body.innerHTML = `
           <!-- METADATA EDITOR -->
-          <div class="elevated rounded-xl p-4 space-y-3">
+          <div class="elevated rounded-xl p-3.5 sm:p-4 space-y-3">
             <div class="text-xs font-mono uppercase accent-text font-semibold">1. Dados Principais do Projeto</div>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div class="sm:col-span-2">
@@ -609,33 +648,37 @@
           </div>
 
           <!-- IMAGE UPLOADER & GALLERY MANAGER -->
-          <div class="elevated rounded-xl p-4 space-y-3">
-            <div class="flex items-center justify-between">
-              <div class="text-xs font-mono uppercase accent-text font-semibold">2. Prints & Imagens do Projeto (Upload ou Ctrl+V)</div>
-              <label class="px-3 py-1.5 rounded-lg accent-bg text-xs font-semibold cursor-pointer">
+          <div class="elevated rounded-xl p-3.5 sm:p-4 space-y-3">
+            <div class="flex items-center justify-between gap-2">
+              <div class="text-xs font-mono uppercase accent-text font-semibold">2. Prints & Imagens</div>
+              <label class="px-3 py-1.5 rounded-lg accent-bg text-xs font-semibold cursor-pointer shrink-0">
                 + Subir Imagem
                 <input type="file" accept="image/*" multiple onchange="handleFileSelect(event)" class="hidden" />
               </label>
             </div>
 
             ${imgs.length === 0 ? `
-              <div class="text-xs text-sec py-6 text-center border border-dashed border-subtle rounded-lg">
-                Nenhuma imagem neste projeto. Clique em "+ Subir Imagem" ou pressione <strong>Ctrl+V</strong> para colar um print da área de transferência.
+              <div class="text-xs text-sec py-4 text-center border border-dashed border-subtle rounded-lg">
+                Nenhuma imagem. Clique em "+ Subir Imagem" ou cole com Ctrl+V.
               </div>
             ` : `
-              <div class="space-y-2.5">
+              <div class="space-y-2">
                 ${imgs.map((img, i) => `
-                  <div class="surface rounded-lg p-2.5 flex items-center gap-3">
-                    <img src="${img.url}" class="w-20 h-12 object-cover rounded border border-subtle shrink-0" />
-                    <input type="text" value="${img.caption || ''}" placeholder="Legenda da imagem..."
-                      oninput="STATE.projects[${CURRENT_PROJECT_INDEX}].images[${i}].caption = this.value"
-                      class="flex-1 px-2.5 py-1.5 rounded text-xs" />
-                    <button onclick="setAsCover(${i})" class="px-2.5 py-1 rounded elevated text-[11px] font-mono hover:opacity-80">
-                      ${i === 0 ? 'Capa Principal' : 'Definir Capa'}
-                    </button>
-                    <button onclick="removeImage(${i})" class="px-2.5 py-1 rounded elevated text-rose-500 text-xs hover:opacity-80">
-                      Remover
-                    </button>
+                  <div class="surface rounded-lg p-2 flex flex-col sm:flex-row sm:items-center gap-2">
+                    <div class="flex items-center gap-2.5 flex-1 min-w-0">
+                      <img src="${img.url}" class="w-16 h-10 object-cover rounded border border-subtle shrink-0" />
+                      <input type="text" value="${img.caption || ''}" placeholder="Legenda..."
+                        oninput="STATE.projects[${CURRENT_PROJECT_INDEX}].images[${i}].caption = this.value"
+                        class="flex-1 px-2.5 py-1.5 rounded text-xs min-w-0" />
+                    </div>
+                    <div class="flex items-center justify-end gap-1.5 shrink-0">
+                      <button onclick="setAsCover(${i})" class="px-2 py-1 rounded elevated text-[11px] font-mono hover:opacity-80">
+                        ${i === 0 ? '★ Capa' : 'Definir Capa'}
+                      </button>
+                      <button onclick="removeImage(${i})" class="px-2 py-1 rounded elevated text-rose-500 text-xs hover:opacity-80">
+                        Excluir
+                      </button>
+                    </div>
                   </div>
                 `).join('')}
               </div>
@@ -643,25 +686,25 @@
           </div>
 
           <!-- CONTENT BLOCKS EDITOR -->
-          <div class="elevated rounded-xl p-4 space-y-3">
+          <div class="elevated rounded-xl p-3.5 sm:p-4 space-y-3">
             <div class="flex items-center justify-between">
-              <div class="text-xs font-mono uppercase accent-text font-semibold">3. Blocos de Documentação do Projeto</div>
-              <button onclick="addBlock()" class="px-3 py-1.5 rounded-lg surface text-xs font-semibold hover:opacity-90">
-                + Adicionar Bloco
+              <div class="text-xs font-mono uppercase accent-text font-semibold">3. Blocos de Conteúdo</div>
+              <button onclick="addBlock()" class="px-2.5 py-1.5 rounded-lg surface text-xs font-semibold hover:opacity-90">
+                + Bloco
               </button>
             </div>
 
             <div class="space-y-3">
               ${(p.blocks || []).map((b, bIdx) => `
-                <div class="surface rounded-xl p-3.5 space-y-2">
+                <div class="surface rounded-xl p-3 space-y-2">
                   <div class="flex items-center justify-between gap-2">
                     <input type="text" value="${b.title}" placeholder="Título do Bloco"
                       oninput="STATE.projects[${CURRENT_PROJECT_INDEX}].blocks[${bIdx}].title = this.value"
-                      class="flex-1 px-3 py-1.5 rounded text-xs font-bold font-mono" />
+                      class="flex-1 px-2.5 py-1.5 rounded text-xs font-bold font-mono" />
                     <div class="flex items-center gap-1 font-mono">
-                      <button onclick="moveBlock(${bIdx}, -1)" class="px-2 py-1 rounded elevated text-xs">Subir</button>
-                      <button onclick="moveBlock(${bIdx}, 1)" class="px-2 py-1 rounded elevated text-xs">Descer</button>
-                      <button onclick="removeBlock(${bIdx})" class="px-2 py-1 rounded elevated text-rose-500 text-xs">Excluir</button>
+                      <button onclick="moveBlock(${bIdx}, -1)" class="px-2 py-1 rounded elevated text-xs">↑</button>
+                      <button onclick="moveBlock(${bIdx}, 1)" class="px-2 py-1 rounded elevated text-xs">↓</button>
+                      <button onclick="removeBlock(${bIdx})" class="px-2 py-1 rounded elevated text-rose-500 text-xs">✕</button>
                     </div>
                   </div>
                   <textarea rows="4"
@@ -782,16 +825,16 @@
       STATE.projects.push({
         id: `projeto-${Date.now()}`,
         number: num,
-        category: "SaaS & Produtos Web",
-        title: "Novo Projeto com IA",
-        subtitle: "Clique para editar o resumo, blocos e adicionar prints deste projeto.",
+        category: "Automação, 3D & Infra SRE",
+        title: "Novo Projeto",
+        subtitle: "Clique para editar os detalhes e adicionar imagens.",
         status: "Em Produção",
-        path: "/home/tiago2609/Projetos/...",
-        tags: ["Python", "IA Generativa"],
+        path: "/home/tiago2609/...",
+        tags: ["Docker", "Linux"],
         images: [],
         blocks: [
           { title: "Problema & Visão", content: "Descreva o objetivo do projeto..." },
-          { title: "Arquitetura & Orquestração de IA", content: "Descreva a stack e o papel dos agentes..." }
+          { title: "Arquitetura & Engenharia", content: "Descreva a stack e a infraestrutura..." }
         ]
       });
       renderAll();
@@ -824,10 +867,14 @@
     function openLightbox(url) {
       document.getElementById('lightbox-img').src = url;
       document.getElementById('lightbox').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
     }
 
     function closeLightbox() {
       document.getElementById('lightbox').classList.add('hidden');
+      if (CURRENT_PROJECT_INDEX === null) {
+        document.body.style.overflow = '';
+      }
     }
 
     loadData();
