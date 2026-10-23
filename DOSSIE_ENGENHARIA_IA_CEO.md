@@ -24,7 +24,7 @@
 | **02** | **Painel Pedagógico — Maria do Carmo** | SaaS & Produtos Web | `FastAPI, Gemini 2.5 Flash, Structured Outputs, SQLite WAL` | Produção (:8002) |
 | **03** | **Gestão Financeira Autônoma PF/PJ** | SaaS & Produtos Web | `TypeScript, Clean Arch & DDD, Prisma + PG 16, React 19` | Produção (:8085 / DB :5434) |
 | **06** | **Antigravity Telegram Bridge (agy-telegram)** | Agentes, Memória & AIOps | `Python 3.12, Telegram API, Antigravity CLI, systemd` | Daemon Ativo (agy-bot.service) |
-| **07** | **Servidor Grafana** | Agentes, Memória & AIOps | `FastMCP, Model Context Protocol, Python 3.12 Async, LiteLLM` | Estruturado em ai-ops/ |
+| **07** | **Servidor Grafana — Observabilidade & Telemetria** | Automação, 3D & Infra SRE | `Grafana (:3000), Prometheus TSDB (:9090), Uptime Kuma (:3001), cAdvisor & Node Exporter` | Produção 24/7 (:3000 / :9090 / :3001) |
 | **08** | **Bots de monitoração (Discord & Telegram)** | Agentes, Memória & AIOps | `Python 3.12, discord.py, Docker SDK, psutil` | Daemons Ativos 24/7 |
 | **09** | **Automação Trello IA & ERP de Ambientes** | Automação, 3D & Infra SRE | `Python, Gemini 3.1 Flash Lite, Trello REST API, Rollback Transacional` | Rotinas & API (:8088) Ativas |
 | **10** | **Bot de Estudos Microsoft Learn** | Automação, 3D & Infra SRE | `Python, Telegram Quiz Polls, Inline Keyboards, AZ-900 / SC-900 / MS-900` | Base & Bot Estruturados |
@@ -104,7 +104,7 @@ Plataforma comercial Digital Out-Of-Home (DOOH) projetada para tablets Android i
 
 Desenvolvido sob medida para a coordenadora escolar Maria do Carmo avaliar dezenas de relatórios pedagógicos individuais enviados pelos professores em arquivos .docx, .pdf e .zip.
 
-Substitui horas de revisão manual por uma fila automatizada que classifica cada relatório em Semáforo (🟢 Aprovado, 🟡 Dúvida, 🔴 Incorreto) e já entrega a devolutiva pronta no formato 'De ➡️ Para'.
+Substitui horas de revisão manual por uma fila automatizada que classifica cada relatório em três níveis (Aprovado, Dúvida, Incorreto) e já entrega a devolutiva pronta no formato 'De -> Para'.
 
 ### Arquitetura & Motor Cognitivo
 
@@ -183,35 +183,41 @@ Permite administrar projetos, corrigir bugs e disparar tarefas complexas de enge
 
 ---
 
-## 07. Servidor Grafana
+## 07. Servidor Grafana — Observabilidade & Telemetria
 
-**Resumo:** Ambiente de monitoração utilizando Grafana, Prometheus e Kuma
+**Resumo:** Central de monitoramento contínuo em tempo real integrando Grafana, Prometheus TSDB, Uptime Kuma e exportadores dedicados.
 
-- **Categoria:** `Agentes, Memória & AIOps`
-- **Status:** `Estruturado em ai-ops/`
-- **Caminho no Servidor:** `/home/tiago2609/homelab-aiops-portfolio/ai-ops`
-- **Tecnologias:** `FastMCP` • `Model Context Protocol` • `Python 3.12 Async` • `LiteLLM` • `Open-WebUI`
+- **Categoria:** `Automação, 3D & Infra SRE`
+- **Status:** `Produção 24/7 (:3000 / :9090 / :3001)`
+- **Caminho no Servidor:** `/home/tiago2609/monitoring`
+- **Tecnologias:** `Grafana (:3000)` • `Prometheus TSDB (:9090)` • `Uptime Kuma (:3001)` • `cAdvisor & Node Exporter` • `mc-monitor (PaperMC)`
 
 ### Galeria & Evidências Visuais
 
-#### Grafana Docker
-![Grafana Docker](assets/1792768088-Grafana-Docker.png)
+#### Dashboard Grafana Docker (cAdvisor) — Consumo de CPU, RAM e Rede por Container
+![Dashboard Grafana Docker (cAdvisor) — Consumo de CPU, RAM e Rede por Container](assets/1792768088-Grafana-Docker.png)
 
-#### Grafana Mine
-![Grafana Mine](assets/1792768089-Grafana-Mine.png)
+#### Dashboard Grafana PaperMC (mc-monitor) — TPS, Jogadores Online e Memória JVM
+![Dashboard Grafana PaperMC (mc-monitor) — TPS, Jogadores Online e Memória JVM](assets/1792768089-Grafana-Mine.png)
 
-#### Grafana Server
-![Grafana Server](assets/1792768089-Grafana-Server.png)
+#### Dashboard Grafana Host Linux (Node Exporter) — Telemetria de Hardware, Disco e Carga
+![Dashboard Grafana Host Linux (Node Exporter) — Telemetria de Hardware, Disco e Carga](assets/1792768089-Grafana-Server.png)
 
-### Problema & Visão AIOps
+### Problema & Visão de Observabilidade (NOC / SRE)
 
-Permite que agentes de IA inspecionem a saúde real da infraestrutura (métricas PromQL, containers degradados e logs) através do protocolo padronizado MCP da Anthropic, atuando como engenheiros SRE.
+Garantir visibilidade total e preventiva sobre a saúde física do servidor e de todos os serviços hospedados 24/7, antecipando gargalos de CPU, memória, I/O de disco ou degradação de aplicações antes que afetem os usuários finais.
 
-### Arquitetura & Segurança
+### Arquitetura de Coleta & Dashboards Especializados
 
-• Servidor FastMCP (mcp_homelab_server.py) expondo tools assíncronas via stdio e SSE;
-• LiteLLM AI Gateway (:4000) unificando roteamento de modelos locais e em nuvem com Open-WebUI (:3002);
-• Design Read-Only nas ferramentas de diagnóstico para garantir investigações de causa-raiz (RCA) 100% seguras.
+- Prometheus TSDB (:9090): coleta séries temporais a cada 15 segundos em 9 jobs de scrape simultâneos;
+- Monitoramento de Containers (cAdvisor :8082): painel dedicado no Grafana rastreando o isolamento de recursos de cada um dos 26 containers Docker;
+- Monitoramento de Aplicação Game Server (mc-monitor): telemetria em tempo real do servidor PaperMC (taxa de ticks por segundo - TPS, latência e heap Java);
+- Monitoramento de Host e Disponibilidade: métricas de kernel/hardware via Node Exporter (:9100) combinadas com sondas sintéticas HTTP/TCP no Blackbox Exporter (:9115) e Uptime Kuma (:3001).
+
+### Orquestração de Agentes de IA
+
+- Co-engenharia das queries PromQL, provisionamento declarativo dos dashboards JSON no Grafana e integração de novos exportadores (como o mc-monitor e plex-exporter) assistida por agentes;
+- Inspeção automatizada das métricas do Prometheus pelos agentes para diagnóstico rápido de causa-raiz (RCA).
 
 ---
 
@@ -258,7 +264,7 @@ Combina duas frentes de produtividade sobre a API do Trello:
 
 ### Engenharia de Confiabilidade & Rollback
 
-• Gatilho estrito por etiquetas respeitando travas '🚫 Sem IA' e '🤖 Analisado';
+• Gatilho estrito por etiquetas respeitando travas de exclusão ('Sem IA' e 'Analisado');
 • Snapshot automático pré-mutação em backups_trello_ia/ e histórico auditável (trello_ia_history.json);
 • Script dedicado de reversão transacional (rollback_ia_desejos.py) e automação de capas (auto_cover_filmes.py).
 
