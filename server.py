@@ -19,6 +19,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ASSETS_DIR = os.path.join(BASE_DIR, "assets")
 DATA_FILE = os.path.join(BASE_DIR, "projects_data.json")
 PORT = int(os.getenv("PORT", "8089"))
+SECURITY_PIN = os.getenv("PORTFOLIO_PIN", "2609")
 
 os.makedirs(ASSETS_DIR, exist_ok=True)
 
