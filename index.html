@@ -419,7 +419,9 @@
       STATE.settings.theme = themeName;
       localStorage.setItem('portfolio_theme', themeName);
       applySettings();
-      saveAll(false);
+      if (EDIT_MODE && hasValidAuth()) {
+        saveAll(false);
+      }
     }
 
     function updateThemeButtonsUI(theme) {
