@@ -28,6 +28,7 @@
 | **08** | **Bots de monitoração (Discord & Telegram)** | Agentes, Memória & AIOps | `Python 3.12, discord.py, Docker SDK, psutil` | Daemons Ativos 24/7 |
 | **09** | **Automação Trello IA & ERP de Ambientes** | Automação, 3D & Infra SRE | `Python, Gemini 3.1 Flash Lite, Trello REST API, Rollback Transacional` | Rotinas & API (:8088) Ativas |
 | **10** | **Bot de Estudos Microsoft Learn** | Automação, 3D & Infra SRE | `Python, Telegram Quiz Polls, Inline Keyboards, AZ-900 / SC-900 / MS-900` | Base & Bot Estruturados |
+| **09** | **HomeAssistant** | SaaS & Produtos Web | `Python, IA Generativa` | Em Produção |
 
 ---
 
@@ -302,5 +303,35 @@ Transforma o estudo para 5 certificações Microsoft (AZ-900, SC-900, MS-900, MS
 • 16 módulos divididos em 4 fases progressivas (Nuvem Base ➔ Identidades/Entra ID ➔ Governança M365 ➔ Colaboração & Endpoints);
 • Quizzes nativos do Telegram (type='quiz') com correção instantânea e explicação técnica detalhada;
 • Curadoria de conteúdo e estruturação de código realizadas em parceria com agentes de IA.
+
+---
+
+## 09. HomeAssistant
+
+**Resumo:** Clique para editar o resumo, blocos e adicionar prints deste projeto.
+
+- **Categoria:** `SaaS & Produtos Web`
+- **Status:** `Em Produção`
+- **Caminho no Servidor:** `/home/tiago2609/Projetos/...`
+- **Tecnologias:** `Python` • `IA Generativa`
+
+### Galeria & Evidências Visuais
+
+#### homeassistant administrador
+![homeassistant administrador](assets/1792769292-homeassistant-administrador.png)
+
+#### homeassistant mobile
+![homeassistant mobile](assets/1792769295-homeassistant-mobile.png)
+
+#### homeassistant mobile 2
+![homeassistant mobile 2](assets/1792769297-homeassistant-mobile-2.png)
+
+### Problema & Visão
+
+Descreva o objetivo do projeto...
+
+### Arquitetura & Orquestração de IA
+
+Descreva a stack e o papel dos agentes...
 
 ---
