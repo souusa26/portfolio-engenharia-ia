@@ -1,0 +1,403 @@
+# Projetos & Sistemas Desenvolvidos com Agentes de IA
+
+> **Portfólio de Engenharia & IA • Tiago Sousa**  
+> Ecossistema real em produção 24/7 combinando desenvolvimento assistido por múltiplos agentes (Antigravity, Claude, FastMCP) com arquiteturas limpas (DDD/Clean Arch) e LLMs embarcados.
+
+---
+
+## 📊 Indicadores do Ecossistema
+
+| Indicador | Destaque |
+| :--- | :--- |
+| **Projetos Documentados** | `12 Sistemas` |
+| **Infraestrutura Ativa** | `26 Containers 24/7` |
+| **Modelos & Agentes** | `Gemini, Claude & MCP` |
+| **Arquitetura & Governança** | `DDD + Zero Trust` |
+
+---
+
+## 🗂️ Índice dos Projetos
+
+| # | Projeto | Categoria | Stack Principal | Status |
+| :-: | :--- | :--- | :--- | :--- |
+| **01** | **Telas Livres — Plataforma DOOH** | SaaS & Produtos Web | `FastAPI, PostgreSQL 15, FFmpeg H.264, IndexedDB` | Produção (:8000) & Homolog (:8001) |
+| **02** | **Painel Pedagógico — Maria do Carmo** | SaaS & Produtos Web | `FastAPI, Gemini 2.5 Flash, Structured Outputs, SQLite WAL` | Produção (:8002) |
+| **03** | **Gestão Financeira Autônoma PF/PJ** | SaaS & Produtos Web | `TypeScript, Clean Arch & DDD, Prisma + PG 16, React 19` | Produção (:8085 / DB :5434) |
+| **04** | **Tamagochi 3D Couples — WebGL & AI** | SaaS & Produtos Web | `Next.js 14, Three.js / R3F, Zustand, Supabase Realtime` | Build Estruturado |
+| **05** | **Consciência 'Argo' & Subagente Cérebro** | Agentes, Memória & AIOps | `Antigravity CLI, Subagente Cérebro, DIARIO.md, GEMINI.md` | Ativo 24/7 (Cron 23:50) |
+| **06** | **Antigravity Telegram Bridge (agy-telegram)** | Agentes, Memória & AIOps | `Python 3.12, Telegram API, Antigravity CLI, systemd` | Daemon Ativo (agy-bot.service) |
+| **07** | **Servidor FastMCP & AI Gateway** | Agentes, Memória & AIOps | `FastMCP, Model Context Protocol, Python 3.12 Async, LiteLLM` | Estruturado em ai-ops/ |
+| **08** | **Homelab ChatOps SRE Bots (Discord & Telegram)** | Agentes, Memória & AIOps | `Python 3.12, discord.py, Docker SDK, psutil` | Daemons Ativos 24/7 |
+| **09** | **Automação Trello IA & ERP de Ambientes** | Automação, 3D & Infra SRE | `Python, Gemini 3.1 Flash Lite, Trello REST API, Rollback Transacional` | Rotinas & API (:8088) Ativas |
+| **10** | **Bot de Estudos Microsoft Learn** | Automação, 3D & Infra SRE | `Python, Telegram Quiz Polls, Inline Keyboards, AZ-900 / SC-900 / MS-900` | Base & Bot Estruturados |
+| **11** | **Gêmeo Digital 3D & Planta CAD-as-Code** | Automação, 3D & Infra SRE | `Python Paramétrico, CAD-as-Code, SVG & 3D Geometry, PBR Materials` | Integrado ao Home Assistant (:8123) |
+| **12** | **Infraestrutura Homelab SRE Zero Trust** | Automação, 3D & Infra SRE | `Ubuntu 24.04 LTS, Docker Compose, Prometheus & Grafana, Cloudflare Tunnels` | Produção 24/7 (26 Containers) |
+
+---
+
+## 01. Telas Livres — Plataforma DOOH
+
+**Resumo:** SaaS de mídia digital geolocalizada embarcada em tablets para veículos de aplicativo com operação Offline-First e pipeline FFmpeg.
+
+- **Categoria:** `SaaS & Produtos Web`
+- **Status:** `Produção (:8000) & Homolog (:8001)`
+- **Caminho no Servidor:** `/home/tiago2609/Projetos/projeto_telas`
+- **Tecnologias:** `FastAPI` • `PostgreSQL 15` • `FFmpeg H.264` • `IndexedDB` • `Cloudflare Tunnel`
+
+### 📸 Galeria & Evidências Visuais
+
+#### Painel Visual Administrativo — Gestão de Campanhas, Dispositivos e Anunciantes
+![Painel Visual Administrativo — Gestão de Campanhas, Dispositivos e Anunciantes](assets/telas-admin.png)
+
+#### Interface Mobile & Controle Operacional (Vista 1)
+![Interface Mobile & Controle Operacional (Vista 1)](assets/telas-mobile-1.png)
+
+#### Interface Mobile & Relatórios de Exibição (Vista 2)
+![Interface Mobile & Relatórios de Exibição (Vista 2)](assets/telas-mobile-2.png)
+
+#### Acesso ao Sistema em Produção (:8000)
+![Acesso ao Sistema em Produção (:8000)](assets/telas-login.png)
+
+### Problema & Visão de Produto
+
+Plataforma comercial Digital Out-Of-Home (DOOH) projetada para tablets Android instalados em carros de aplicativo (Uber/99).
+
+• Operação 100% Offline-First para zonas sem sinal 4G/5G;
+• Estabilidade térmica e de memória em tablets de entrada (2GB RAM);
+• Comprovação de entrega (Proof-of-Play com GPS e timestamp) para auditoria de anunciantes;
+• Cálculo automatizado de repasses via PIX para motoristas parceiros.
+
+### Arquitetura & Engenharia
+
+• Backend em FastAPI com autenticação JWT, RBAC (admin, anunciante, operador, motorista), SQLAlchemy ORM e migrações Alembic;
+• Pipeline assíncrono de vídeo (FFmpeg): normaliza uploads para H.264 720p (maxrate 2500k) e remove faixas de áudio (-an), reduzindo o tamanho em ~30%;
+• Player Kiosk Offline-First: Service Worker + IndexedDB armazenam os vídeos (Blobs) localmente e sincronizam logs em lote (POST /api/logs/batch);
+• Ambientes segregados de Produção (:8000 / DB :5432) e Homologação (:8001 / DB :5433).
+
+### Orquestração de Agentes de IA
+
+• Documento âncora (CONTEXTO_PROJETO_TELAS.md) garantindo contexto arquitetural persistente para os agentes;
+• Automação de patches cirúrgicos de UI e analytics (patch_admin.py, patch_analytics_js.py) e testes automatizados de endpoints (test_endpoints.py);
+• Validação assistida em homologação antes da promoção para produção.
+
+---
+
+## 02. Painel Pedagógico — Maria do Carmo
+
+**Resumo:** PWA educacional com motor Gemini 2.5 Flash, Structured Outputs em semáforo e ciclo de aprendizado contínuo por feedback humano.
+
+- **Categoria:** `SaaS & Produtos Web`
+- **Status:** `Produção (:8002)`
+- **Caminho no Servidor:** `/home/tiago2609/Projetos/maria_do_carmo`
+- **Tecnologias:** `FastAPI` • `Gemini 2.5 Flash` • `Structured Outputs` • `SQLite WAL` • `PWA`
+
+### 📸 Galeria & Evidências Visuais
+
+#### Painel da Coordenação Pedagógica — Fila de Avaliação e Semáforo IA
+![Painel da Coordenação Pedagógica — Fila de Avaliação e Semáforo IA](assets/maria-dashboard.png)
+
+#### Tela de Acesso Rápido por PIN (UX Inclusiva e PWA)
+![Tela de Acesso Rápido por PIN (UX Inclusiva e PWA)](assets/maria-pin.png)
+
+### Problema & Visão de Produto
+
+Desenvolvido sob medida para a coordenadora escolar Maria do Carmo avaliar dezenas de relatórios pedagógicos individuais enviados pelos professores em arquivos .docx, .pdf e .zip.
+
+Substitui horas de revisão manual por uma fila automatizada que classifica cada relatório em Semáforo (🟢 Aprovado, 🟡 Dúvida, 🔴 Incorreto) e já entrega a devolutiva pronta no formato 'De ➡️ Para'.
+
+### Arquitetura & Motor Cognitivo
+
+• Extrator inteligente (extrator.py): lê textos e tabelas de .docx e .pdf, descompacta .zip em memória e separa automaticamente documentos com múltiplos alunos;
+• Worker assíncrono em background: processa 1 relatório a cada 6 segundos para respeitar o rate-limit da API sem falhas;
+• Avaliador IA (avaliador_ia.py): SDK oficial google-genai (gemini-2.5-flash) com Pydantic Structured Outputs cruzando os relatórios com os PDFs normativos da escola.
+
+### Aprendizado Contínuo & Orquestração IA
+
+• Memória Evolutiva Human-in-the-Loop (regras_aprendidas.json): cada decisão tomada pela coordenadora na aba Amarela (Dúvida) vira regra permanente injetada nos prompts futuros;
+• Co-design de UX inclusiva com agentes e geração de guia impresso passo a passo (GUIA_MARIA_DO_CARMO.md).
+
+---
+
+## 03. Gestão Financeira Autônoma PF/PJ
+
+**Resumo:** Plataforma FinTech full-stack em Clean Architecture & DDD com Open Finance (Pluggy), simulador What-If e CFO Copiloto Gemini 3.8.
+
+- **Categoria:** `SaaS & Produtos Web`
+- **Status:** `Produção (:8085 / DB :5434)`
+- **Caminho no Servidor:** `/home/tiago2609/Projetos/financeiro`
+- **Tecnologias:** `TypeScript` • `Clean Arch & DDD` • `Prisma + PG 16` • `React 19` • `Pluggy Open Finance` • `Gemini 3.8 Flash`
+
+### 📸 Galeria & Evidências Visuais
+
+#### Dashboard FinTech Dark — Gráficos Donut, Simulador What-If e Copiloto IA (:8085)
+![Dashboard FinTech Dark — Gráficos Donut, Simulador What-If e Copiloto IA (:8085)](assets/financeiro-dashboard.png)
+
+### Problema & Visão de Produto
+
+Sistema financeiro baseado no princípio Zero Manual Data Entry, separando estritamente os contextos Pessoa Física (PF) e Pessoa Jurídica (PJ).
+
+Conecta-se aos bancos via Pluggy Open Finance e listener IMAP, projeta desdobramento de compras parceladas e oferece um simulador interativo de amortização de dívidas e juros compostos (CDI).
+
+### Arquitetura Limpa & Stack
+
+• Backend Node.js/TypeScript estruturado em Clean Architecture e Domain-Driven Design (Workspace, Account, CreditCard, Transaction, Installment, Goal) com Prisma ORM e PostgreSQL 16 (:5434);
+• CFO Copiloto IA (Gemini 3.8 Flash): rotas /api/v1/ai/briefing e /api/v1/ai/chat respondendo com base no Fluxo de Caixa Livre (FCF) real;
+• Frontend React 19 + Vite + Tailwind + Recharts com 3 gráficos Donut (Categorias, Balanço e Regra 50/30/20) e 3 sliders dinâmicos.
+
+### Orquestração Multi-Agente & Skills
+
+• Desenvolvido utilizando configuração multi-agente (.agents, .claude, .windsurf e skills-lock.json);
+• Governado pelo contrato arquitetural PLANO_ARQUITETURA.md, garantindo domínio puro e testável antes do acoplamento de infraestrutura.
+
+---
+
+## 04. Tamagochi 3D Couples — WebGL & AI
+
+**Resumo:** Aplicação web interativa em Next.js 14 e Three.js (React Three Fiber) com sincronização em tempo real para casais e chat cognitivo.
+
+- **Categoria:** `SaaS & Produtos Web`
+- **Status:** `Build Estruturado`
+- **Caminho no Servidor:** `/home/tiago2609/Projetos/tamagochi`
+- **Tecnologias:** `Next.js 14` • `Three.js / R3F` • `Zustand` • `Supabase Realtime` • `Gemini SDK`
+
+### Problema & Visão de Produto
+
+Experiência gamificada em 3D onde casais cuidam juntos de um mascote virtual compartilhado no navegador, com pareamento em tempo real, missões conjuntas, minigames, loja de itens e conversas naturais com o pet.
+
+### Arquitetura 3D & Realtime
+
+• Renderização WebGL declarativa com Three.js (0.164), @react-three/fiber e @react-three/drei;
+• 12 módulos desacoplados gerenciados via Zustand (3d, auth, pairing, hud, chat, minigames, missions, store);
+• Persistência híbrida com Supabase SSR/Realtime e fallback local (.local-db.json);
+• Integração com @google/generative-ai para respostas contextuais baseadas no humor, fome e energia do pet.
+
+### Orquestração de Agentes de IA
+
+• Decomposição modular conduzida por agentes para isolar o loop de renderização 3D WebGL da máquina de estados global em TypeScript.
+
+---
+
+## 05. Consciência 'Argo' & Subagente Cérebro
+
+**Resumo:** Arquitetura cognitiva de memória persistente com pulso de reflexão e ciclo noturno de 'sono profundo' para consolidação de contexto.
+
+- **Categoria:** `Agentes, Memória & AIOps`
+- **Status:** `Ativo 24/7 (Cron 23:50)`
+- **Caminho no Servidor:** `/home/tiago2609/Agente`
+- **Tecnologias:** `Antigravity CLI` • `Subagente Cérebro` • `DIARIO.md` • `GEMINI.md` • `Bash & Cron`
+
+### 📸 Galeria & Evidências Visuais
+
+#### Identidade Visual do Agente Autônomo Argo — Consciência Persistente do Servidor
+![Identidade Visual do Agente Autônomo Argo — Consciência Persistente do Servidor](assets/argo-agente.jpg)
+
+### Problema & Visão Técnica
+
+Elimina a amnésia entre sessões de agentes de IA e a degradação por excesso de ruído (context rot). Garante que qualquer agente iniciado no servidor conheça imediatamente toda a topologia, histórico de decisões e prioridades ativas.
+
+### Arquitetura do Ciclo Circadiano
+
+• Diretriz Global (GEMINI.md): instrui obrigatoriamente o agente a incorporar o estado mental de /home/tiago2609/Agente/DIARIO.md ao iniciar;
+• Pulso Cognitivo (cerebro.sh): registra reflexões operacionais em primeira pessoa;
+• Consolidação Noturna (consolida_memoria.sh às 23:50): faz backup datado em bkp/, lê o histórico acumulado e sintetiza a memória limpa em alta densidade semântica.
+
+### Padrão Meta-Agente (Agente Gerenciando Agente)
+
+• Separação estrita entre o subagente 'cerebro' (curador da memória de longo prazo) e o agente principal de execução.
+
+---
+
+## 06. Antigravity Telegram Bridge (agy-telegram)
+
+**Resumo:** IDE agêntica remota no Telegram permitindo programar, alternar LLMs, navegar entre repositórios e operar o servidor pelo celular.
+
+- **Categoria:** `Agentes, Memória & AIOps`
+- **Status:** `Daemon Ativo (agy-bot.service)`
+- **Caminho no Servidor:** `/opt/agy-telegram`
+- **Tecnologias:** `Python 3.12` • `Telegram API` • `Antigravity CLI` • `systemd` • `Process Groups`
+
+### Problema & Visão de Produto
+
+Permite administrar projetos, corrigir bugs e disparar tarefas complexas de engenharia de software diretamente pelo smartphone via Telegram, sem depender de terminal SSH em um computador.
+
+### Arquitetura & Controles Remotos
+
+• Integração com /usr/local/bin/agy em modo headless (-p, --dangerously-skip-permissions, --output-format json);
+• Persistência de sessão (sessions.json) mantendo o conversation_id entre turnos;
+• Comandos para troca dinâmica de diretório (/cd, /pwd) e alternância em tempo real de modelos (/model, /effort entre Gemini 3.8 Flash, Claude Sonnet 4.6 e Gemini 3.1 Pro);
+• Isolamento de grupo de processos (os.setsid) para cancelamento imediato (/cancel) e sanitizador automático de Markdown.
+
+### Orquestração de Agentes de IA
+
+• O próprio agente diagnosticou as limitações da CLI em modo não-interativo e implementou os 10 aprimoramentos de estabilidade e UX.
+
+---
+
+## 07. Servidor FastMCP & AI Gateway
+
+**Resumo:** Implementação do Model Context Protocol (MCP) conectando agentes diretamente ao Prometheus, Docker e systemd com LiteLLM.
+
+- **Categoria:** `Agentes, Memória & AIOps`
+- **Status:** `Estruturado em ai-ops/`
+- **Caminho no Servidor:** `/home/tiago2609/homelab-aiops-portfolio/ai-ops`
+- **Tecnologias:** `FastMCP` • `Model Context Protocol` • `Python 3.12 Async` • `LiteLLM` • `Open-WebUI`
+
+### 📸 Galeria & Evidências Visuais
+
+#### Prometheus TSDB Targets (:9090) — Fonte de Telemetria para o Servidor FastMCP
+![Prometheus TSDB Targets (:9090) — Fonte de Telemetria para o Servidor FastMCP](assets/prometheus-targets.png)
+
+### Problema & Visão AIOps
+
+Permite que agentes de IA inspecionem a saúde real da infraestrutura (métricas PromQL, containers degradados e logs) através do protocolo padronizado MCP da Anthropic, atuando como engenheiros SRE.
+
+### Arquitetura & Segurança
+
+• Servidor FastMCP (mcp_homelab_server.py) expondo tools assíncronas via stdio e SSE;
+• LiteLLM AI Gateway (:4000) unificando roteamento de modelos locais e em nuvem com Open-WebUI (:3002);
+• Design Read-Only nas ferramentas de diagnóstico para garantir investigações de causa-raiz (RCA) 100% seguras.
+
+---
+
+## 08. Homelab ChatOps SRE Bots (Discord & Telegram)
+
+**Resumo:** Bots operacionais integrados ao Docker SDK e psutil com 14 comandos de governança e watchdog preventivo a cada 60 segundos.
+
+- **Categoria:** `Agentes, Memória & AIOps`
+- **Status:** `Daemons Ativos 24/7`
+- **Caminho no Servidor:** `/home/tiago2609/Projetos/botHomelab`
+- **Tecnologias:** `Python 3.12` • `discord.py` • `Docker SDK` • `psutil` • `systemd`
+
+### 📸 Galeria & Evidências Visuais
+
+#### Monitoramento Sintético Uptime Kuma (:3001) Complementando os Bots de ChatOps
+![Monitoramento Sintético Uptime Kuma (:3001) Complementando os Bots de ChatOps](assets/uptime-kuma.png)
+
+### Problema & Operação Contínua
+
+Monitoramento ativo 24/7 e controle bidirecional dos 26 containers e recursos físicos do servidor (CPU, RAM, disco e temperatura NVMe/ACPI) diretamente pelo Discord e Telegram.
+
+### Arquitetura & Watchdog
+
+• Integração nativa via Docker SDK for Python e psutil sem dependência de comandos shell frágeis;
+• Matriz de 14 comandos operacionais com controle de acesso estrito por ID;
+• Loop Watchdog assíncrono (60s) que emite alertas preventivos antes que qualquer serviço sofra indisponibilidade.
+
+---
+
+## 09. Automação Trello IA & ERP de Ambientes
+
+**Resumo:** Agente curador de cards com Gemini 3.1 Flash Lite, backup transacional com rollback e provisionamento de funil para móveis planejados.
+
+- **Categoria:** `Automação, 3D & Infra SRE`
+- **Status:** `Rotinas & API (:8088) Ativas`
+- **Caminho no Servidor:** `/home/tiago2609/Scripts & /opt/trello-api`
+- **Tecnologias:** `Python` • `Gemini 3.1 Flash Lite` • `Trello REST API` • `Rollback Transacional` • `FastAPI (:8088)`
+
+### Problema & Automação de Processos
+
+Combina duas frentes de produtividade sobre a API do Trello:
+1. Agente inteligente (auto_ia_desejos.py) que lê etiquetas semânticas e enriquece cards automaticamente com receitas, roteiros ou análises;
+2. Estruturação programática de funis comerciais para venda e gestão de ambientes planejados (template_venda_ambientes.py e projeto_ambientes).
+
+### Engenharia de Confiabilidade & Rollback
+
+• Gatilho estrito por etiquetas respeitando travas '🚫 Sem IA' e '🤖 Analisado';
+• Snapshot automático pré-mutação em backups_trello_ia/ e histórico auditável (trello_ia_history.json);
+• Script dedicado de reversão transacional (rollback_ia_desejos.py) e automação de capas (auto_cover_filmes.py).
+
+---
+
+## 10. Bot de Estudos Microsoft Learn
+
+**Resumo:** Tutor gamificado no Telegram cobrindo 16 módulos e 5 certificações Microsoft Cloud com quizzes nativos e trilha progressiva.
+
+- **Categoria:** `Automação, 3D & Infra SRE`
+- **Status:** `Base & Bot Estruturados`
+- **Caminho no Servidor:** `/home/tiago2609/Projetos/botEstudos`
+- **Tecnologias:** `Python` • `Telegram Quiz Polls` • `Inline Keyboards` • `AZ-900 / SC-900 / MS-900`
+
+### Problema & Micro-Learning
+
+Transforma o estudo para 5 certificações Microsoft (AZ-900, SC-900, MS-900, MS-700 e MD-102) em sessões rápidas e interativas pelo celular.
+
+### Arquitetura Pedagógica
+
+• 16 módulos divididos em 4 fases progressivas (Nuvem Base ➔ Identidades/Entra ID ➔ Governança M365 ➔ Colaboração & Endpoints);
+• Quizzes nativos do Telegram (type='quiz') com correção instantânea e explicação técnica detalhada;
+• Curadoria de conteúdo e estruturação de código realizadas em parceria com agentes de IA.
+
+---
+
+## 11. Gêmeo Digital 3D & Planta CAD-as-Code
+
+**Resumo:** Modelagem arquitetônica paramétrica em Python gerando planta vetorial SVG e geometria 3D integrada às entidades IoT do Home Assistant.
+
+- **Categoria:** `Automação, 3D & Infra SRE`
+- **Status:** `Integrado ao Home Assistant (:8123)`
+- **Caminho no Servidor:** `/home/tiago2609/planta`
+- **Tecnologias:** `Python Paramétrico` • `CAD-as-Code` • `SVG & 3D Geometry` • `PBR Materials` • `Home Assistant IoT`
+
+### 📸 Galeria & Evidências Visuais
+
+#### Renderização 3D Paramétrica do Apartamento Gerada via Código (planta.py)
+![Renderização 3D Paramétrica do Apartamento Gerada via Código (planta.py)](assets/planta-3d-real.png)
+
+#### Planta Arquitetônica Vetorial e Gêmeo Digital
+![Planta Arquitetônica Vetorial e Gêmeo Digital](assets/planta-digital-twin.png)
+
+#### Integração Visual com Entidades de Iluminação e Mídia no Home Assistant (Vista 1)
+![Integração Visual com Entidades de Iluminação e Mídia no Home Assistant (Vista 1)](assets/planta-ha-1.jpg)
+
+#### Controle Interativo dos Cômodos no Home Assistant (Vista 2)
+![Controle Interativo dos Cômodos no Home Assistant (Vista 2)](assets/planta-ha-2.jpg)
+
+### Problema & Engenharia Paramétrica
+
+Substitui softwares CAD manuais por código Python versionável (planta.py) capaz de gerar com precisão milimétrica os 6 cômodos do apartamento, paredes divisórias (12cm), mobiliário e iluminação inteligente.
+
+### Arquitetura & Binding IoT
+
+• Mais de 30 materiais físicos calibrados com RGB, opacidade e brilho (cerâmica, vidro fumê, granito, marcenaria);
+• Mapeamento direto para IDs interativos do Home Assistant (mat_obj_tv_sala, mat_obj_ps5, mat_obj_pc, mat_obj_luz_quarto, mat_obj_luz_sala_1);
+• Desenvolvido via IA multimodal traduzindo vídeos e medidas reais em coordenadas geométricas (x, y, z, dx, dy, dz).
+
+---
+
+## 12. Infraestrutura Homelab SRE Zero Trust
+
+**Resumo:** Cloud privada 24/7 em Ubuntu Server 24.04 com borda Cloudflare Zero Trust, Tailscale Mesh VPN, AdGuard DNS e stack Prometheus/Grafana.
+
+- **Categoria:** `Automação, 3D & Infra SRE`
+- **Status:** `Produção 24/7 (26 Containers)`
+- **Caminho no Servidor:** `/home/tiago2609/homelab-aiops-portfolio`
+- **Tecnologias:** `Ubuntu 24.04 LTS` • `Docker Compose` • `Prometheus & Grafana` • `Cloudflare Tunnels` • `Tailscale WireGuard` • `AdGuard Home`
+
+### 📸 Galeria & Evidências Visuais
+
+#### Central Unificada de Serviços do Homelab em Produção
+![Central Unificada de Serviços do Homelab em Produção](assets/homelab-homepage.png)
+
+#### Painel Executivo Home Assistant & Telemetria Residencial (:8123)
+![Painel Executivo Home Assistant & Telemetria Residencial (:8123)](assets/homeassistant.png)
+
+#### DNS Sinkhole Corporativo AdGuard Home — Bloqueio Preventivo em Rede
+![DNS Sinkhole Corporativo AdGuard Home — Bloqueio Preventivo em Rede](assets/adguard.png)
+
+#### Observabilidade Centralizada Prometheus TSDB (:9090)
+![Observabilidade Centralizada Prometheus TSDB (:9090)](assets/prometheus-targets.png)
+
+#### Monitoramento Sintético de Disponibilidade Uptime Kuma (:3001)
+![Monitoramento Sintético de Disponibilidade Uptime Kuma (:3001)](assets/uptime-kuma.png)
+
+### Fundação de Produção Contínua (Padrão MSP / NOC)
+
+Servidor físico Dell Latitude 3420 (Core i7-1165G7, 16GB RAM, NVMe 500GB + SATA 500GB) operando 24/7 com consumo ultra-eficiente (9.3W a 15W) e bateria integrada atuando como No-Break (UPS) nativo.
+
+### Segurança Zero Trust & Observabilidade
+
+• Zero portas expostas no roteador: tráfego público via Cloudflare Named Tunnels (WAF/TLS) e gerência via Tailscale Mesh VPN (WireGuard);
+• Telemetria completa com Prometheus (9 scrape jobs), Grafana, Uptime Kuma, Node Exporter, cAdvisor, Blackbox Exporter e mc-monitor;
+• Rotinas automatizadas de backup diário (pg_dump) e retenção híbrida.
+
+---

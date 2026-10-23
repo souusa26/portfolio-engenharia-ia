@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tiago Sousa — Portfólio de Engenharia & Agentes de IA</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-main: #09090b;
+      --bg-surface: #121215;
+      --bg-elevated: #1c1c21;
+      --text-primary: #fafafa;
+      --text-secondary: #a1a1aa;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --accent: #6366f1;
+      --accent-soft: rgba(99, 102, 241, 0.14);
+    }
+
+    body[data-theme="light"] {
+      --bg-main: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-elevated: #f1f5f9;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --border-color: rgba(15, 23, 42, 0.09);
+    }
+
+    body[data-theme="slate-dark"] {
+      --bg-main: #0b0f19;
+      --bg-surface: #111827;
+      --bg-elevated: #1e293b;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --border-color: rgba(255, 255, 255, 0.09);
+    }
+
+    body[data-accent="indigo"] { --accent: #6366f1; --accent-soft: rgba(99, 102, 241, 0.14); }
+    body[data-accent="emerald"] { --accent: #10b981; --accent-soft: rgba(16, 185, 129, 0.14); }
+    body[data-accent="blue"] { --accent: #3b82f6; --accent-soft: rgba(59, 130, 246, 0.14); }
+    body[data-accent="amber"] { --accent: #f59e0b; --accent-soft: rgba(245, 158, 11, 0.14); }
+    body[data-accent="rose"] { --accent: #f43f5e; --accent-soft: rgba(244, 63, 94, 0.14); }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-primary);
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+    .surface {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-color);
+    }
+
+    .elevated {
+      background-color: var(--bg-elevated);
+      border: 1px solid var(--border-color);
+    }
+
+    .text-sec { color: var(--text-secondary); }
+    .border-subtle { border-color: var(--border-color); }
+
+    .accent-bg { background-color: var(--accent); color: #fff; }
+    .accent-pill { background-color: var(--accent-soft); color: var(--accent); border: 1px solid var(--accent); }
+    .accent-text { color: var(--accent); }
+
+    .project-card {
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .project-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent);
+      box-shadow: 0 14px 32px -12px rgba(0, 0, 0, 0.35);
+    }
+
+    .line-clamp-2 {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    input, textarea, select {
+      background-color: var(--bg-elevated);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+    }
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+  </style>
+</head>
+<body data-theme="zinc-dark" data-accent="indigo" class="min-h-screen antialiased">
+
+  <!-- TOP NAVIGATION & STUDIO BAR -->
+  <nav class="sticky top-0 z-30 surface border-t-0 border-x-0 backdrop-blur-md bg-opacity-90">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg accent-bg flex items-center justify-center font-bold text-sm">
+          TS
+        </div>
+        <div>
+          <div class="font-semibold text-sm leading-tight">Tiago Sousa</div>
+          <div class="text-xs text-sec font-mono" id="live-status-text">Engenharia & Agentes de IA</div>
+        </div>
+      </div>
+
+      <!-- ACTION BUTTONS -->
+      <div class="flex items-center gap-2.5">
+        <button onclick="toggleEditMode()" id="btn-edit-mode" class="px-3.5 py-1.5 rounded-lg elevated text-xs font-medium hover:opacity-90 transition flex items-center gap-1.5">
+          <span>✏️ Personalizar & Editar</span>
+        </button>
+        <button onclick="saveAll(true)" id="btn-save-sync" class="hidden px-3.5 py-1.5 rounded-lg accent-bg text-xs font-semibold hover:opacity-95 transition">
+          💾 Salvar & Atualizar GitHub
+        </button>
+        <a href="/api/dossier" target="_blank" class="px-3.5 py-1.5 rounded-lg elevated text-xs font-medium hover:opacity-90 transition">
+          📄 Ver Markdown
+        </a>
+      </div>
+    </div>
+
+    <!-- CUSTOMIZATION DRAWER (ONLY VISIBLE IN EDIT MODE) -->
+    <div id="customizer-bar" class="hidden border-t border-subtle elevated">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-4 text-xs">
+        <div class="flex flex-wrap items-center gap-4">
+          <div class="flex items-center gap-2">
+            <span class="text-sec font-medium">Tema:</span>
+            <select id="select-theme" onchange="updateThemeSettings()" class="px-2.5 py-1 rounded-md text-xs">
+              <option value="zinc-dark">Minimal Dark (Linear)</option>
+              <option value="light">Clean Light (Apple / Papel)</option>
+              <option value="slate-dark">Executive Navy</option>
+            </select>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-sec font-medium">Destaque:</span>
+            <select id="select-accent" onchange="updateThemeSettings()" class="px-2.5 py-1 rounded-md text-xs">
+              <option value="indigo">Indigo</option>
+              <option value="emerald">Esmeralda</option>
+              <option value="blue">Azul</option>
+              <option value="amber">Âmbar</option>
+              <option value="rose">Rose</option>
+            </select>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-sec font-medium">Colunas:</span>
+            <select id="select-cols" onchange="updateThemeSettings()" class="px-2.5 py-1 rounded-md text-xs">
+              <option value="3">3 Colunas</option>
+              <option value="2">2 Colunas (Cards Maiores)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="addNewProject()" class="px-3 py-1.5 rounded-md surface hover:opacity-90 font-medium">
+            + Novo Projeto
+          </button>
+          <span id="save-toast" class="text-emerald-400 font-mono hidden">✓ Salvo!</span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- CLEAN MINIMALIST HERO -->
+  <header class="max-w-6xl mx-auto px-4 sm:px-6 pt-12 pb-8">
+    <div id="hero-view">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full elevated text-xs font-mono text-sec mb-4" id="hero-badge">
+        Portfólio de Engenharia & IA • Tiago Sousa
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight max-w-3xl leading-tight" id="hero-title">
+        Projetos & Sistemas Desenvolvidos com Agentes de IA
+      </h1>
+      <p class="mt-3 text-base text-sec max-w-2xl leading-relaxed" id="hero-subtitle">
+        Ecossistema real em produção 24/7 combinando desenvolvimento assistido por múltiplos agentes com arquiteturas limpas e LLMs embarcados.
+      </p>
+    </div>
+
+    <!-- HERO EDIT FORM (ONLY IN EDIT MODE) -->
+    <div id="hero-edit" class="hidden surface rounded-2xl p-5 space-y-3">
+      <div class="text-xs font-mono uppercase accent-text font-semibold">Editar Cabeçalho da Página</div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div>
+          <label class="text-xs text-sec block mb-1">Selo Superior</label>
+          <input id="input-hero-badge" type="text" oninput="syncHeroInputs()" class="w-full px-3 py-2 rounded-lg text-sm" />
+        </div>
+        <div>
+          <label class="text-xs text-sec block mb-1">Título Principal</label>
+          <input id="input-hero-title" type="text" oninput="syncHeroInputs()" class="w-full px-3 py-2 rounded-lg text-sm font-semibold" />
+        </div>
+      </div>
+      <div>
+        <label class="text-xs text-sec block mb-1">Descrição / Subtítulo</label>
+        <textarea id="input-hero-subtitle" rows="2" oninput="syncHeroInputs()" class="w-full px-3 py-2 rounded-lg text-sm"></textarea>
+      </div>
+    </div>
+
+    <!-- COMPACT METRICS STRIP -->
+    <div id="metrics-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-8"></div>
+  </header>
+
+  <!-- FILTER TABS & SEARCH -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 pb-6">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-subtle pb-4">
+      <div class="flex flex-wrap gap-1.5" id="category-tabs"></div>
+      <input
+        id="search-box"
+        type="text"
+        oninput="renderGrid()"
+        placeholder="Buscar projeto ou tecnologia..."
+        class="px-3.5 py-1.5 rounded-lg text-xs w-full sm:w-64"
+      />
+    </div>
+  </section>
+
+  <!-- CLEAN BENTO PROJECT GRID -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 pb-20">
+    <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+  </main>
+
+  <!-- PROJECT DETAIL & VISUAL EDITOR MODAL -->
+  <div id="project-modal" class="fixed inset-0 z-50 hidden bg-black/75 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+    <div class="surface rounded-2xl max-w-4xl w-full max-h-[92vh] flex flex-col overflow-hidden shadow-2xl">
+      
+      <!-- MODAL HEADER -->
+      <div class="px-6 py-4 border-b border-subtle flex items-center justify-between gap-4 shrink-0">
+        <div class="flex items-center gap-2.5">
+          <span id="modal-num" class="px-2.5 py-0.5 rounded font-mono text-xs elevated font-semibold"></span>
+          <span id="modal-cat" class="text-xs text-sec font-medium"></span>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="toggleModalEdit()" id="btn-modal-edit" class="px-3 py-1.5 rounded-lg elevated text-xs font-medium hover:opacity-90">
+            ✏️ Editar Projeto / Subir Prints
+          </button>
+          <button onclick="closeModal()" class="w-8 h-8 rounded-lg elevated flex items-center justify-center text-sm hover:opacity-80">
+            ✕
+          </button>
+        </div>
+      </div>
+
+      <!-- MODAL SCROLLABLE BODY -->
+      <div class="p-6 overflow-y-auto space-y-6 flex-1" id="modal-body"></div>
+
+      <!-- MODAL FOOTER (VISIBLE WHEN EDITING) -->
+      <div id="modal-footer" class="hidden px-6 py-3.5 border-t border-subtle elevated flex items-center justify-between shrink-0">
+        <button onclick="deleteCurrentProject()" class="text-xs text-rose-400 hover:underline">
+          Excluir este projeto
+        </button>
+        <div class="flex items-center gap-2">
+          <button onclick="saveAll(true)" class="px-4 py-2 rounded-lg accent-bg text-xs font-semibold">
+            💾 Salvar Alterações & Atualizar README
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LIGHTBOX FULLSCREEN IMAGE VIEWER -->
+  <div id="lightbox" onclick="closeLightbox()" class="fixed inset-0 z-50 hidden bg-black/90 flex items-center justify-center p-4 cursor-zoom-out">
+    <img id="lightbox-img" src="" alt="" class="max-w-full max-h-[92vh] rounded-lg shadow-2xl object-contain" />
+  </div>
+
+  <script>
+    let STATE = { settings: {}, projects: [] };
+    let EDIT_MODE = false;
+    let ACTIVE_CAT = 'Todos';
+    let CURRENT_PROJECT_INDEX = null;
+    let ACTIVE_IMG_INDEX = 0;
+
+    async function loadData() {
+      try {
+        const res = await fetch('/api/data');
+        if (res.ok) {
+          STATE = await res.json();
+        }
+      } catch (e) {
+        console.error(e);
+      }
+      applySettings();
+      renderAll();
+    }
+
+    function applySettings() {
+      const s = STATE.settings || {};
+      document.body.setAttribute('data-theme', s.theme || 'zinc-dark');
+      document.body.setAttribute('data-accent', s.accent || 'indigo');
+
+      document.getElementById('select-theme').value = s.theme || 'zinc-dark';
+      document.getElementById('select-accent').value = s.accent || 'indigo';
+      document.getElementById('select-cols').value = String(s.columns || 3);
+
+      document.getElementById('hero-badge').textContent = s.badge || '';
+      document.getElementById('hero-title').textContent = s.title || '';
+      document.getElementById('hero-subtitle').textContent = s.subtitle || '';
+
+      document.getElementById('input-hero-badge').value = s.badge || '';
+      document.getElementById('input-hero-title').value = s.title || '';
+      document.getElementById('input-hero-subtitle').value = s.subtitle || '';
+    }
+
+    function updateThemeSettings() {
+      STATE.settings.theme = document.getElementById('select-theme').value;
+      STATE.settings.accent = document.getElementById('select-accent').value;
+      STATE.settings.columns = parseInt(document.getElementById('select-cols').value, 10);
+      applySettings();
+      renderGrid();
+      saveAll(false);
+    }
+
+    function syncHeroInputs() {
+      STATE.settings.badge = document.getElementById('input-hero-badge').value;
+      STATE.settings.title = document.getElementById('input-hero-title').value;
+      STATE.settings.subtitle = document.getElementById('input-hero-subtitle').value;
+      document.getElementById('hero-badge').textContent = STATE.settings.badge;
+      document.getElementById('hero-title').textContent = STATE.settings.title;
+      document.getElementById('hero-subtitle').textContent = STATE.settings.subtitle;
+    }
+
+    function toggleEditMode() {
+      EDIT_MODE = !EDIT_MODE;
+      document.getElementById('customizer-bar').classList.toggle('hidden', !EDIT_MODE);
+      document.getElementById('btn-save-sync').classList.toggle('hidden', !EDIT_MODE);
+      document.getElementById('hero-view').classList.toggle('hidden', EDIT_MODE);
+      document.getElementById('hero-edit').classList.toggle('hidden', !EDIT_MODE);
+      document.getElementById('btn-edit-mode').innerHTML = EDIT_MODE
+        ? '<span>👁️ Ver Modo Apresentação</span>'
+        : '<span>✏️ Personalizar & Editar</span>';
+      renderAll();
+      if (CURRENT_PROJECT_INDEX !== null) {
+        renderModalContent();
+      }
+    }
+
+    function renderAll() {
+      renderMetrics();
+      renderCategories();
+      renderGrid();
+    }
+
+    function renderMetrics() {
+      const metrics = STATE.settings.metrics || [];
+      const container = document.getElementById('metrics-grid');
+      container.innerHTML = metrics.map((m, idx) => `
+        <div class="surface rounded-xl p-4">
+          <div class="text-xs text-sec">${m.label}</div>
+          ${EDIT_MODE ? `
+            <input type="text" value="${m.value}" oninput="STATE.settings.metrics[${idx}].value = this.value" class="mt-1 w-full px-2 py-1 rounded text-sm font-bold" />
+          ` : `
+            <div class="text-lg font-bold mt-0.5">${m.value}</div>
+          `}
+        </div>
+      `).join('');
+    }
+
+    function renderCategories() {
+      const cats = ['Todos', ...new Set(STATE.projects.map(p => p.category))];
+      const container = document.getElementById('category-tabs');
+      container.innerHTML = cats.map(c => {
+        const active = c === ACTIVE_CAT;
+        return `
+          <button onclick="ACTIVE_CAT='${c}'; renderCategories(); renderGrid();"
+            class="px-3 py-1.5 rounded-lg text-xs font-medium transition ${active ? 'accent-bg' : 'elevated text-sec hover:opacity-90'}">
+            ${c}
+          </button>
+        `;
+      }).join('');
+    }
+
+    function renderGrid() {
+      const query = (document.getElementById('search-box')?.value || '').toLowerCase().trim();
+      const cols = STATE.settings.columns || 3;
+      const grid = document.getElementById('projects-grid');
+      grid.className = `grid grid-cols-1 md:grid-cols-2 ${cols === 2 ? 'lg:grid-cols-2' : 'lg:grid-cols-3'} gap-5`;
+
+      const filtered = STATE.projects
+        .map((p, index) => ({ p, index }))
+        .filter(({ p }) => {
+          const matchCat = ACTIVE_CAT === 'Todos' || p.category === ACTIVE_CAT;
+          const text = `${p.title} ${p.subtitle} ${(p.tags || []).join(' ')}`.toLowerCase();
+          return matchCat && (!query || text.includes(query));
+        });
+
+      grid.innerHTML = filtered.map(({ p, index }) => {
+        const cover = (p.images && p.images.length > 0) ? p.images[0].url : null;
+        return `
+          <article onclick="openModal(${index})" class="surface project-card rounded-2xl overflow-hidden cursor-pointer flex flex-col justify-between">
+            <div>
+              <!-- IMAGE THUMBNAIL -->
+              <div class="aspect-video w-full elevated relative overflow-hidden flex items-center justify-center">
+                ${cover ? `
+                  <img src="${cover}" alt="${p.title}" class="w-full h-full object-cover object-top" />
+                ` : `
+                  <div class="text-center p-4">
+                    <div class="text-xs font-mono text-sec opacity-75">Projeto #${p.number}</div>
+                    <div class="text-[11px] text-sec mt-1">Clique para ver detalhes ou subir print</div>
+                  </div>
+                `}
+                <div class="absolute top-2.5 left-2.5 px-2 py-0.5 rounded bg-black/70 text-white font-mono text-[11px]">
+                  #${p.number}
+                </div>
+                ${p.images && p.images.length > 0 ? `
+                  <div class="absolute bottom-2.5 right-2.5 px-2 py-0.5 rounded bg-black/70 text-white font-mono text-[10px]">
+                    📷 ${p.images.length}
+                  </div>
+                ` : ''}
+              </div>
+
+              <!-- CLEAN CARD BODY -->
+              <div class="p-5">
+                <div class="flex items-center justify-between gap-2 text-[11px] text-sec font-mono mb-1.5">
+                  <span>${p.category}</span>
+                  <span class="inline-flex items-center gap-1 text-emerald-400">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                    Ativo
+                  </span>
+                </div>
+                <h3 class="font-bold text-base leading-snug">${p.title}</h3>
+                <p class="text-xs text-sec mt-1.5 line-clamp-2 leading-relaxed">${p.subtitle || ''}</p>
+              </div>
+            </div>
+
+            <!-- CLEAN FOOTER TAGS -->
+            <div class="px-5 pb-4 pt-2 flex flex-wrap gap-1.5">
+              ${(p.tags || []).slice(0, 4).map(t => `
+                <span class="px-2 py-0.5 rounded elevated text-[11px] font-mono text-sec">${t}</span>
+              `).join('')}
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function openModal(index) {
+      CURRENT_PROJECT_INDEX = index;
+      ACTIVE_IMG_INDEX = 0;
+      document.getElementById('project-modal').classList.remove('hidden');
+      renderModalContent();
+    }
+
+    function closeModal() {
+      document.getElementById('project-modal').classList.add('hidden');
+      CURRENT_PROJECT_INDEX = null;
+      renderGrid();
+    }
+
+    function toggleModalEdit() {
+      EDIT_MODE = !EDIT_MODE;
+      document.getElementById('customizer-bar').classList.toggle('hidden', !EDIT_MODE);
+      document.getElementById('btn-save-sync').classList.toggle('hidden', !EDIT_MODE);
+      renderModalContent();
+      renderAll();
+    }
+
+    function renderModalContent() {
+      if (CURRENT_PROJECT_INDEX === null) return;
+      const p = STATE.projects[CURRENT_PROJECT_INDEX];
+      document.getElementById('modal-num').textContent = `#${p.number}`;
+      document.getElementById('modal-cat').textContent = p.category;
+      document.getElementById('modal-footer').classList.toggle('hidden', !EDIT_MODE);
+      document.getElementById('btn-modal-edit').textContent = EDIT_MODE
+        ? '👁️ Ver Modo Leitura'
+        : '✏️ Editar Blocos & Imagens';
+
+      const body = document.getElementById('modal-body');
+
+      if (!EDIT_MODE) {
+        // CLEAN PRESENTATION VIEW
+        const imgs = p.images || [];
+        const activeImg = imgs[ACTIVE_IMG_INDEX] || null;
+
+        body.innerHTML = `
+          <div>
+            <h2 class="text-2xl font-bold">${p.title}</h2>
+            <p class="text-sm text-sec mt-1.5 leading-relaxed">${p.subtitle || ''}</p>
+            <div class="flex flex-wrap items-center gap-2 mt-3 text-xs font-mono">
+              <span class="px-2.5 py-1 rounded elevated text-emerald-400">● ${p.status}</span>
+              ${p.path ? `<span class="px-2.5 py-1 rounded elevated text-sec">${p.path}</span>` : ''}
+            </div>
+            <div class="flex flex-wrap gap-1.5 mt-3">
+              ${(p.tags || []).map(t => `<span class="px-2.5 py-1 rounded elevated text-xs font-mono">${t}</span>`).join('')}
+            </div>
+          </div>
+
+          <!-- IMAGE GALLERY -->
+          ${imgs.length > 0 ? `
+            <div class="space-y-3">
+              <div class="rounded-xl overflow-hidden elevated border border-subtle">
+                <img src="${activeImg.url}" onclick="openLightbox('${activeImg.url}')"
+                  class="w-full max-h-[420px] object-contain mx-auto cursor-zoom-in bg-black/40" />
+                <div class="px-4 py-2.5 text-xs text-sec border-t border-subtle flex items-center justify-between">
+                  <span>${activeImg.caption || p.title}</span>
+                  <span class="font-mono text-[11px]">Clique na imagem para ampliar</span>
+                </div>
+              </div>
+              ${imgs.length > 1 ? `
+                <div class="flex gap-2 overflow-x-auto pb-1">
+                  ${imgs.map((img, i) => `
+                    <img src="${img.url}" onclick="ACTIVE_IMG_INDEX=${i}; renderModalContent();"
+                      class="h-16 w-28 object-cover rounded-lg cursor-pointer border-2 transition ${i === ACTIVE_IMG_INDEX ? 'border-indigo-500 opacity-100' : 'border-transparent opacity-60 hover:opacity-100'}" />
+                  `).join('')}
+                </div>
+              ` : ''}
+            </div>
+          ` : ''}
+
+          <!-- CONTENT BLOCKS -->
+          <div class="grid grid-cols-1 gap-4">
+            ${(p.blocks || []).map(b => `
+              <div class="elevated rounded-xl p-5">
+                <h4 class="text-sm font-bold accent-text uppercase tracking-wider font-mono mb-2">${b.title}</h4>
+                <div class="text-sm leading-relaxed whitespace-pre-line">${b.content}</div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      } else {
+        // FULL VISUAL EDITOR VIEW
+        const imgs = p.images || [];
+        body.innerHTML = `
+          <!-- METADATA EDITOR -->
+          <div class="elevated rounded-xl p-4 space-y-3">
+            <div class="text-xs font-mono uppercase accent-text font-semibold">1. Dados Principais do Projeto</div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div class="sm:col-span-2">
+                <label class="text-xs text-sec block mb-1">Título do Projeto</label>
+                <input type="text" value="${p.title}" oninput="STATE.projects[${CURRENT_PROJECT_INDEX}].title = this.value" class="w-full px-3 py-2 rounded-lg text-sm font-semibold" />
+              </div>
+              <div>
+                <label class="text-xs text-sec block mb-1">Categoria</label>
+                <input type="text" value="${p.category}" oninput="STATE.projects[${CURRENT_PROJECT_INDEX}].category = this.value" class="w-full px-3 py-2 rounded-lg text-sm" />
+              </div>
+            </div>
+            <div>
+              <label class="text-xs text-sec block mb-1">Resumo Curto (aparece no card)</label>
+              <textarea rows="2" oninput="STATE.projects[${CURRENT_PROJECT_INDEX}].subtitle = this.value" class="w-full px-3 py-2 rounded-lg text-sm">${p.subtitle || ''}</textarea>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div>
+                <label class="text-xs text-sec block mb-1">Status</label>
+                <input type="text" value="${p.status || ''}" oninput="STATE.projects[${CURRENT_PROJECT_INDEX}].status = this.value" class="w-full px-3 py-1.5 rounded-lg text-xs font-mono" />
+              </div>
+              <div>
+                <label class="text-xs text-sec block mb-1">Caminho no Servidor</label>
+                <input type="text" value="${p.path || ''}" oninput="STATE.projects[${CURRENT_PROJECT_INDEX}].path = this.value" class="w-full px-3 py-1.5 rounded-lg text-xs font-mono" />
+              </div>
+              <div>
+                <label class="text-xs text-sec block mb-1">Tags (separadas por vírgula)</label>
+                <input type="text" value="${(p.tags || []).join(', ')}"
+                  oninput="STATE.projects[${CURRENT_PROJECT_INDEX}].tags = this.value.split(',').map(s=>s.trim()).filter(Boolean)"
+                  class="w-full px-3 py-1.5 rounded-lg text-xs font-mono" />
+              </div>
+            </div>
+          </div>
+
+          <!-- IMAGE UPLOADER & GALLERY MANAGER -->
+          <div class="elevated rounded-xl p-4 space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="text-xs font-mono uppercase accent-text font-semibold">2. Prints & Imagens do Projeto (Arraste, Clique ou Cole com Ctrl+V)</div>
+              <label class="px-3 py-1.5 rounded-lg accent-bg text-xs font-semibold cursor-pointer">
+                + Subir Imagem do Computador
+                <input type="file" accept="image/*" multiple onchange="handleFileSelect(event)" class="hidden" />
+              </label>
+            </div>
+
+            ${imgs.length === 0 ? `
+              <div class="text-xs text-sec py-6 text-center border border-dashed border-subtle rounded-lg">
+                Nenhuma imagem neste projeto ainda. Clique em "+ Subir Imagem" ou pressione <strong>Ctrl+V</strong> para colar um print da área de transferência.
+              </div>
+            ` : `
+              <div class="space-y-2.5">
+                ${imgs.map((img, i) => `
+                  <div class="surface rounded-lg p-2.5 flex items-center gap-3">
+                    <img src="${img.url}" class="w-20 h-12 object-cover rounded border border-subtle shrink-0" />
+                    <input type="text" value="${img.caption || ''}" placeholder="Legenda da imagem..."
+                      oninput="STATE.projects[${CURRENT_PROJECT_INDEX}].images[${i}].caption = this.value"
+                      class="flex-1 px-2.5 py-1.5 rounded text-xs" />
+                    <button onclick="setAsCover(${i})" title="Definir como capa" class="px-2 py-1 rounded elevated text-[11px] hover:opacity-80">
+                      ${i === 0 ? '★ Capa' : 'Tornar Capa'}
+                    </button>
+                    <button onclick="removeImage(${i})" class="px-2 py-1 rounded elevated text-rose-400 text-xs hover:opacity-80">
+                      Remover
+                    </button>
+                  </div>
+                `).join('')}
+              </div>
+            `}
+          </div>
+
+          <!-- CONTENT BLOCKS EDITOR -->
+          <div class="elevated rounded-xl p-4 space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="text-xs font-mono uppercase accent-text font-semibold">3. Blocos de Documentação do Projeto</div>
+              <button onclick="addBlock()" class="px-3 py-1.5 rounded-lg surface text-xs font-semibold hover:opacity-90">
+                + Adicionar Bloco
+              </button>
+            </div>
+
+            <div class="space-y-3">
+              ${(p.blocks || []).map((b, bIdx) => `
+                <div class="surface rounded-xl p-3.5 space-y-2">
+                  <div class="flex items-center justify-between gap-2">
+                    <input type="text" value="${b.title}" placeholder="Título do Bloco (ex: Arquitetura, Papel da IA...)"
+                      oninput="STATE.projects[${CURRENT_PROJECT_INDEX}].blocks[${bIdx}].title = this.value"
+                      class="flex-1 px-3 py-1.5 rounded text-xs font-bold font-mono" />
+                    <div class="flex items-center gap-1">
+                      <button onclick="moveBlock(${bIdx}, -1)" class="px-2 py-1 rounded elevated text-xs">↑</button>
+                      <button onclick="moveBlock(${bIdx}, 1)" class="px-2 py-1 rounded elevated text-xs">↓</button>
+                      <button onclick="removeBlock(${bIdx})" class="px-2 py-1 rounded elevated text-rose-400 text-xs">✕</button>
+                    </div>
+                  </div>
+                  <textarea rows="4"
+                    oninput="STATE.projects[${CURRENT_PROJECT_INDEX}].blocks[${bIdx}].content = this.value"
+                    class="w-full px-3 py-2 rounded text-xs leading-relaxed">${b.content}</textarea>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    async function handleFileSelect(event) {
+      const files = Array.from(event.target.files || []);
+      for (const file of files) {
+        await uploadImageFile(file);
+      }
+      renderModalContent();
+      saveAll(false);
+    }
+
+    async function uploadImageFile(file) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+          const res = await fetch('/api/upload', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              filename: file.name || 'screenshot.png',
+              data_url: e.target.result
+            })
+          });
+          if (res.ok) {
+            const out = await res.json();
+            if (CURRENT_PROJECT_INDEX !== null) {
+              STATE.projects[CURRENT_PROJECT_INDEX].images = STATE.projects[CURRENT_PROJECT_INDEX].images || [];
+              STATE.projects[CURRENT_PROJECT_INDEX].images.push({
+                url: out.url,
+                caption: file.name.replace(/\.[^/.]+$/, '')
+              });
+            }
+          }
+          resolve();
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // Support Ctrl+V image paste directly when modal is open!
+    window.addEventListener('paste', async (e) => {
+      if (CURRENT_PROJECT_INDEX === null) return;
+      const items = e.clipboardData?.items || [];
+      for (const item of items) {
+        if (item.type.indexOf('image') !== -1) {
+          const file = item.getAsFile();
+          if (file) {
+            if (!EDIT_MODE) EDIT_MODE = true;
+            await uploadImageFile(file);
+            renderModalContent();
+            saveAll(false);
+          }
+        }
+      }
+    });
+
+    function setAsCover(imgIdx) {
+      const imgs = STATE.projects[CURRENT_PROJECT_INDEX].images;
+      const [chosen] = imgs.splice(imgIdx, 1);
+      imgs.unshift(chosen);
+      renderModalContent();
+      saveAll(false);
+    }
+
+    function removeImage(imgIdx) {
+      STATE.projects[CURRENT_PROJECT_INDEX].images.splice(imgIdx, 1);
+      ACTIVE_IMG_INDEX = 0;
+      renderModalContent();
+      saveAll(false);
+    }
+
+    function addBlock() {
+      STATE.projects[CURRENT_PROJECT_INDEX].blocks = STATE.projects[CURRENT_PROJECT_INDEX].blocks || [];
+      STATE.projects[CURRENT_PROJECT_INDEX].blocks.push({
+        title: "Novo Tópico",
+        content: "Descreva os detalhes aqui..."
+      });
+      renderModalContent();
+    }
+
+    function moveBlock(idx, dir) {
+      const blocks = STATE.projects[CURRENT_PROJECT_INDEX].blocks;
+      const target = idx + dir;
+      if (target < 0 || target >= blocks.length) return;
+      const temp = blocks[idx];
+      blocks[idx] = blocks[target];
+      blocks[target] = temp;
+      renderModalContent();
+    }
+
+    function removeBlock(idx) {
+      STATE.projects[CURRENT_PROJECT_INDEX].blocks.splice(idx, 1);
+      renderModalContent();
+    }
+
+    function addNewProject() {
+      const num = String(STATE.projects.length + 1).padStart(2, '0');
+      STATE.projects.push({
+        id: `projeto-${Date.now()}`,
+        number: num,
+        category: "SaaS & Produtos Web",
+        title: "Novo Projeto com IA",
+        subtitle: "Clique para editar o resumo, blocos e adicionar prints deste projeto.",
+        status: "Em Produção",
+        path: "/home/tiago2609/Projetos/...",
+        tags: ["Python", "IA Generativa"],
+        images: [],
+        blocks: [
+          { title: "Problema & Visão", content: "Descreva o objetivo do projeto..." },
+          { title: "Arquitetura & Orquestração de IA", content: "Descreva a stack e o papel dos agentes..." }
+        ]
+      });
+      renderAll();
+      openModal(STATE.projects.length - 1);
+    }
+
+    function deleteCurrentProject() {
+      if (!confirm('Deseja remover este projeto do portfólio?')) return;
+      STATE.projects.splice(CURRENT_PROJECT_INDEX, 1);
+      closeModal();
+      saveAll(false);
+    }
+
+    async function saveAll(syncGithub = false) {
+      await fetch('/api/save', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(STATE)
+      });
+      if (syncGithub) {
+        await fetch('/api/sync-github', { method: 'POST' });
+      }
+      const toast = document.getElementById('save-toast');
+      if (toast) {
+        toast.classList.remove('hidden');
+        setTimeout(() => toast.classList.add('hidden'), 2500);
+      }
+    }
+
+    function openLightbox(url) {
+      document.getElementById('lightbox-img').src = url;
+      document.getElementById('lightbox').classList.remove('hidden');
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.add('hidden');
+    }
+
+    loadData();
+  </script>
+</body>
+</html>
