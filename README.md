@@ -9,7 +9,7 @@
 
 | Indicador | Destaque |
 | :--- | :--- |
-| **Projetos Documentados** | `12 Sistemas` |
+| **Projetos Documentados** | `8 Sistemas` |
 | **Infraestrutura Ativa** | `26 Containers 24/7` |
 | **Modelos & Agentes** | `Gemini, Claude` |
 | **Arquitetura & Governança** | `DDD + Zero Trust` |
