@@ -29,6 +29,7 @@
 | **09** | **Automação Trello IA & ERP de Ambientes** | Automação, 3D & Infra SRE | `Python, Gemini 3.1 Flash Lite, Trello REST API, Rollback Transacional` | Rotinas & API (:8088) Ativas |
 | **10** | **Bot de Estudos Microsoft Learn** | Automação, 3D & Infra SRE | `Python, Telegram Quiz Polls, Inline Keyboards, AZ-900 / SC-900 / MS-900` | Base & Bot Estruturados |
 | **09** | **HomeAssistant** | SaaS & Produtos Web | `Python, IA Generativa` | Em Produção |
+| **10** | **AdGuard** | SaaS & Produtos Web | `Python, IA Generativa` | Em Produção |
 
 ---
 
@@ -325,6 +326,30 @@ Transforma o estudo para 5 certificações Microsoft (AZ-900, SC-900, MS-900, MS
 
 #### homeassistant mobile 2
 ![homeassistant mobile 2](assets/1792769297-homeassistant-mobile-2.png)
+
+### Problema & Visão
+
+Descreva o objetivo do projeto...
+
+### Arquitetura & Orquestração de IA
+
+Descreva a stack e o papel dos agentes...
+
+---
+
+## 10. AdGuard
+
+**Resumo:** Clique para editar o resumo, blocos e adicionar prints deste projeto.
+
+- **Categoria:** `SaaS & Produtos Web`
+- **Status:** `Em Produção`
+- **Caminho no Servidor:** `/home/tiago2609/Projetos/...`
+- **Tecnologias:** `Python` • `IA Generativa`
+
+### Galeria & Evidências Visuais
+
+#### AdGuard
+![AdGuard](assets/1792769393-AdGuard.png)
 
 ### Problema & Visão
 

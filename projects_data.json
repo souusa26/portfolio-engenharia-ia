@@ -378,6 +378,35 @@
           "content": "Descreva a stack e o papel dos agentes..."
         }
       ]
+    },
+    {
+      "id": "projeto-1792769387378",
+      "number": "10",
+      "category": "SaaS & Produtos Web",
+      "title": "AdGuard",
+      "subtitle": "Clique para editar o resumo, blocos e adicionar prints deste projeto.",
+      "status": "Em Produção",
+      "path": "/home/tiago2609/Projetos/...",
+      "tags": [
+        "Python",
+        "IA Generativa"
+      ],
+      "images": [
+        {
+          "url": "assets/1792769393-AdGuard.png",
+          "caption": "AdGuard"
+        }
+      ],
+      "blocks": [
+        {
+          "title": "Problema & Visão",
+          "content": "Descreva o objetivo do projeto..."
+        },
+        {
+          "title": "Arquitetura & Orquestração de IA",
+          "content": "Descreva a stack e o papel dos agentes..."
+        }
+      ]
     }
   ]
 }
