@@ -46,17 +46,14 @@
 
 ### Galeria & Evidências Visuais
 
-#### Painel Visual Administrativo — Gestão de Campanhas, Dispositivos e Anunciantes
-![Painel Visual Administrativo — Gestão de Campanhas, Dispositivos e Anunciantes](assets/telas-admin.png)
-
-#### Interface Mobile & Controle Operacional (Vista 1)
-![Interface Mobile & Controle Operacional (Vista 1)](assets/telas-mobile-1.png)
-
-#### Interface Mobile & Relatórios de Exibição (Vista 2)
-![Interface Mobile & Relatórios de Exibição (Vista 2)](assets/telas-mobile-2.png)
-
 #### Acesso ao Sistema em Produção (:8000)
 ![Acesso ao Sistema em Produção (:8000)](assets/telas-login.png)
+
+#### tela livre admin
+![tela livre admin](assets/1792766923-tela-livre-admin.png)
+
+#### tela livre player
+![tela livre player](assets/1792766927-tela-livre-player.png)
 
 ### Problema & Visão de Produto
 

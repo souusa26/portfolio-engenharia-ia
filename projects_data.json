@@ -43,20 +43,16 @@
       ],
       "images": [
         {
-          "url": "assets/telas-admin.png",
-          "caption": "Painel Visual Administrativo — Gestão de Campanhas, Dispositivos e Anunciantes"
-        },
-        {
-          "url": "assets/telas-mobile-1.png",
-          "caption": "Interface Mobile & Controle Operacional (Vista 1)"
-        },
-        {
-          "url": "assets/telas-mobile-2.png",
-          "caption": "Interface Mobile & Relatórios de Exibição (Vista 2)"
-        },
-        {
           "url": "assets/telas-login.png",
           "caption": "Acesso ao Sistema em Produção (:8000)"
+        },
+        {
+          "url": "assets/1792766923-tela-livre-admin.png",
+          "caption": "tela livre admin"
+        },
+        {
+          "url": "assets/1792766927-tela-livre-player.png",
+          "caption": "tela livre player"
         }
       ],
       "blocks": [
