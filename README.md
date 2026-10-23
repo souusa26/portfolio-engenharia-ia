@@ -28,8 +28,6 @@
 | **08** | **Bots de monitoração (Discord & Telegram)** | Agentes, Memória & AIOps | `Python 3.12, discord.py, Docker SDK, psutil` | Daemons Ativos 24/7 |
 | **09** | **Automação Trello IA & ERP de Ambientes** | Automação, 3D & Infra SRE | `Python, Gemini 3.1 Flash Lite, Trello REST API, Rollback Transacional` | Rotinas & API (:8088) Ativas |
 | **10** | **Bot de Estudos Microsoft Learn** | Automação, 3D & Infra SRE | `Python, Telegram Quiz Polls, Inline Keyboards, AZ-900 / SC-900 / MS-900` | Base & Bot Estruturados |
-| **11** | **Gêmeo Digital 3D & Planta CAD-as-Code** | Automação, 3D & Infra SRE | `Python Paramétrico, CAD-as-Code, SVG & 3D Geometry, PBR Materials` | Integrado ao Home Assistant (:8123) |
-| **12** | **Infraestrutura Homelab SRE Zero Trust** | Automação, 3D & Infra SRE | `Ubuntu 24.04 LTS, Docker Compose, Prometheus & Grafana, Cloudflare Tunnels` | Produção 24/7 (26 Containers) |
 
 ---
 
@@ -304,78 +302,5 @@ Transforma o estudo para 5 certificações Microsoft (AZ-900, SC-900, MS-900, MS
 • 16 módulos divididos em 4 fases progressivas (Nuvem Base ➔ Identidades/Entra ID ➔ Governança M365 ➔ Colaboração & Endpoints);
 • Quizzes nativos do Telegram (type='quiz') com correção instantânea e explicação técnica detalhada;
 • Curadoria de conteúdo e estruturação de código realizadas em parceria com agentes de IA.
-
----
-
-## 11. Gêmeo Digital 3D & Planta CAD-as-Code
-
-**Resumo:** Modelagem arquitetônica paramétrica em Python gerando planta vetorial SVG e geometria 3D integrada às entidades IoT do Home Assistant.
-
-- **Categoria:** `Automação, 3D & Infra SRE`
-- **Status:** `Integrado ao Home Assistant (:8123)`
-- **Caminho no Servidor:** `/home/tiago2609/planta`
-- **Tecnologias:** `Python Paramétrico` • `CAD-as-Code` • `SVG & 3D Geometry` • `PBR Materials` • `Home Assistant IoT`
-
-### Galeria & Evidências Visuais
-
-#### Renderização 3D Paramétrica do Apartamento Gerada via Código (planta.py)
-![Renderização 3D Paramétrica do Apartamento Gerada via Código (planta.py)](assets/planta-3d-real.png)
-
-#### Planta Arquitetônica Vetorial e Gêmeo Digital
-![Planta Arquitetônica Vetorial e Gêmeo Digital](assets/planta-digital-twin.png)
-
-#### Integração Visual com Entidades de Iluminação e Mídia no Home Assistant (Vista 1)
-![Integração Visual com Entidades de Iluminação e Mídia no Home Assistant (Vista 1)](assets/planta-ha-1.jpg)
-
-#### Controle Interativo dos Cômodos no Home Assistant (Vista 2)
-![Controle Interativo dos Cômodos no Home Assistant (Vista 2)](assets/planta-ha-2.jpg)
-
-### Problema & Engenharia Paramétrica
-
-Substitui softwares CAD manuais por código Python versionável (planta.py) capaz de gerar com precisão milimétrica os 6 cômodos do apartamento, paredes divisórias (12cm), mobiliário e iluminação inteligente.
-
-### Arquitetura & Binding IoT
-
-• Mais de 30 materiais físicos calibrados com RGB, opacidade e brilho (cerâmica, vidro fumê, granito, marcenaria);
-• Mapeamento direto para IDs interativos do Home Assistant (mat_obj_tv_sala, mat_obj_ps5, mat_obj_pc, mat_obj_luz_quarto, mat_obj_luz_sala_1);
-• Desenvolvido via IA multimodal traduzindo vídeos e medidas reais em coordenadas geométricas (x, y, z, dx, dy, dz).
-
----
-
-## 12. Infraestrutura Homelab SRE Zero Trust
-
-**Resumo:** Cloud privada 24/7 em Ubuntu Server 24.04 com borda Cloudflare Zero Trust, Tailscale Mesh VPN, AdGuard DNS e stack Prometheus/Grafana.
-
-- **Categoria:** `Automação, 3D & Infra SRE`
-- **Status:** `Produção 24/7 (26 Containers)`
-- **Caminho no Servidor:** `/home/tiago2609/homelab-aiops-portfolio`
-- **Tecnologias:** `Ubuntu 24.04 LTS` • `Docker Compose` • `Prometheus & Grafana` • `Cloudflare Tunnels` • `Tailscale WireGuard` • `AdGuard Home`
-
-### Galeria & Evidências Visuais
-
-#### Central Unificada de Serviços do Homelab em Produção
-![Central Unificada de Serviços do Homelab em Produção](assets/homelab-homepage.png)
-
-#### Painel Executivo Home Assistant & Telemetria Residencial (:8123)
-![Painel Executivo Home Assistant & Telemetria Residencial (:8123)](assets/homeassistant.png)
-
-#### DNS Sinkhole Corporativo AdGuard Home — Bloqueio Preventivo em Rede
-![DNS Sinkhole Corporativo AdGuard Home — Bloqueio Preventivo em Rede](assets/adguard.png)
-
-#### Observabilidade Centralizada Prometheus TSDB (:9090)
-![Observabilidade Centralizada Prometheus TSDB (:9090)](assets/prometheus-targets.png)
-
-#### Monitoramento Sintético de Disponibilidade Uptime Kuma (:3001)
-![Monitoramento Sintético de Disponibilidade Uptime Kuma (:3001)](assets/uptime-kuma.png)
-
-### Fundação de Produção Contínua (Padrão MSP / NOC)
-
-Servidor físico Dell Latitude 3420 (Core i7-1165G7, 16GB RAM, NVMe 500GB + SATA 500GB) operando 24/7 com consumo ultra-eficiente (9.3W a 15W) e bateria integrada atuando como No-Break (UPS) nativo.
-
-### Segurança Zero Trust & Observabilidade
-
-• Zero portas expostas no roteador: tráfego público via Cloudflare Named Tunnels (WAF/TLS) e gerência via Tailscale Mesh VPN (WireGuard);
-• Telemetria completa com Prometheus (9 scrape jobs), Grafana, Uptime Kuma, Node Exporter, cAdvisor, Blackbox Exporter e mc-monitor;
-• Rotinas automatizadas de backup diário (pg_dump) e retenção híbrida.
 
 ---
