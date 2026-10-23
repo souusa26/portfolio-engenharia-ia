@@ -206,9 +206,12 @@
           </div>
         </div>
 
-        <div class="flex items-center justify-between sm:justify-end gap-3 pt-1 sm:pt-0 border-t border-subtle sm:border-t-0">
+        <div class="flex items-center justify-between sm:justify-end gap-2.5 pt-1 sm:pt-0 border-t border-subtle sm:border-t-0">
           <button onclick="addNewProject()" class="px-3 py-1.5 rounded-md surface hover:opacity-90 font-medium">
             + Novo Projeto
+          </button>
+          <button onclick="logoutEditMode()" title="Bloquear modo de edição" class="px-2.5 py-1.5 rounded-md elevated text-rose-400 hover:opacity-90 font-mono text-[11px]">
+            Bloquear
           </button>
           <span id="save-toast" class="text-emerald-500 font-mono text-[11px] sm:text-xs hidden">Salvo com sucesso</span>
         </div>
@@ -316,6 +319,57 @@
     </div>
   </div>
 
+  <!-- PIN AUTHENTICATION MODAL -->
+  <div id="pin-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="surface rounded-2xl max-w-sm w-full p-5 sm:p-6 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <div class="w-7 h-7 rounded-lg elevated flex items-center justify-center text-sec">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+          </div>
+          <span class="font-bold text-sm">Acesso de Edição</span>
+        </div>
+        <button onclick="closePinModal()" class="w-7 h-7 rounded-lg elevated flex items-center justify-center text-sec hover:text-white">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <p class="text-xs text-sec leading-relaxed">
+        Este portfólio está compartilhado publicamente. Informe o PIN de 4 dígitos para habilitar a personalização e envio de imagens.
+      </p>
+
+      <form onsubmit="event.preventDefault(); submitPinAuth();" class="space-y-3">
+        <input
+          id="pin-auth-input"
+          type="password"
+          maxlength="8"
+          inputmode="numeric"
+          pattern="[0-9]*"
+          placeholder="••••"
+          autocomplete="current-password"
+          class="w-full text-center text-2xl font-mono tracking-[0.4em] px-3 py-2.5 rounded-xl border border-subtle focus:border-indigo-500"
+        />
+        <div id="pin-error-msg" class="text-xs text-rose-500 font-medium text-center hidden">
+          PIN incorreto. Tente novamente.
+        </div>
+        <div class="flex items-center gap-2 pt-1">
+          <button type="button" onclick="closePinModal()" class="flex-1 py-2 rounded-lg elevated text-xs font-medium hover:opacity-80">
+            Cancelar
+          </button>
+          <button type="submit" id="btn-submit-pin" class="flex-1 py-2 rounded-lg accent-bg text-xs font-semibold hover:opacity-90">
+            Desbloquear
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- LIGHTBOX FULLSCREEN IMAGE VIEWER -->
   <div id="lightbox" onclick="closeLightbox()" class="fixed inset-0 z-50 hidden bg-black/95 flex items-center justify-center p-3 cursor-zoom-out">
     <div class="relative max-w-full max-h-full flex items-center justify-center">
@@ -409,7 +463,88 @@
       document.getElementById('hero-subtitle').textContent = STATE.settings.subtitle;
     }
 
+    let PENDING_AUTH_ACTION = null;
+
+    function getAuthPin() {
+      return sessionStorage.getItem('portfolio_auth_pin') || '';
+    }
+
+    function hasValidAuth() {
+      return Boolean(getAuthPin());
+    }
+
+    function requireAuth(action) {
+      if (hasValidAuth()) {
+        action();
+        return;
+      }
+      PENDING_AUTH_ACTION = action;
+      const modal = document.getElementById('pin-modal');
+      const input = document.getElementById('pin-auth-input');
+      const err = document.getElementById('pin-error-msg');
+      err.classList.add('hidden');
+      input.value = '';
+      modal.classList.remove('hidden');
+      setTimeout(() => input.focus(), 150);
+    }
+
+    function closePinModal() {
+      document.getElementById('pin-modal').classList.add('hidden');
+      PENDING_AUTH_ACTION = null;
+    }
+
+    async function submitPinAuth() {
+      const input = document.getElementById('pin-auth-input');
+      const err = document.getElementById('pin-error-msg');
+      const btn = document.getElementById('btn-submit-pin');
+      const pin = input.value.trim();
+      
+      if (!pin) return;
+      
+      btn.disabled = true;
+      btn.textContent = 'Verificando...';
+      
+      try {
+        const res = await fetch('/api/auth/verify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ pin })
+        });
+        const data = await res.json();
+        if (res.ok && data.ok) {
+          sessionStorage.setItem('portfolio_auth_pin', pin);
+          closePinModal();
+          if (PENDING_AUTH_ACTION) {
+            const action = PENDING_AUTH_ACTION;
+            PENDING_AUTH_ACTION = null;
+            action();
+          }
+        } else {
+          err.textContent = data.error || 'PIN incorreto. Tente novamente.';
+          err.classList.remove('hidden');
+          input.select();
+        }
+      } catch (e) {
+        err.textContent = 'Erro ao conectar ao servidor.';
+        err.classList.remove('hidden');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Desbloquear';
+      }
+    }
+
+    function logoutEditMode() {
+      sessionStorage.removeItem('portfolio_auth_pin');
+      if (EDIT_MODE) {
+        toggleEditMode();
+      }
+    }
+
     function toggleEditMode() {
+      if (!EDIT_MODE && !hasValidAuth()) {
+        requireAuth(() => toggleEditMode());
+        return;
+      }
       EDIT_MODE = !EDIT_MODE;
       document.getElementById('customizer-bar').classList.toggle('hidden', !EDIT_MODE);
       document.getElementById('btn-save-sync').classList.toggle('hidden', !EDIT_MODE);
@@ -541,6 +676,10 @@
     }
 
     function toggleModalEdit() {
+      if (!EDIT_MODE && !hasValidAuth()) {
+        requireAuth(() => toggleModalEdit());
+        return;
+      }
       EDIT_MODE = !EDIT_MODE;
       document.getElementById('customizer-bar').classList.toggle('hidden', !EDIT_MODE);
       document.getElementById('btn-save-sync').classList.toggle('hidden', !EDIT_MODE);
@@ -728,26 +867,42 @@
     }
 
     async function uploadImageFile(file) {
+      if (!hasValidAuth()) {
+        requireAuth(() => uploadImageFile(file));
+        return;
+      }
       return new Promise((resolve) => {
         const reader = new FileReader();
         reader.onload = async (e) => {
-          const res = await fetch('/api/upload', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              filename: file.name || 'screenshot.png',
-              data_url: e.target.result
-            })
-          });
-          if (res.ok) {
-            const out = await res.json();
-            if (CURRENT_PROJECT_INDEX !== null) {
-              STATE.projects[CURRENT_PROJECT_INDEX].images = STATE.projects[CURRENT_PROJECT_INDEX].images || [];
-              STATE.projects[CURRENT_PROJECT_INDEX].images.push({
-                url: out.url,
-                caption: file.name.replace(/\.[^/.]+$/, '')
-              });
+          try {
+            const res = await fetch('/api/upload', {
+              method: 'POST',
+              headers: { 
+                'Content-Type': 'application/json',
+                'X-Auth-Pin': getAuthPin()
+              },
+              body: JSON.stringify({
+                filename: file.name || 'screenshot.png',
+                data_url: e.target.result
+              })
+            });
+            if (res.status === 401) {
+              sessionStorage.removeItem('portfolio_auth_pin');
+              requireAuth(() => uploadImageFile(file));
+              return resolve();
             }
+            if (res.ok) {
+              const out = await res.json();
+              if (CURRENT_PROJECT_INDEX !== null) {
+                STATE.projects[CURRENT_PROJECT_INDEX].images = STATE.projects[CURRENT_PROJECT_INDEX].images || [];
+                STATE.projects[CURRENT_PROJECT_INDEX].images.push({
+                  url: out.url,
+                  caption: file.name.replace(/\.[^/.]+$/, '')
+                });
+              }
+            }
+          } catch (err) {
+            console.error(err);
           }
           resolve();
         };
@@ -849,18 +1004,37 @@
     }
 
     async function saveAll(syncGithub = false) {
-      await fetch('/api/save', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(STATE)
-      });
-      if (syncGithub) {
-        await fetch('/api/sync-github', { method: 'POST' });
+      if (!hasValidAuth()) {
+        requireAuth(() => saveAll(syncGithub));
+        return;
       }
-      const toast = document.getElementById('save-toast');
-      if (toast) {
-        toast.classList.remove('hidden');
-        setTimeout(() => toast.classList.add('hidden'), 2500);
+      try {
+        const res = await fetch('/api/save', {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'X-Auth-Pin': getAuthPin()
+          },
+          body: JSON.stringify(STATE)
+        });
+        if (res.status === 401) {
+          sessionStorage.removeItem('portfolio_auth_pin');
+          requireAuth(() => saveAll(syncGithub));
+          return;
+        }
+        if (syncGithub) {
+          await fetch('/api/sync-github', { 
+            method: 'POST',
+            headers: { 'X-Auth-Pin': getAuthPin() }
+          });
+        }
+        const toast = document.getElementById('save-toast');
+        if (toast) {
+          toast.classList.remove('hidden');
+          setTimeout(() => toast.classList.add('hidden'), 2500);
+        }
+      } catch (err) {
+        console.error(err);
       }
     }
 

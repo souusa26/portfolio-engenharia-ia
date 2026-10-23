@@ -208,6 +208,24 @@ class PortfolioCMSHandler(SimpleHTTPRequestHandler):
         content_len = int(self.headers.get("Content-Length", "0"))
         raw_body = self.rfile.read(content_len) if content_len > 0 else b"{}"
 
+        if self.path == "/api/auth/verify":
+            try:
+                payload = json.loads(raw_body.decode("utf-8"))
+                provided_pin = str(payload.get("pin", "")).strip()
+                if provided_pin == SECURITY_PIN:
+                    self._send_json(200, {"ok": True, "token": SECURITY_PIN})
+                else:
+                    self._send_json(401, {"ok": False, "error": "PIN incorreto."})
+            except Exception as e:
+                self._send_json(400, {"ok": False, "error": str(e)})
+            return
+
+        # Protege endpoints de escrita com o PIN de segurança
+        client_pin = self.headers.get("X-Auth-Pin", "").strip()
+        if client_pin != SECURITY_PIN:
+            self._send_json(401, {"ok": False, "error": "Acesso não autorizado. Digite o PIN de 4 dígitos para editar."})
+            return
+
         if self.path == "/api/save":
             try:
                 data = json.loads(raw_body.decode("utf-8"))
