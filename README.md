@@ -246,12 +246,23 @@ Monitoramento ativo 24/7 e controle bidirecional dos 26 containers e recursos f�
 
 ## 09. Automação Trello IA & ERP de Ambientes
 
-**Resumo:** Agente curador de cards com Gemini 3.1 Flash Lite, backup transacional com rollback e provisionamento de funil para móveis planejados.
+**Resumo:** Agente curador de cards/etiquetas com Gemini 3.1 Flash Lite, backup transacional com rollback e provisionamento de funil para móveis planejados.
 
 - **Categoria:** `Automação, 3D & Infra SRE`
 - **Status:** `Rotinas & API (:8088) Ativas`
 - **Caminho no Servidor:** `/home/tiago2609/Scripts & /opt/trello-api`
 - **Tecnologias:** `Python` • `Gemini 3.1 Flash Lite` • `Trello REST API` • `Rollback Transacional` • `FastAPI (:8088)`
+
+### Galeria & Evidências Visuais
+
+#### Trello IA
+![Trello IA](assets/1792768702-Trello-IA.png)
+
+#### Trello Filme
+![Trello Filme](assets/1792768706-Trello-Filme.png)
+
+#### Trello etiquetas
+![Trello etiquetas](assets/1792768708-Trello-etiquetas.png)
 
 ### Problema & Automação de Processos
 

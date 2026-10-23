@@ -272,7 +272,7 @@
       "number": "09",
       "category": "Automação, 3D & Infra SRE",
       "title": "Automação Trello IA & ERP de Ambientes",
-      "subtitle": "Agente curador de cards com Gemini 3.1 Flash Lite, backup transacional com rollback e provisionamento de funil para móveis planejados.",
+      "subtitle": "Agente curador de cards/etiquetas com Gemini 3.1 Flash Lite, backup transacional com rollback e provisionamento de funil para móveis planejados.",
       "status": "Rotinas & API (:8088) Ativas",
       "path": "/home/tiago2609/Scripts & /opt/trello-api",
       "tags": [
@@ -282,7 +282,20 @@
         "Rollback Transacional",
         "FastAPI (:8088)"
       ],
-      "images": [],
+      "images": [
+        {
+          "url": "assets/1792768702-Trello-IA.png",
+          "caption": "Trello IA"
+        },
+        {
+          "url": "assets/1792768706-Trello-Filme.png",
+          "caption": "Trello Filme"
+        },
+        {
+          "url": "assets/1792768708-Trello-etiquetas.png",
+          "caption": "Trello etiquetas"
+        }
+      ],
       "blocks": [
         {
           "title": "Problema & Automação de Processos",
