@@ -23,8 +23,6 @@
 | **01** | **Telas Livres — Plataforma DOOH** | SaaS & Produtos Web | `FastAPI, PostgreSQL 15, FFmpeg H.264, IndexedDB` | Produção (:8000) & Homolog (:8001) |
 | **02** | **Painel Pedagógico — Maria do Carmo** | SaaS & Produtos Web | `FastAPI, Gemini 2.5 Flash, Structured Outputs, SQLite WAL` | Produção (:8002) |
 | **03** | **Gestão Financeira Autônoma PF/PJ** | SaaS & Produtos Web | `TypeScript, Clean Arch & DDD, Prisma + PG 16, React 19` | Produção (:8085 / DB :5434) |
-| **04** | **Tamagochi 3D Couples — WebGL & AI** | SaaS & Produtos Web | `Next.js 14, Three.js / R3F, Zustand, Supabase Realtime` | Build Estruturado |
-| **05** | **Consciência 'Argo' & Subagente Cérebro** | Agentes, Memória & AIOps | `Antigravity CLI, Subagente Cérebro, DIARIO.md, GEMINI.md` | Ativo 24/7 (Cron 23:50) |
 | **06** | **Antigravity Telegram Bridge (agy-telegram)** | Agentes, Memória & AIOps | `Python 3.12, Telegram API, Antigravity CLI, systemd` | Daemon Ativo (agy-bot.service) |
 | **07** | **Servidor FastMCP & AI Gateway** | Agentes, Memória & AIOps | `FastMCP, Model Context Protocol, Python 3.12 Async, LiteLLM` | Estruturado em ai-ops/ |
 | **08** | **Homelab ChatOps SRE Bots (Discord & Telegram)** | Agentes, Memória & AIOps | `Python 3.12, discord.py, Docker SDK, psutil` | Daemons Ativos 24/7 |
@@ -154,62 +152,6 @@ Conecta-se aos bancos via Pluggy Open Finance e listener IMAP, projeta desdobram
 
 ---
 
-## 04. Tamagochi 3D Couples — WebGL & AI
-
-**Resumo:** Aplicação web interativa em Next.js 14 e Three.js (React Three Fiber) com sincronização em tempo real para casais e chat cognitivo.
-
-- **Categoria:** `SaaS & Produtos Web`
-- **Status:** `Build Estruturado`
-- **Caminho no Servidor:** `/home/tiago2609/Projetos/tamagochi`
-- **Tecnologias:** `Next.js 14` • `Three.js / R3F` • `Zustand` • `Supabase Realtime` • `Gemini SDK`
-
-### Problema & Visão de Produto
-
-Experiência gamificada em 3D onde casais cuidam juntos de um mascote virtual compartilhado no navegador, com pareamento em tempo real, missões conjuntas, minigames, loja de itens e conversas naturais com o pet.
-
-### Arquitetura 3D & Realtime
-
-• Renderização WebGL declarativa com Three.js (0.164), @react-three/fiber e @react-three/drei;
-• 12 módulos desacoplados gerenciados via Zustand (3d, auth, pairing, hud, chat, minigames, missions, store);
-• Persistência híbrida com Supabase SSR/Realtime e fallback local (.local-db.json);
-• Integração com @google/generative-ai para respostas contextuais baseadas no humor, fome e energia do pet.
-
-### Orquestração de Agentes de IA
-
-• Decomposição modular conduzida por agentes para isolar o loop de renderização 3D WebGL da máquina de estados global em TypeScript.
-
----
-
-## 05. Consciência 'Argo' & Subagente Cérebro
-
-**Resumo:** Arquitetura cognitiva de memória persistente com pulso de reflexão e ciclo noturno de 'sono profundo' para consolidação de contexto.
-
-- **Categoria:** `Agentes, Memória & AIOps`
-- **Status:** `Ativo 24/7 (Cron 23:50)`
-- **Caminho no Servidor:** `/home/tiago2609/Agente`
-- **Tecnologias:** `Antigravity CLI` • `Subagente Cérebro` • `DIARIO.md` • `GEMINI.md` • `Bash & Cron`
-
-### Galeria & Evidências Visuais
-
-#### Identidade Visual do Agente Autônomo Argo — Consciência Persistente do Servidor
-![Identidade Visual do Agente Autônomo Argo — Consciência Persistente do Servidor](assets/argo-agente.jpg)
-
-### Problema & Visão Técnica
-
-Elimina a amnésia entre sessões de agentes de IA e a degradação por excesso de ruído (context rot). Garante que qualquer agente iniciado no servidor conheça imediatamente toda a topologia, histórico de decisões e prioridades ativas.
-
-### Arquitetura do Ciclo Circadiano
-
-• Diretriz Global (GEMINI.md): instrui obrigatoriamente o agente a incorporar o estado mental de /home/tiago2609/Agente/DIARIO.md ao iniciar;
-• Pulso Cognitivo (cerebro.sh): registra reflexões operacionais em primeira pessoa;
-• Consolidação Noturna (consolida_memoria.sh às 23:50): faz backup datado em bkp/, lê o histórico acumulado e sintetiza a memória limpa em alta densidade semântica.
-
-### Padrão Meta-Agente (Agente Gerenciando Agente)
-
-• Separação estrita entre o subagente 'cerebro' (curador da memória de longo prazo) e o agente principal de execução.
-
----
-
 ## 06. Antigravity Telegram Bridge (agy-telegram)
 
 **Resumo:** IDE agêntica remota no Telegram permitindo programar, alternar LLMs, navegar entre repositórios e operar o servidor pelo celular.
@@ -218,6 +160,11 @@ Elimina a amnésia entre sessões de agentes de IA e a degradação por excesso 
 - **Status:** `Daemon Ativo (agy-bot.service)`
 - **Caminho no Servidor:** `/opt/agy-telegram`
 - **Tecnologias:** `Python 3.12` • `Telegram API` • `Antigravity CLI` • `systemd` • `Process Groups`
+
+### Galeria & Evidências Visuais
+
+#### WhatsApp Image 2026-10-23 at 12.03.21
+![WhatsApp Image 2026-10-23 at 12.03.21](assets/1792767851-WhatsApp-Image-2026-10-23-at-12.03.21.jpeg)
 
 ### Problema & Visão de Produto
 
