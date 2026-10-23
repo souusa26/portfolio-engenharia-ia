@@ -2,7 +2,7 @@
 """
 Servidor Visual CMS & Showcase de Engenharia com IA (Porta 8089)
 Permite:
-- Visualização limpa estilo Linear/Apple/Bento
+- Visualização limpa estilo Linear/Apple/Bento (Dark / White)
 - Edição visual de projetos, blocos, temas e textos (POST /api/save)
 - Upload de imagens via Drag & Drop / Arquivo / Ctrl+V (POST /api/upload)
 - Regeneração automática do README.md e sincronização com GitHub (POST /api/sync-github)
@@ -35,7 +35,7 @@ def generate_markdown_from_data(data: dict) -> str:
         "",
         "---",
         "",
-        "## 📊 Indicadores do Ecossistema",
+        "## Indicadores do Ecossistema",
         "",
         "| Indicador | Destaque |",
         "| :--- | :--- |",
@@ -47,7 +47,7 @@ def generate_markdown_from_data(data: dict) -> str:
         "",
         "---",
         "",
-        "## 🗂️ Índice dos Projetos",
+        "## Índice dos Projetos",
         "",
         "| # | Projeto | Categoria | Stack Principal | Status |",
         "| :-: | :--- | :--- | :--- | :--- |",
@@ -59,7 +59,6 @@ def generate_markdown_from_data(data: dict) -> str:
         cat = p.get("category", "")
         tags = ", ".join(p.get("tags", [])[:4])
         status = p.get("status", "")
-        anchor = re.sub(r"[^a-z0-9\-]", "", f"{num}-{title.lower().replace(' ', '-')}")
         lines.append(f"| **{num}** | **{title}** | {cat} | `{tags}` | {status} |")
 
     lines.extend(["", "---", ""])
@@ -89,7 +88,7 @@ def generate_markdown_from_data(data: dict) -> str:
         lines.append("")
 
         if images:
-            lines.append("### 📸 Galeria & Evidências Visuais")
+            lines.append("### Galeria & Evidências Visuais")
             lines.append("")
             for img in images:
                 url = img.get("url", "")
@@ -212,7 +211,7 @@ class PortfolioCMSHandler(SimpleHTTPRequestHandler):
             try:
                 data = json.loads(raw_body.decode("utf-8"))
                 save_data_and_markdown(data)
-                self._send_json(200, {"ok": True, "message": "Alterações salvas e README.md atualizado!"})
+                self._send_json(200, {"ok": True, "message": "Alterações salvas e README.md atualizado."})
             except Exception as e:
                 self._send_json(400, {"ok": False, "error": str(e)})
             return
@@ -246,7 +245,7 @@ class PortfolioCMSHandler(SimpleHTTPRequestHandler):
                         save_data_and_markdown(json.load(f))
                 subprocess.run(["git", "add", "."], cwd=BASE_DIR, check=False)
                 subprocess.run(
-                    ["git", "commit", "-m", "docs: atualiza portfólio e imagens pelo Visual Studio"],
+                    ["git", "commit", "-m", "docs: atualiza portfólio clean e imagens"],
                     cwd=BASE_DIR,
                     check=False,
                 )
@@ -257,9 +256,9 @@ class PortfolioCMSHandler(SimpleHTTPRequestHandler):
                     text=True,
                 )
                 if push_res.returncode == 0:
-                    self._send_json(200, {"ok": True, "message": "Sincronizado com o GitHub com sucesso!"})
+                    self._send_json(200, {"ok": True, "message": "Sincronizado com o GitHub com sucesso."})
                 else:
-                    self._send_json(200, {"ok": True, "message": "Salvo localmente e README atualizado!"})
+                    self._send_json(200, {"ok": True, "message": "Salvo localmente e README atualizado."})
             except Exception as e:
                 self._send_json(400, {"ok": False, "error": str(e)})
             return
