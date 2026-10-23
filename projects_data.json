@@ -235,7 +235,7 @@
       "id": "chatops-bots",
       "number": "08",
       "category": "Agentes, Memória & AIOps",
-      "title": "Homelab ChatOps SRE Bots (Discord & Telegram)",
+      "title": "Bots de monitoração (Discord & Telegram)",
       "subtitle": "Bots operacionais integrados ao Docker SDK e psutil com 14 comandos de governança e watchdog preventivo a cada 60 segundos.",
       "status": "Daemons Ativos 24/7",
       "path": "/home/tiago2609/Projetos/botHomelab",
@@ -248,8 +248,8 @@
       ],
       "images": [
         {
-          "url": "assets/uptime-kuma.png",
-          "caption": "Monitoramento Sintético Uptime Kuma (:3001) Complementando os Bots de ChatOps"
+          "url": "assets/1792768287-Discord.png",
+          "caption": "Discord"
         }
       ],
       "blocks": [
