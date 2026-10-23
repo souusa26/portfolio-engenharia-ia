@@ -44,6 +44,12 @@
     body[data-accent="amber"] { --accent: #f59e0b; --accent-soft: rgba(245, 158, 11, 0.14); }
     body[data-accent="rose"] { --accent: #f43f5e; --accent-soft: rgba(244, 63, 94, 0.14); }
 
+    html, body {
+      overflow-x: hidden;
+      max-width: 100vw;
+      width: 100%;
+    }
+
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background-color: var(--bg-main);
@@ -100,6 +106,8 @@
       color: var(--text-primary);
       border: 1px solid var(--border-color);
       font-size: 16px; /* Prevents auto-zoom on iOS inputs */
+      box-sizing: border-box;
+      max-width: 100%;
     }
     @media (min-width: 640px) {
       input, textarea, select { font-size: 0.875rem; }
@@ -257,19 +265,27 @@
   </header>
 
   <!-- FILTER TABS & SEARCH BAR -->
-  <section class="max-w-6xl mx-auto px-3.5 sm:px-6 pb-4 sm:pb-6">
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-subtle pb-3 sm:pb-4">
+  <section class="max-w-6xl mx-auto px-3.5 sm:px-6 pb-4 sm:pb-6 w-full max-w-full">
+    <div class="w-full min-w-0 max-w-full flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-4 border-b border-subtle pb-3 sm:pb-4">
       <!-- HORIZONTAL SCROLLABLE CATEGORIES ON MOBILE -->
-      <div class="flex overflow-x-auto no-scrollbar gap-1.5 pb-1 -mx-3.5 px-3.5 sm:mx-0 sm:px-0 sm:flex-wrap" id="category-tabs"></div>
+      <div class="w-full min-w-0 max-w-full overflow-hidden">
+        <div class="w-full min-w-0 flex items-center overflow-x-auto no-scrollbar gap-1.5 pb-1 sm:pb-0 sm:flex-wrap" id="category-tabs" style="-webkit-overflow-scrolling: touch;"></div>
+      </div>
       
       <!-- SEARCH BOX -->
-      <div class="relative w-full sm:w-64 shrink-0">
+      <div class="relative w-full sm:w-64 shrink-0 min-w-0 max-w-full">
+        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-sec">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </div>
         <input
           id="search-box"
           type="text"
           oninput="renderGrid()"
           placeholder="Buscar projeto ou tecnologia..."
-          class="w-full px-3.5 py-1.5 sm:py-2 rounded-lg text-xs"
+          class="w-full pl-8 pr-3 py-2 sm:py-1.5 rounded-lg text-xs"
         />
       </div>
     </div>
@@ -571,7 +587,7 @@
       const metrics = STATE.settings.metrics || [];
       const container = document.getElementById('metrics-grid');
       container.innerHTML = metrics.map((m, idx) => `
-        <div class="surface rounded-xl p-2.5 sm:p-4">
+        <div class="surface rounded-xl p-2.5 sm:p-4 min-w-0 overflow-hidden">
           <div class="text-[10px] sm:text-xs text-sec truncate">${m.label}</div>
           ${EDIT_MODE ? `
             <input type="text" value="${m.value}" oninput="STATE.settings.metrics[${idx}].value = this.value" class="mt-1 w-full px-2 py-1 rounded text-xs sm:text-sm font-bold" />
@@ -613,7 +629,7 @@
       grid.innerHTML = filtered.map(({ p, index }) => {
         const cover = (p.images && p.images.length > 0) ? p.images[0].url : null;
         return `
-          <article onclick="openModal(${index})" class="surface project-card rounded-xl sm:rounded-2xl overflow-hidden cursor-pointer flex flex-col justify-between">
+          <article onclick="openModal(${index})" class="surface project-card rounded-xl sm:rounded-2xl overflow-hidden cursor-pointer flex flex-col justify-between min-w-0">
             <div>
               <!-- IMAGE THUMBNAIL -->
               <div class="aspect-video w-full elevated relative overflow-hidden flex items-center justify-center border-b border-subtle">
@@ -664,13 +680,13 @@
       CURRENT_PROJECT_INDEX = index;
       ACTIVE_IMG_INDEX = 0;
       document.getElementById('project-modal').classList.remove('hidden');
-      document.body.style.overflow = 'hidden'; // Prevents body scroll when modal is open
+      document.body.style.overflowY = 'hidden'; // Prevents body scroll when modal is open
       renderModalContent();
     }
 
     function closeModal() {
       document.getElementById('project-modal').classList.add('hidden');
-      document.body.style.overflow = '';
+      document.body.style.overflowY = '';
       CURRENT_PROJECT_INDEX = null;
       renderGrid();
     }
@@ -1041,13 +1057,13 @@
     function openLightbox(url) {
       document.getElementById('lightbox-img').src = url;
       document.getElementById('lightbox').classList.remove('hidden');
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflowY = 'hidden';
     }
 
     function closeLightbox() {
       document.getElementById('lightbox').classList.add('hidden');
       if (CURRENT_PROJECT_INDEX === null) {
-        document.body.style.overflow = '';
+        document.body.style.overflowY = '';
       }
     }
 
