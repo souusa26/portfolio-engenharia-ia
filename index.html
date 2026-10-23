@@ -26,7 +26,7 @@
       --bg-elevated: #f1f5f9;
       --text-primary: #0f172a;
       --text-secondary: #475569;
-      --border-color: rgba(15, 23, 42, 0.09);
+      --border-color: rgba(15, 23, 42, 0.10);
     }
 
     body[data-theme="slate-dark"] {
@@ -74,9 +74,9 @@
       transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     }
     .project-card:hover {
-      transform: translateY(-3px);
+      transform: translateY(-2px);
       border-color: var(--accent);
-      box-shadow: 0 14px 32px -12px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 12px 28px -12px rgba(0, 0, 0, 0.25);
     }
 
     .line-clamp-2 {
@@ -103,7 +103,7 @@
   <nav class="sticky top-0 z-30 surface border-t-0 border-x-0 backdrop-blur-md bg-opacity-90">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
       <div class="flex items-center gap-3">
-        <div class="w-8 h-8 rounded-lg accent-bg flex items-center justify-center font-bold text-sm">
+        <div class="w-8 h-8 rounded-lg accent-bg flex items-center justify-center font-bold text-xs tracking-wider">
           TS
         </div>
         <div>
@@ -113,15 +113,39 @@
       </div>
 
       <!-- ACTION BUTTONS -->
-      <div class="flex items-center gap-2.5">
-        <button onclick="toggleEditMode()" id="btn-edit-mode" class="px-3.5 py-1.5 rounded-lg elevated text-xs font-medium hover:opacity-90 transition flex items-center gap-1.5">
-          <span>✏️ Personalizar & Editar</span>
+      <div class="flex items-center gap-2">
+        <!-- DARK / WHITE SEGMENTED SWITCHER -->
+        <div class="inline-flex items-center p-0.5 rounded-lg elevated text-xs font-medium">
+          <button onclick="setQuickTheme('zinc-dark')" id="btn-theme-dark" class="px-2.5 py-1 rounded-md transition flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <span>Dark</span>
+          </button>
+          <button onclick="setQuickTheme('light')" id="btn-theme-light" class="px-2.5 py-1 rounded-md transition flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+            <span>White</span>
+          </button>
+        </div>
+
+        <button onclick="toggleEditMode()" id="btn-edit-mode" class="px-3.5 py-1.5 rounded-lg elevated text-xs font-medium hover:opacity-90 transition">
+          Personalizar
         </button>
         <button onclick="saveAll(true)" id="btn-save-sync" class="hidden px-3.5 py-1.5 rounded-lg accent-bg text-xs font-semibold hover:opacity-95 transition">
-          💾 Salvar & Atualizar GitHub
+          Salvar & Sincronizar GitHub
         </button>
-        <a href="/api/dossier" target="_blank" class="px-3.5 py-1.5 rounded-lg elevated text-xs font-medium hover:opacity-90 transition">
-          📄 Ver Markdown
+        <a href="/api/dossier" target="_blank" class="hidden sm:inline-flex px-3.5 py-1.5 rounded-lg elevated text-xs font-medium hover:opacity-90 transition">
+          Markdown
         </a>
       </div>
     </div>
@@ -133,8 +157,8 @@
           <div class="flex items-center gap-2">
             <span class="text-sec font-medium">Tema:</span>
             <select id="select-theme" onchange="updateThemeSettings()" class="px-2.5 py-1 rounded-md text-xs">
-              <option value="zinc-dark">Minimal Dark (Linear)</option>
-              <option value="light">Clean Light (Apple / Papel)</option>
+              <option value="zinc-dark">Minimal Dark</option>
+              <option value="light">Clean White</option>
               <option value="slate-dark">Executive Navy</option>
             </select>
           </div>
@@ -142,26 +166,26 @@
             <span class="text-sec font-medium">Destaque:</span>
             <select id="select-accent" onchange="updateThemeSettings()" class="px-2.5 py-1 rounded-md text-xs">
               <option value="indigo">Indigo</option>
-              <option value="emerald">Esmeralda</option>
-              <option value="blue">Azul</option>
-              <option value="amber">Âmbar</option>
+              <option value="emerald">Emerald</option>
+              <option value="blue">Blue</option>
+              <option value="amber">Amber</option>
               <option value="rose">Rose</option>
             </select>
           </div>
           <div class="flex items-center gap-2">
-            <span class="text-sec font-medium">Colunas:</span>
+            <span class="text-sec font-medium">Layout:</span>
             <select id="select-cols" onchange="updateThemeSettings()" class="px-2.5 py-1 rounded-md text-xs">
               <option value="3">3 Colunas</option>
-              <option value="2">2 Colunas (Cards Maiores)</option>
+              <option value="2">2 Colunas</option>
             </select>
           </div>
         </div>
 
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-3">
           <button onclick="addNewProject()" class="px-3 py-1.5 rounded-md surface hover:opacity-90 font-medium">
             + Novo Projeto
           </button>
-          <span id="save-toast" class="text-emerald-400 font-mono hidden">✓ Salvo!</span>
+          <span id="save-toast" class="text-emerald-500 font-mono hidden">Alterações salvas</span>
         </div>
       </div>
     </div>
@@ -235,10 +259,10 @@
         </div>
         <div class="flex items-center gap-2">
           <button onclick="toggleModalEdit()" id="btn-modal-edit" class="px-3 py-1.5 rounded-lg elevated text-xs font-medium hover:opacity-90">
-            ✏️ Editar Projeto / Subir Prints
+            Editar Projeto / Imagens
           </button>
-          <button onclick="closeModal()" class="w-8 h-8 rounded-lg elevated flex items-center justify-center text-sm hover:opacity-80">
-            ✕
+          <button onclick="closeModal()" class="w-8 h-8 rounded-lg elevated flex items-center justify-center text-xs font-mono hover:opacity-80">
+            ESC
           </button>
         </div>
       </div>
@@ -248,12 +272,12 @@
 
       <!-- MODAL FOOTER (VISIBLE WHEN EDITING) -->
       <div id="modal-footer" class="hidden px-6 py-3.5 border-t border-subtle elevated flex items-center justify-between shrink-0">
-        <button onclick="deleteCurrentProject()" class="text-xs text-rose-400 hover:underline">
+        <button onclick="deleteCurrentProject()" class="text-xs text-rose-500 hover:underline">
           Excluir este projeto
         </button>
         <div class="flex items-center gap-2">
           <button onclick="saveAll(true)" class="px-4 py-2 rounded-lg accent-bg text-xs font-semibold">
-            💾 Salvar Alterações & Atualizar README
+            Salvar Alterações & Atualizar README
           </button>
         </div>
       </div>
@@ -281,16 +305,42 @@
       } catch (e) {
         console.error(e);
       }
+      const savedLocalTheme = localStorage.getItem('portfolio_theme');
+      if (savedLocalTheme) {
+        STATE.settings.theme = savedLocalTheme;
+      }
       applySettings();
       renderAll();
     }
 
+    function setQuickTheme(themeName) {
+      STATE.settings.theme = themeName;
+      localStorage.setItem('portfolio_theme', themeName);
+      applySettings();
+      saveAll(false);
+    }
+
+    function updateThemeButtonsUI(theme) {
+      const btnDark = document.getElementById('btn-theme-dark');
+      const btnLight = document.getElementById('btn-theme-light');
+      if (theme === 'light') {
+        btnLight.className = "px-2.5 py-1 rounded-md transition flex items-center gap-1.5 accent-bg";
+        btnDark.className = "px-2.5 py-1 rounded-md transition flex items-center gap-1.5 text-sec hover:opacity-80";
+      } else {
+        btnDark.className = "px-2.5 py-1 rounded-md transition flex items-center gap-1.5 accent-bg";
+        btnLight.className = "px-2.5 py-1 rounded-md transition flex items-center gap-1.5 text-sec hover:opacity-80";
+      }
+    }
+
     function applySettings() {
       const s = STATE.settings || {};
-      document.body.setAttribute('data-theme', s.theme || 'zinc-dark');
+      const theme = s.theme || 'zinc-dark';
+      document.body.setAttribute('data-theme', theme);
       document.body.setAttribute('data-accent', s.accent || 'indigo');
 
-      document.getElementById('select-theme').value = s.theme || 'zinc-dark';
+      updateThemeButtonsUI(theme);
+
+      document.getElementById('select-theme').value = theme;
       document.getElementById('select-accent').value = s.accent || 'indigo';
       document.getElementById('select-cols').value = String(s.columns || 3);
 
@@ -307,6 +357,7 @@
       STATE.settings.theme = document.getElementById('select-theme').value;
       STATE.settings.accent = document.getElementById('select-accent').value;
       STATE.settings.columns = parseInt(document.getElementById('select-cols').value, 10);
+      localStorage.setItem('portfolio_theme', STATE.settings.theme);
       applySettings();
       renderGrid();
       saveAll(false);
@@ -327,9 +378,9 @@
       document.getElementById('btn-save-sync').classList.toggle('hidden', !EDIT_MODE);
       document.getElementById('hero-view').classList.toggle('hidden', EDIT_MODE);
       document.getElementById('hero-edit').classList.toggle('hidden', !EDIT_MODE);
-      document.getElementById('btn-edit-mode').innerHTML = EDIT_MODE
-        ? '<span>👁️ Ver Modo Apresentação</span>'
-        : '<span>✏️ Personalizar & Editar</span>';
+      document.getElementById('btn-edit-mode').textContent = EDIT_MODE
+        ? 'Modo Apresentação'
+        : 'Personalizar';
       renderAll();
       if (CURRENT_PROJECT_INDEX !== null) {
         renderModalContent();
@@ -391,21 +442,21 @@
           <article onclick="openModal(${index})" class="surface project-card rounded-2xl overflow-hidden cursor-pointer flex flex-col justify-between">
             <div>
               <!-- IMAGE THUMBNAIL -->
-              <div class="aspect-video w-full elevated relative overflow-hidden flex items-center justify-center">
+              <div class="aspect-video w-full elevated relative overflow-hidden flex items-center justify-center border-b border-subtle">
                 ${cover ? `
                   <img src="${cover}" alt="${p.title}" class="w-full h-full object-cover object-top" />
                 ` : `
                   <div class="text-center p-4">
-                    <div class="text-xs font-mono text-sec opacity-75">Projeto #${p.number}</div>
-                    <div class="text-[11px] text-sec mt-1">Clique para ver detalhes ou subir print</div>
+                    <div class="text-xs font-mono text-sec opacity-75">PROJETO ${p.number}</div>
+                    <div class="text-[11px] text-sec mt-1">Ver especificações técnicas</div>
                   </div>
                 `}
-                <div class="absolute top-2.5 left-2.5 px-2 py-0.5 rounded bg-black/70 text-white font-mono text-[11px]">
-                  #${p.number}
+                <div class="absolute top-2.5 left-2.5 px-2 py-0.5 rounded bg-black/75 text-white font-mono text-[11px]">
+                  ${p.number}
                 </div>
                 ${p.images && p.images.length > 0 ? `
-                  <div class="absolute bottom-2.5 right-2.5 px-2 py-0.5 rounded bg-black/70 text-white font-mono text-[10px]">
-                    📷 ${p.images.length}
+                  <div class="absolute bottom-2.5 right-2.5 px-2 py-0.5 rounded bg-black/75 text-white font-mono text-[10px]">
+                    ${p.images.length} img
                   </div>
                 ` : ''}
               </div>
@@ -414,8 +465,8 @@
               <div class="p-5">
                 <div class="flex items-center justify-between gap-2 text-[11px] text-sec font-mono mb-1.5">
                   <span>${p.category}</span>
-                  <span class="inline-flex items-center gap-1 text-emerald-400">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                  <span class="inline-flex items-center gap-1.5 text-emerald-500 font-medium">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                     Ativo
                   </span>
                 </div>
@@ -459,12 +510,12 @@
     function renderModalContent() {
       if (CURRENT_PROJECT_INDEX === null) return;
       const p = STATE.projects[CURRENT_PROJECT_INDEX];
-      document.getElementById('modal-num').textContent = `#${p.number}`;
+      document.getElementById('modal-num').textContent = p.number;
       document.getElementById('modal-cat').textContent = p.category;
       document.getElementById('modal-footer').classList.toggle('hidden', !EDIT_MODE);
       document.getElementById('btn-modal-edit').textContent = EDIT_MODE
-        ? '👁️ Ver Modo Leitura'
-        : '✏️ Editar Blocos & Imagens';
+        ? 'Modo Leitura'
+        : 'Editar Blocos & Imagens';
 
       const body = document.getElementById('modal-body');
 
@@ -478,7 +529,7 @@
             <h2 class="text-2xl font-bold">${p.title}</h2>
             <p class="text-sm text-sec mt-1.5 leading-relaxed">${p.subtitle || ''}</p>
             <div class="flex flex-wrap items-center gap-2 mt-3 text-xs font-mono">
-              <span class="px-2.5 py-1 rounded elevated text-emerald-400">● ${p.status}</span>
+              <span class="px-2.5 py-1 rounded elevated text-emerald-500 font-medium">${p.status}</span>
               ${p.path ? `<span class="px-2.5 py-1 rounded elevated text-sec">${p.path}</span>` : ''}
             </div>
             <div class="flex flex-wrap gap-1.5 mt-3">
@@ -491,10 +542,10 @@
             <div class="space-y-3">
               <div class="rounded-xl overflow-hidden elevated border border-subtle">
                 <img src="${activeImg.url}" onclick="openLightbox('${activeImg.url}')"
-                  class="w-full max-h-[420px] object-contain mx-auto cursor-zoom-in bg-black/40" />
+                  class="w-full max-h-[420px] object-contain mx-auto cursor-zoom-in bg-black/20" />
                 <div class="px-4 py-2.5 text-xs text-sec border-t border-subtle flex items-center justify-between">
                   <span>${activeImg.caption || p.title}</span>
-                  <span class="font-mono text-[11px]">Clique na imagem para ampliar</span>
+                  <span class="font-mono text-[11px]">Clique para ampliar</span>
                 </div>
               </div>
               ${imgs.length > 1 ? `
@@ -512,7 +563,7 @@
           <div class="grid grid-cols-1 gap-4">
             ${(p.blocks || []).map(b => `
               <div class="elevated rounded-xl p-5">
-                <h4 class="text-sm font-bold accent-text uppercase tracking-wider font-mono mb-2">${b.title}</h4>
+                <h4 class="text-xs font-bold accent-text uppercase tracking-wider font-mono mb-2">${b.title}</h4>
                 <div class="text-sm leading-relaxed whitespace-pre-line">${b.content}</div>
               </div>
             `).join('')}
@@ -560,16 +611,16 @@
           <!-- IMAGE UPLOADER & GALLERY MANAGER -->
           <div class="elevated rounded-xl p-4 space-y-3">
             <div class="flex items-center justify-between">
-              <div class="text-xs font-mono uppercase accent-text font-semibold">2. Prints & Imagens do Projeto (Arraste, Clique ou Cole com Ctrl+V)</div>
+              <div class="text-xs font-mono uppercase accent-text font-semibold">2. Prints & Imagens do Projeto (Upload ou Ctrl+V)</div>
               <label class="px-3 py-1.5 rounded-lg accent-bg text-xs font-semibold cursor-pointer">
-                + Subir Imagem do Computador
+                + Subir Imagem
                 <input type="file" accept="image/*" multiple onchange="handleFileSelect(event)" class="hidden" />
               </label>
             </div>
 
             ${imgs.length === 0 ? `
               <div class="text-xs text-sec py-6 text-center border border-dashed border-subtle rounded-lg">
-                Nenhuma imagem neste projeto ainda. Clique em "+ Subir Imagem" ou pressione <strong>Ctrl+V</strong> para colar um print da área de transferência.
+                Nenhuma imagem neste projeto. Clique em "+ Subir Imagem" ou pressione <strong>Ctrl+V</strong> para colar um print da área de transferência.
               </div>
             ` : `
               <div class="space-y-2.5">
@@ -579,10 +630,10 @@
                     <input type="text" value="${img.caption || ''}" placeholder="Legenda da imagem..."
                       oninput="STATE.projects[${CURRENT_PROJECT_INDEX}].images[${i}].caption = this.value"
                       class="flex-1 px-2.5 py-1.5 rounded text-xs" />
-                    <button onclick="setAsCover(${i})" title="Definir como capa" class="px-2 py-1 rounded elevated text-[11px] hover:opacity-80">
-                      ${i === 0 ? '★ Capa' : 'Tornar Capa'}
+                    <button onclick="setAsCover(${i})" class="px-2.5 py-1 rounded elevated text-[11px] font-mono hover:opacity-80">
+                      ${i === 0 ? 'Capa Principal' : 'Definir Capa'}
                     </button>
-                    <button onclick="removeImage(${i})" class="px-2 py-1 rounded elevated text-rose-400 text-xs hover:opacity-80">
+                    <button onclick="removeImage(${i})" class="px-2.5 py-1 rounded elevated text-rose-500 text-xs hover:opacity-80">
                       Remover
                     </button>
                   </div>
@@ -604,13 +655,13 @@
               ${(p.blocks || []).map((b, bIdx) => `
                 <div class="surface rounded-xl p-3.5 space-y-2">
                   <div class="flex items-center justify-between gap-2">
-                    <input type="text" value="${b.title}" placeholder="Título do Bloco (ex: Arquitetura, Papel da IA...)"
+                    <input type="text" value="${b.title}" placeholder="Título do Bloco"
                       oninput="STATE.projects[${CURRENT_PROJECT_INDEX}].blocks[${bIdx}].title = this.value"
                       class="flex-1 px-3 py-1.5 rounded text-xs font-bold font-mono" />
-                    <div class="flex items-center gap-1">
-                      <button onclick="moveBlock(${bIdx}, -1)" class="px-2 py-1 rounded elevated text-xs">↑</button>
-                      <button onclick="moveBlock(${bIdx}, 1)" class="px-2 py-1 rounded elevated text-xs">↓</button>
-                      <button onclick="removeBlock(${bIdx})" class="px-2 py-1 rounded elevated text-rose-400 text-xs">✕</button>
+                    <div class="flex items-center gap-1 font-mono">
+                      <button onclick="moveBlock(${bIdx}, -1)" class="px-2 py-1 rounded elevated text-xs">Subir</button>
+                      <button onclick="moveBlock(${bIdx}, 1)" class="px-2 py-1 rounded elevated text-xs">Descer</button>
+                      <button onclick="removeBlock(${bIdx})" class="px-2 py-1 rounded elevated text-rose-500 text-xs">Excluir</button>
                     </div>
                   </div>
                   <textarea rows="4"
@@ -661,7 +712,6 @@
       });
     }
 
-    // Support Ctrl+V image paste directly when modal is open!
     window.addEventListener('paste', async (e) => {
       if (CURRENT_PROJECT_INDEX === null) return;
       const items = e.clipboardData?.items || [];
@@ -674,6 +724,16 @@
             renderModalContent();
             saveAll(false);
           }
+        }
+      }
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (!document.getElementById('lightbox').classList.contains('hidden')) {
+          closeLightbox();
+        } else if (CURRENT_PROJECT_INDEX !== null) {
+          closeModal();
         }
       }
     });
@@ -697,7 +757,7 @@
       STATE.projects[CURRENT_PROJECT_INDEX].blocks = STATE.projects[CURRENT_PROJECT_INDEX].blocks || [];
       STATE.projects[CURRENT_PROJECT_INDEX].blocks.push({
         title: "Novo Tópico",
-        content: "Descreva os detalhes aqui..."
+        content: "Descreva os detalhes técnicos aqui..."
       });
       renderModalContent();
     }

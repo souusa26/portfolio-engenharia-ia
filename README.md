@@ -5,7 +5,7 @@
 
 ---
 
-## 📊 Indicadores do Ecossistema
+## Indicadores do Ecossistema
 
 | Indicador | Destaque |
 | :--- | :--- |
@@ -16,7 +16,7 @@
 
 ---
 
-## 🗂️ Índice dos Projetos
+## Índice dos Projetos
 
 | # | Projeto | Categoria | Stack Principal | Status |
 | :-: | :--- | :--- | :--- | :--- |
@@ -44,7 +44,7 @@
 - **Caminho no Servidor:** `/home/tiago2609/Projetos/projeto_telas`
 - **Tecnologias:** `FastAPI` • `PostgreSQL 15` • `FFmpeg H.264` • `IndexedDB` • `Cloudflare Tunnel`
 
-### 📸 Galeria & Evidências Visuais
+### Galeria & Evidências Visuais
 
 #### Painel Visual Administrativo — Gestão de Campanhas, Dispositivos e Anunciantes
 ![Painel Visual Administrativo — Gestão de Campanhas, Dispositivos e Anunciantes](assets/telas-admin.png)
@@ -91,7 +91,7 @@ Plataforma comercial Digital Out-Of-Home (DOOH) projetada para tablets Android i
 - **Caminho no Servidor:** `/home/tiago2609/Projetos/maria_do_carmo`
 - **Tecnologias:** `FastAPI` • `Gemini 2.5 Flash` • `Structured Outputs` • `SQLite WAL` • `PWA`
 
-### 📸 Galeria & Evidências Visuais
+### Galeria & Evidências Visuais
 
 #### Painel da Coordenação Pedagógica — Fila de Avaliação e Semáforo IA
 ![Painel da Coordenação Pedagógica — Fila de Avaliação e Semáforo IA](assets/maria-dashboard.png)
@@ -127,7 +127,7 @@ Substitui horas de revisão manual por uma fila automatizada que classifica cada
 - **Caminho no Servidor:** `/home/tiago2609/Projetos/financeiro`
 - **Tecnologias:** `TypeScript` • `Clean Arch & DDD` • `Prisma + PG 16` • `React 19` • `Pluggy Open Finance` • `Gemini 3.8 Flash`
 
-### 📸 Galeria & Evidências Visuais
+### Galeria & Evidências Visuais
 
 #### Dashboard FinTech Dark — Gráficos Donut, Simulador What-If e Copiloto IA (:8085)
 ![Dashboard FinTech Dark — Gráficos Donut, Simulador What-If e Copiloto IA (:8085)](assets/financeiro-dashboard.png)
@@ -186,7 +186,7 @@ Experiência gamificada em 3D onde casais cuidam juntos de um mascote virtual co
 - **Caminho no Servidor:** `/home/tiago2609/Agente`
 - **Tecnologias:** `Antigravity CLI` • `Subagente Cérebro` • `DIARIO.md` • `GEMINI.md` • `Bash & Cron`
 
-### 📸 Galeria & Evidências Visuais
+### Galeria & Evidências Visuais
 
 #### Identidade Visual do Agente Autônomo Argo — Consciência Persistente do Servidor
 ![Identidade Visual do Agente Autônomo Argo — Consciência Persistente do Servidor](assets/argo-agente.jpg)
@@ -242,7 +242,7 @@ Permite administrar projetos, corrigir bugs e disparar tarefas complexas de enge
 - **Caminho no Servidor:** `/home/tiago2609/homelab-aiops-portfolio/ai-ops`
 - **Tecnologias:** `FastMCP` • `Model Context Protocol` • `Python 3.12 Async` • `LiteLLM` • `Open-WebUI`
 
-### 📸 Galeria & Evidências Visuais
+### Galeria & Evidências Visuais
 
 #### Prometheus TSDB Targets (:9090) — Fonte de Telemetria para o Servidor FastMCP
 ![Prometheus TSDB Targets (:9090) — Fonte de Telemetria para o Servidor FastMCP](assets/prometheus-targets.png)
@@ -268,7 +268,7 @@ Permite que agentes de IA inspecionem a saúde real da infraestrutura (métricas
 - **Caminho no Servidor:** `/home/tiago2609/Projetos/botHomelab`
 - **Tecnologias:** `Python 3.12` • `discord.py` • `Docker SDK` • `psutil` • `systemd`
 
-### 📸 Galeria & Evidências Visuais
+### Galeria & Evidências Visuais
 
 #### Monitoramento Sintético Uptime Kuma (:3001) Complementando os Bots de ChatOps
 ![Monitoramento Sintético Uptime Kuma (:3001) Complementando os Bots de ChatOps](assets/uptime-kuma.png)
@@ -338,7 +338,7 @@ Transforma o estudo para 5 certificações Microsoft (AZ-900, SC-900, MS-900, MS
 - **Caminho no Servidor:** `/home/tiago2609/planta`
 - **Tecnologias:** `Python Paramétrico` • `CAD-as-Code` • `SVG & 3D Geometry` • `PBR Materials` • `Home Assistant IoT`
 
-### 📸 Galeria & Evidências Visuais
+### Galeria & Evidências Visuais
 
 #### Renderização 3D Paramétrica do Apartamento Gerada via Código (planta.py)
 ![Renderização 3D Paramétrica do Apartamento Gerada via Código (planta.py)](assets/planta-3d-real.png)
@@ -373,7 +373,7 @@ Substitui softwares CAD manuais por código Python versionável (planta.py) capa
 - **Caminho no Servidor:** `/home/tiago2609/homelab-aiops-portfolio`
 - **Tecnologias:** `Ubuntu 24.04 LTS` • `Docker Compose` • `Prometheus & Grafana` • `Cloudflare Tunnels` • `Tailscale WireGuard` • `AdGuard Home`
 
-### 📸 Galeria & Evidências Visuais
+### Galeria & Evidências Visuais
 
 #### Central Unificada de Serviços do Homelab em Produção
 ![Central Unificada de Serviços do Homelab em Produção](assets/homelab-homepage.png)
